@@ -4,65 +4,33 @@ Rectangle {
 	width: 100
 	height: 62
 
-	property alias tasks: taskRepeat.model
+	property alias tasks: taskList.model
 
-	Flickable {
-		id: scroll
+	ListView {
+		id: taskList
 		anchors.fill: parent
-		contentWidth: parent.width
-		contentHeight: taskList.childrenRect.height
+		anchors.leftMargin: 10
+		anchors.topMargin: 10
+		anchors.rightMargin: 10
+		anchors.bottomMargin: 10
+		spacing: 10
+		z: 0
 
-		Column {
-			id: taskList
-			anchors.fill: parent
-			anchors.leftMargin: 10
-			anchors.topMargin: 10
-			anchors.rightMargin: 10
-			anchors.bottomMargin: 10
-			spacing: 10
+		delegate: Task {
+			id: task
+			width: taskList.width
+			z: 100
 
-			Repeater {
-				id: taskRepeat
+			taskId: model.taskId
+			assignee: model.assignee
+			description: model.description
 
-				Task {
-					width: taskList.width - anchors.leftMargin - anchors.rightMargin
-
-					taskId: model.taskId
-					assignee: model.assignee
-					description: model.description
-				}
-
-				onItemAdded: {
-					print("++ " + taskRepeat.count + ": " + scroll.visibleArea.heightRatio);
-				}
-
-				onItemRemoved: {
-					print("-- " + taskRepeat.count + ": " + scroll.visibleArea.heightRatio);
-				}
+			MouseArea {
+				id: taskMouseArea
+				anchors.fill: parent
+				drag.target: task
+				drag.axis: Drag.XandYAxis
 			}
 		}
 	}
-
-	Rectangle {
-		id: scrollbar
-		anchors.right: scroll.right
-		y: scroll.visibleArea.yPosition * scroll.height
-		width: 4
-		radius: 2
-		smooth: true
-		height: scroll.visibleArea.heightRatio * scroll.height
-		color: "#657b83"
-	}
-
-	states: [
-		State {
-			name: "noScrollbar"
-			when: scroll.visibleArea.heightRatio == 1
-			PropertyChanges {
-				target: scrollbar
-				visible: false
-			}
-		}
-
-	]
 }

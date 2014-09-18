@@ -17,7 +17,7 @@ Rectangle {
 			id: queueRepeater
 			model: mainModel
 
-			Queue {
+			WorkQueue {
 				id: backlog
 				width: workspace.width / queueRepeater.model.count
 				height: workspace.height

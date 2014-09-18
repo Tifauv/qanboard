@@ -4,7 +4,7 @@ Rectangle {
 	id: task
 	width: 180
 	height: 80
-	color: "#cccccc"
+	color: "#eeeeee"
 
 	property int taskId: 1
 	property string assignee: "Assignee"
@@ -51,12 +51,6 @@ Rectangle {
 			anchors.leftMargin: 0
 			font.pixelSize: 12
 		}
-	}
-
-	MouseArea {
-		id: taskMouseArea
-		anchors.fill: parent
-		drag.target: task
 	}
 
 	states: [

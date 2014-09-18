@@ -27,7 +27,7 @@ ListModel {
 			},
 
 			ListElement {
-				taskId: 24
+				taskId: 25
 				assignee: ""
 				description: "Implement a new algorithm"
 				category: "Improvement"
