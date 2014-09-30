@@ -5,9 +5,10 @@ Rectangle {
 	width: 180
 	height: 80
 	color: "#eeeeee"
+	border.width: 0
 
-	property int taskId: 1
-	property string assignee: "Assignee"
+	property alias taskId: header.taskId
+	property alias assignee: header.assignee
 	property string description: "Description"
 
 	Column {
@@ -18,27 +19,12 @@ Rectangle {
 		anchors.topMargin: 5
 		anchors.fill: parent
 
-		Row {
-			id: topLayout
+		TaskHeader {
+			id: header
 			height: 20
 			anchors.right: parent.right
 			anchors.left: parent.left
-
-			Text {
-				id: taskIdLbl
-				text: qsTr("#%1").arg(taskId)
-				anchors.verticalCenter: parent.verticalCenter
-				font.bold: true
-				font.pointSize: 8
-			}
-
-			Text {
-				id: assigneeLbl
-				text: qsTr(" - Assigned to %1").arg(assignee)
-				font.pointSize: 8
-				anchors.verticalCenter: parent.verticalCenter
-			}
-		 }
+		}
 
 		Text {
 			id: descriptionLbl
@@ -55,13 +41,16 @@ Rectangle {
 
 	states: [
 		State {
-			name: "notAssigned"
-			when: assignee == ""
+			name: "dropTarget"
 			PropertyChanges {
-				target: assigneeLbl
-				text: qsTr(" - Nobody assigned")
-				color: "#999999"
-				font.italic: true
+				target: task
+				color: "#dddddd"
+				border.color: "#666666"
+				border.width: 5
+			}
+			PropertyChanges {
+				target: mainLayout
+				visible: false
 			}
 		}
 	]

@@ -28,8 +28,20 @@ Rectangle {
 			MouseArea {
 				id: taskMouseArea
 				anchors.fill: parent
-				drag.target: task
-				drag.axis: Drag.XandYAxis
+
+				onPressAndHold: {
+					task.state = "dropTarget";
+					taskMouseArea.drag.target = task;
+					task.z = 100000;
+					print("Dragging (z=" + task.z + ")");
+				}
+
+				onReleased: {
+					task.state = "";
+					task.z = 100;
+					taskMouseArea.drag.target = null;
+					print("Released (z=" + task.z + ")");
+				}
 			}
 		}
 	}
