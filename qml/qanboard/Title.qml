@@ -32,8 +32,6 @@ Rectangle {
 		font.pointSize: 11
 		verticalAlignment: Text.AlignVCenter
 		wrapMode: Text.WrapAnywhere
-		font.pixelSize: 12
-		z: 1
 		color: labelColor
 	}
 }

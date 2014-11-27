@@ -1,10 +1,26 @@
 import QtQuick 1.1
 
 Rectangle {
+	id: main
 	width: 100
 	height: 62
 
-	property alias tasks: taskList.model
+	property string name: "default"
+	property alias tasks: visualModel.model
+
+	signal dragged(variant model, int index)
+
+	VisualDataModel {
+		id: visualModel
+		delegate:  Task {
+			id: task
+			width: taskList.width
+
+			taskId: model.taskId
+			assignee: model.assignee
+			description: model.description
+		}
+	}
 
 	ListView {
 		id: taskList
@@ -14,35 +30,29 @@ Rectangle {
 		anchors.rightMargin: 10
 		anchors.bottomMargin: 10
 		spacing: 10
-		z: 0
 
-		delegate: Task {
-			id: task
-			width: taskList.width
-			z: 100
+		model: visualModel
 
-			taskId: model.taskId
-			assignee: model.assignee
-			description: model.description
+		MouseArea {
+			id: taskMouseArea
+			anchors.fill: taskList
 
-			MouseArea {
-				id: taskMouseArea
-				anchors.fill: parent
+			onPressAndHold: {
+				// If we are sliding inside the view, dismiss
+				if (taskList.moving)
+					return;
 
-				onPressAndHold: {
-					task.state = "dropTarget";
-					taskMouseArea.drag.target = task;
-					task.z = 100000;
-					print("Dragging (z=" + task.z + ")");
-				}
+				var index = taskList.indexAt(mouse.x + taskList.contentX, mouse.y + taskList.contentY);
+				if (index === -1) // No index, nothing to do
+					return;
 
-				onReleased: {
-					task.state = "";
-					task.z = 100;
-					taskMouseArea.drag.target = null;
-					print("Released (z=" + task.z + ")");
-				}
+				taskList.interactive = false;
+				dragged(visualModel.model, index);
 			}
 		}
+	}
+
+	function getItemIndex(p_y) {
+		return taskList.indexAt(width / 2, p_y + taskList.contentY);
 	}
 }

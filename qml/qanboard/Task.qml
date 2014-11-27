@@ -35,7 +35,6 @@ Rectangle {
 			anchors.rightMargin: 0
 			anchors.left: parent.left
 			anchors.leftMargin: 0
-			font.pixelSize: 12
 		}
 	}
 
@@ -51,6 +50,16 @@ Rectangle {
 			PropertyChanges {
 				target: mainLayout
 				visible: false
+			}
+		},
+		State {
+			name: "dragTarget"
+
+			PropertyChanges {
+				target: task
+				opacity: 0.8
+				border.color: "#666666"
+				border.width: 1
 			}
 		}
 	]
