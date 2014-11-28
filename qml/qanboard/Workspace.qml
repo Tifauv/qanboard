@@ -28,7 +28,7 @@ Rectangle {
 					height: workspace.height
 
 					title: model.name
-					taskList: model.tasks
+					tasks: model.tasks
 
 					onTaskDragged: {
 						rootMouseArea.initDrag(backlog, model, index);
@@ -72,6 +72,7 @@ Rectangle {
 				}
 				rootMouseArea.drag.target = null;
 				draggedTask.visible = false;
+				draggedTask.originalQueue.endDragNDrop();
 			}
 		}
 	}
