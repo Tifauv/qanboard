@@ -5,8 +5,8 @@ Rectangle {
 	width: 800
 	height: 320
 
-	Model {
-		id: mainModel
+	TaskModel {
+		id: tasksModel
 	}
 
 	MouseArea {
@@ -20,10 +20,10 @@ Rectangle {
 
 			Repeater {
 				id: queueRepeater
-				model: mainModel
+				model: tasksModel
 
 				WorkQueue {
-					id: backlog
+					id: queue
 					width: workspace.width / queueRepeater.model.count
 					height: workspace.height
 
@@ -31,7 +31,11 @@ Rectangle {
 					tasks: model.tasks
 
 					onTaskDragged: {
-						rootMouseArea.initDrag(backlog, model, index);
+						draggedTask.x = rootMouseArea.mouseX - draggedTask.width/2;
+						draggedTask.y = rootMouseArea.mouseY - draggedTask.height/2;
+						draggedTask.beginDrag(queue, model.get(index), index);
+						rootMouseArea.drag.target = draggedTask;
+						rootMouseArea.drag.filterChildren = true;
 					}
 				}
 			}
@@ -39,17 +43,6 @@ Rectangle {
 
 		DraggedTask {
 			id: draggedTask
-		}
-
-		function initDrag(p_queue, p_model, p_index) {
-			draggedTask.model = p_model.get(p_index);
-			draggedTask.originalPosition = p_index;
-			draggedTask.originalQueue = p_queue;
-			rootMouseArea.drag.target = draggedTask;
-			draggedTask.x = rootMouseArea.mouseX - draggedTask.width/2;
-			draggedTask.y = rootMouseArea.mouseY - draggedTask.height/2;
-			draggedTask.visible = true;
-			rootMouseArea.drag.filterChildren =  true;
 		}
 
 		onPositionChanged: {
@@ -71,8 +64,8 @@ Rectangle {
 					draggedTask.moveTo(queue, newPosition);
 				}
 				rootMouseArea.drag.target = null;
-				draggedTask.visible = false;
-				draggedTask.originalQueue.endDragNDrop();
+				rootMouseArea.drag.filterChildren = false;
+				draggedTask.endDrag();
 			}
 		}
 	}

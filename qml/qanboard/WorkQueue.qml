@@ -58,25 +58,28 @@ Rectangle {
 				id: taskMouseArea
 				anchors.fill: taskList
 
-				onPressAndHold: initDragNDrop(mouse);
+				onPressAndHold: {
+					// If we are sliding inside the view, dismiss
+					if (taskList.moving)
+						return;
+
+					var index = taskList.indexAt(mouse.x + taskList.contentX, mouse.y + taskList.contentY);
+					if (index === -1) // No index, nothing to do
+						return;
+
+					// emit the taskDragged signal
+					taskDragged(visualModel.model, index);
+				}
 			}
 		}
 	}
 
+
 	/**
 	 * Initialize the drag'n drop.
 	 */
-	function initDragNDrop(p_mouse) {
-		// If we are sliding inside the view, dismiss
-		if (taskList.moving)
-			return;
-
-		var index = taskList.indexAt(p_mouse.x + taskList.contentX, p_mouse.y + taskList.contentY);
-		if (index === -1) // No index, nothing to do
-			return;
-
+	function beginDragNDrop() {
 		taskList.interactive = false;
-		taskDragged(visualModel.model, index);
 	}
 
 

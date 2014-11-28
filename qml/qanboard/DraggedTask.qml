@@ -11,9 +11,27 @@ Task {
 	property int originalPosition
 
 	onModelChanged: {
-		taskId = model.taskId;
-		assignee = model.assignee;
-		description = model.description;
+		if (model !== null) {
+			taskId = model.taskId;
+			assignee = model.assignee;
+			description = model.description;
+		}
+	}
+
+	function beginDrag(p_queue, p_model, p_index) {
+		model = p_model;
+		originalQueue = p_queue;
+		originalPosition = p_index;
+		originalQueue.beginDragNDrop();
+		visible = true;
+	}
+
+	function endDrag() {
+		visible = false;
+		originalQueue.endDragNDrop();
+		originalPosition = -1;
+		originalQueue = null;
+		model = null;
 	}
 
 	function isFrom(p_queue) {

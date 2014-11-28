@@ -26,4 +26,5 @@ qtcAddDeployment()
 
 OTHER_FILES += \
     qml/qanboard/WorkQueue.qml \
-    qml/qanboard/Title.qml
+    qml/qanboard/Title.qml \
+    qml/qanboard/TaskModel.qml
