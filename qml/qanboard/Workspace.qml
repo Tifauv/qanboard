@@ -50,12 +50,9 @@ Rectangle {
 				// Find the destination queue
 				var queue = layout.childAt(mouse.x, mouse.y);
 				var newPosition = queue.findItemPosition(mapToItem(queue, mouse.x, mouse.y));
-				if (draggedTask.isFrom(queue)) {
-					draggedTask.move(newPosition);
-				}
-				else {
-					draggedTask.moveTo(queue, newPosition);
-				}
+				// Move the task
+				draggedTask.move(queue, newPosition);
+				// Cleanup
 				rootMouseArea.state = "";
 				draggedTask.endDrag();
 			}
@@ -64,7 +61,6 @@ Rectangle {
 		states: [
 			State {
 				name: "taskDragging"
-
 				PropertyChanges {
 					target: rootMouseArea
 					drag.target: draggedTask

@@ -31,18 +31,15 @@ Task {
 		model = null;
 	}
 
-	function isFrom(p_queue) {
-		return p_queue === originalQueue;
-	}
-
-
-	function move(p_position) {
-		originalQueue.moveItem(originalPosition, p_position);
-	}
-
-
-	function moveTo(p_queue, p_position) {
-		p_queue.add(model, p_position);
-		originalQueue.remove(originalPosition);
+	function move(p_queue, p_position) {
+		// Déplacement dans la même queue
+		if (p_queue === originalQueue) {
+			originalQueue.moveItem(originalPosition, p_position);
+		}
+		// Déplacement dans une autre queue
+		else {
+			p_queue.add(model, p_position);
+			originalQueue.remove(originalPosition);
+		}
 	}
 }
