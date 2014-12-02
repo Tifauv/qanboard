@@ -4,14 +4,13 @@ Task {
 	opacity: 0.8
 	border.color: "#666666"
 	border.width: 1
-	visible: false
 
 	property variant model
 	property variant originalQueue
 	property int originalPosition
 
 	onModelChanged: {
-		if (model !== null) {
+		if (model !== undefined && model !== null) {
 			taskId = model.taskId;
 			assignee = model.assignee;
 			description = model.description;
@@ -23,11 +22,9 @@ Task {
 		originalQueue = p_queue;
 		originalPosition = p_index;
 		originalQueue.beginDragNDrop();
-		visible = true;
 	}
 
 	function endDrag() {
-		visible = false;
 		originalQueue.endDragNDrop();
 		originalPosition = -1;
 		originalQueue = null;

@@ -1,4 +1,6 @@
 import QtQuick 1.1
+import "task"
+import "queue"
 
 Rectangle {
 	id: workspace
@@ -31,11 +33,8 @@ Rectangle {
 					tasks: model.tasks
 
 					onTaskDragged: {
-						draggedTask.x = rootMouseArea.mouseX - draggedTask.width/2;
-						draggedTask.y = rootMouseArea.mouseY - draggedTask.height/2;
 						draggedTask.beginDrag(queue, model.get(index), index);
-						rootMouseArea.drag.target = draggedTask;
-						rootMouseArea.drag.filterChildren = true;
+						rootMouseArea.state = "taskDragging";
 					}
 				}
 			}
@@ -43,17 +42,11 @@ Rectangle {
 
 		DraggedTask {
 			id: draggedTask
-		}
-
-		onPositionChanged: {
-			if (rootMouseArea.drag.active) {
-				draggedTask.x = mouse.x - draggedTask.width/2;
-				draggedTask.y = mouse.y - draggedTask.height/2;
-			}
+			visible: false
 		}
 
 		onReleased: {
-			if (rootMouseArea.drag.active) {
+			if (state === "taskDragging") {
 				// Find the destination queue
 				var queue = layout.childAt(mouse.x, mouse.y);
 				var newPosition = queue.findItemPosition(mapToItem(queue, mouse.x, mouse.y));
@@ -63,10 +56,27 @@ Rectangle {
 				else {
 					draggedTask.moveTo(queue, newPosition);
 				}
-				rootMouseArea.drag.target = null;
-				rootMouseArea.drag.filterChildren = false;
+				rootMouseArea.state = "";
 				draggedTask.endDrag();
 			}
 		}
+
+		states: [
+			State {
+				name: "taskDragging"
+
+				PropertyChanges {
+					target: rootMouseArea
+					drag.target: draggedTask
+					drag.filterChildren: true
+				}
+				PropertyChanges {
+					target: draggedTask
+					visible: true
+					x: rootMouseArea.mouseX - draggedTask.width/2;
+					y: rootMouseArea.mouseY - draggedTask.height/2;
+				}
+			}
+		]
 	}
 }
