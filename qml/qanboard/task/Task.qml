@@ -4,8 +4,7 @@ Rectangle {
 	id: task
 	width: 180
 	height: 80
-	color: "#eeeeee"
-	border.width: 0
+	color: "#e3f2fd"
 
 	property alias taskId: header.taskId
 	property alias assignee: header.assignee
@@ -35,6 +34,7 @@ Rectangle {
 			anchors.rightMargin: 0
 			anchors.left: parent.left
 			anchors.leftMargin: 0
+			color: Qt.rgba(0, 0, 0, 0.87)
 		}
 	}
 

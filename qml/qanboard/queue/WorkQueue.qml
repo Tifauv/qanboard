@@ -40,18 +40,18 @@ Rectangle {
 		anchors.left: parent.left
 		anchors.top: titleBox.bottom
 		anchors.bottom: parent.bottom
-		border.color: "#cccccc"
+		border.color: Qt.rgba(0, 0, 0, 0.12)
 		z:0
 
 		ListView {
 			id: taskList
 			height: 280
 			anchors.fill: parent
-			anchors.leftMargin: 10
-			anchors.topMargin: 10
-			anchors.rightMargin: 10
-			anchors.bottomMargin: 10
-			spacing: 10
+			anchors.leftMargin: 8
+			anchors.topMargin: 8
+			anchors.rightMargin: 8
+			anchors.bottomMargin: 8
+			spacing: 8
 
 			model: visualModel
 

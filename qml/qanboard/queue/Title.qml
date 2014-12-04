@@ -6,19 +6,8 @@ Rectangle {
 
 	property string label: "Title"
 	property color  labelColor: "#ffffff"
-	property color  buttonColor: "#268bd2"
 
-	gradient: Gradient {
-		GradientStop {
-			position: 0
-			color: Qt.lighter(buttonColor, 1.8)
-		}
-
-		GradientStop {
-			position: 1
-			color: Qt.darker(buttonColor, 1.8)
-		}
-	}
+	color: "#2196f3"
 
 	Text {
 		id: title

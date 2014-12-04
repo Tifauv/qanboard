@@ -16,6 +16,7 @@ Rectangle {
 			anchors.verticalCenter: parent.verticalCenter
 			font.bold: true
 			font.pointSize: 8
+			color: Qt.rgba(0, 0, 0, 0.54)
 		}
 
 		Text {
@@ -23,6 +24,7 @@ Rectangle {
 			text: qsTr(" - Assigned to %1").arg(assignee)
 			font.pointSize: 8
 			anchors.verticalCenter: parent.verticalCenter
+			color: Qt.rgba(0, 0, 0, 0.54)
 		}
 	}
 
@@ -33,7 +35,7 @@ Rectangle {
 			PropertyChanges {
 				target: assigneeLbl
 				text: qsTr(" - Nobody assigned")
-				color: "#999999"
+				color: Qt.rgba(0, 0, 0, 0.26)
 				font.italic: true
 			}
 		}
