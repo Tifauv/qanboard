@@ -15,7 +15,7 @@ Rectangle {
 		anchors.margins: 8
 		height: parent.height - anchors.topMargin - anchors.bottomMargin
 
-		NewTaskButton {
+		AddButton {
 			height: layout.height
 			onClicked: toolbar.addTask()
 		}

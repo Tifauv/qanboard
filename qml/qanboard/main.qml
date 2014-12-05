@@ -10,7 +10,7 @@ Rectangle {
 		z: 0
 	}
 
-	Toolbar {
+	/*Toolbar {
 		id: tools
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
@@ -19,5 +19,5 @@ Rectangle {
 		z: 1
 
 		onAddTask: tools.state = "reduced"
-	}
+	}*/
 }

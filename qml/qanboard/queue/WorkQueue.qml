@@ -7,6 +7,7 @@ Rectangle {
 	height: 320
 
 	property string title: "Title"
+	property bool newTaskAllowed: false
 	property alias tasks: visualModel.model
 
 	signal taskDragged(variant model, int index)

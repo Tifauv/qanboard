@@ -37,20 +37,4 @@ Rectangle {
 			color: Qt.rgba(0, 0, 0, 0.87)
 		}
 	}
-
-	states: [
-		State {
-			name: "dropTarget"
-			PropertyChanges {
-				target: task
-				color: "#dddddd"
-				border.color: "#666666"
-				border.width: 5
-			}
-			PropertyChanges {
-				target: mainLayout
-				visible: false
-			}
-		}
-	]
 }
