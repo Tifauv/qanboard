@@ -101,9 +101,9 @@ Rectangle {
 			}
 			PropertyChanges {
 				target: draggedTask
+				x: rootMouseArea.mouseX - draggedTask.width/2
+				y: rootMouseArea.mouseY - draggedTask.height/2
 				visible: true
-				x: rootMouseArea.mouseX - draggedTask.width/2;
-				y: rootMouseArea.mouseY - draggedTask.height/2;
 			}
 			AnchorChanges {
 				target: newTaskBtn
@@ -138,10 +138,17 @@ Rectangle {
 			from: ""
 			to: "taskDragging"
 
-			AnchorAnimation {
-				targets: newTaskBtn
-				duration: 150
-				easing.type: Easing.OutQuad
+			ParallelAnimation {
+				AnchorAnimation {
+					targets: newTaskBtn
+					duration: 150
+					easing.type: Easing.OutQuad
+				}
+				PropertyAnimation {
+					target: draggedTask
+					properties: "x,y"
+					duration: 0
+				}
 			}
 		},
 		Transition {
