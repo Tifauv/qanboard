@@ -7,9 +7,16 @@ TaskModel::TaskModel(QObject* p_parent) :
 }
 
 
-TaskModel::TaskModel(const TaskModel& p_taskModel) :
+TaskModel::TaskModel(const TaskModel& p_model) :
 	ListItem(),
-	m_task(p_taskModel.model()) {
+	m_task(p_model.model()) {
+	m_task.setParent(this);
+}
+
+TaskModel::TaskModel(const Task& p_task) :
+	ListItem(),
+	m_task(p_task) {
+	m_task.setParent(this);
 }
 
 
@@ -17,8 +24,8 @@ QHash<int, QByteArray> TaskModel::roleNames() const {
 	QHash<int, QByteArray> names;
 	names[TaskIdRole] = "taskId";
 	names[DescriptionRole] = "description";
-	names[AssigneeRole] = "assignee";
 	names[CategoryRole] = "category";
+	names[AssigneeRole] = "assignee";
 	return names;
 }
 
@@ -34,10 +41,10 @@ QVariant TaskModel::data(int p_role) const {
 		return m_task.taskId();
 	case DescriptionRole:
 		return m_task.description();
-	case AssigneeRole:
-		return m_task.assignee();
 	case CategoryRole:
 		return m_task.category();
+	case AssigneeRole:
+		return m_task.assignee();
 	default:
 		return QVariant();
 	}
@@ -47,17 +54,17 @@ QVariant TaskModel::data(int p_role) const {
 void TaskModel::setData(int p_role, QVariant& p_value) {
 	switch (p_role) {
 	case TaskIdRole:
-		return m_task.setTaskId(p_value.toUInt());
+		m_task.setTaskId(p_value.toUInt());
 	case DescriptionRole:
-		return m_task.setDescription(p_value.toString());
-	case AssigneeRole:
-		return m_task.setAssignee(p_value.toString());
+		m_task.setDescription(p_value.toString());
 	case CategoryRole:
-		return m_task.setCategory(p_value.toString());
+		m_task.setCategory(p_value.toString());
+	case AssigneeRole:
+		m_task.setAssignee(p_value.toString());
 	}
 }
 
 
 const Task& TaskModel::model() const {
-	return Task(m_task);
+	return m_task;
 }

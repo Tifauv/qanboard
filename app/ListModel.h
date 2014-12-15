@@ -15,7 +15,7 @@
 /**
  * @brief The ListItem class
  */
-class ListItem: public QObject {
+class ListItem : public QObject {
   Q_OBJECT
 
 public:
@@ -39,6 +39,7 @@ class ListModel : public QAbstractListModel {
 public:
 	explicit ListModel();
 	explicit ListModel(ListItem* prototype, QObject* parent = 0);
+	explicit ListModel(const ListModel&);
 	~ListModel();
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;

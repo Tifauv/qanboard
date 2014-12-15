@@ -18,6 +18,15 @@ ListModel::ListModel() :
 ListModel::ListModel(ListItem* p_prototype, QObject* p_parent) :
 	QAbstractListModel(p_parent),
 	m_prototype(p_prototype) {
+	m_prototype->setParent(this);
+	setRoleNames(m_prototype->roleNames());
+}
+
+ListModel::ListModel(const ListModel& p_model) :
+	QAbstractListModel(),
+	m_prototype(p_model.m_prototype),
+	m_list(p_model.m_list) {
+	m_prototype->setParent(this);
 	setRoleNames(m_prototype->roleNames());
 }
 

@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import Task 1.0
 import "task"
 import "queue"
 import "tools"
@@ -7,10 +8,6 @@ Rectangle {
 	id: workspace
 	width: 800
 	height: 320
-
-	TaskModel {
-		id: tasksModel
-	}
 
 	MouseArea {
 		id: rootMouseArea
@@ -23,15 +20,14 @@ Rectangle {
 
 			Repeater {
 				id: queueRepeater
-				model: tasksModel
+				model: workflow
 
-				WorkQueue {
+				TaskQueueView {
 					id: queue
 					width: workspace.width / queueRepeater.model.count
 					height: workspace.height
 
 					title: model.name
-					newTaskAllowed: model.allowNew
 					tasks: model.tasks
 
 					onTaskDragged: {
@@ -84,7 +80,7 @@ Rectangle {
 		z: 2
 
 		onAddTask: {
-			// createTask(taskId, description);
+			workflow.createTaskInQueue(description, "Backlog");
 			workspace.state = ""
 		}
 

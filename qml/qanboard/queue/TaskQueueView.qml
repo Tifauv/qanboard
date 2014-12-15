@@ -7,14 +7,16 @@ Rectangle {
 	height: 320
 
 	property string title: "Title"
-	property bool newTaskAllowed: false
-	property alias tasks: visualModel.model
+	property variant tasks
 
 	signal taskDragged(variant model, int index)
 
 	VisualDataModel {
 		id: visualModel
-		delegate:  Task {
+
+		model: tasks
+
+		delegate: TaskView {
 			id: task
 			width: taskList.width
 
@@ -76,6 +78,10 @@ Rectangle {
 		}
 	}
 
+
+	Component.onCompleted: {
+		console.log("TaskQueueView '" + title + "' created with " + tasks.count + " tasks.");
+	}
 
 	/**
 	 * Initialize the drag'n drop.

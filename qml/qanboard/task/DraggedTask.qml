@@ -1,6 +1,6 @@
 import QtQuick 1.1
 
-Task {
+TaskView {
 	opacity: 0.8
 	border.color: "#666666"
 	border.width: 1

@@ -12,12 +12,13 @@ public:
 	enum Roles {
 		TaskIdRole = Qt::UserRole+1,
 		DescriptionRole,
-		AssigneeRole,
-		CategoryRole
+		CategoryRole,
+		AssigneeRole
 	};
 
-	explicit TaskModel(QObject *p_parent = 0);
+	explicit TaskModel(QObject* p_parent = 0);
 	explicit TaskModel(const TaskModel&);
+	explicit TaskModel(const Task&);
 	~TaskModel() {}
 
 	QString id() const;
@@ -25,9 +26,9 @@ public:
 	void setData(int p_role, QVariant& p_value);
 	QHash<int, QByteArray> roleNames() const;
 
+private:
 	const Task& model() const;
 
-private:
 	Task m_task;
 };
 

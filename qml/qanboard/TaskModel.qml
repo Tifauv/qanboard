@@ -5,7 +5,6 @@ ListModel {
 
 	ListElement {
 		name: "Backlog"
-		allowNew: true
 		tasks: [
 			ListElement {
 				taskId: 3
@@ -39,7 +38,6 @@ ListModel {
 
 	ListElement {
 		name: "Ready"
-		allowNew: false
 		tasks: [
 			ListElement {
 				taskId: 2
@@ -52,7 +50,6 @@ ListModel {
 
 	ListElement {
 		name: "Work in progress"
-		allowNew: false
 		tasks: [
 			ListElement {
 				taskId: 1
@@ -72,7 +69,6 @@ ListModel {
 
 	ListElement {
 		name: "Done"
-		allowNew: false
 		tasks: [
 			ListElement {
 				taskId: 23
