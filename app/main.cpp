@@ -4,7 +4,6 @@
 #include <QtDebug>
 #include "qmlapplicationviewer.h"
 #include "Task.h"
-#include "TaskQueue.h"
 #include "TaskListModel.h"
 #include "Workflow.h"
 
@@ -13,10 +12,9 @@
  * @brief Registers C++ objects with QML or QMetaObject.
  */
 void registerTypes() {
-	qmlRegisterType<Task>("Task", 1, 0, "Task");
-	qmlRegisterType<TaskListModel>("TaskListModel", 1, 0, "TaskListModel");
-	qmlRegisterType<TaskQueue>("TaskQueue", 1, 0, "TaskQueue");
-	qmlRegisterType<Workflow>("Workflow", 1, 0, "Workflow");
+	qmlRegisterType<Task>("qanboard.app", 1, 0, "Task");
+	qmlRegisterType<TaskListModel>("qanboard.app", 1, 0, "TaskListModel");
+	qmlRegisterType<Workflow>("qanboard.app", 1, 0, "Workflow");
 }
 
 
@@ -77,8 +75,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[]) {
     QmlApplicationViewer viewer;
     viewer.addImportPath(QLatin1String("modules"));
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-    viewer.setMainQmlFile(QLatin1String("qml/qanboard/main.qml"));
 	viewer.rootContext()->setContextProperty("workflow", &wf);
+	viewer.setMainQmlFile(QLatin1String("qml/qanboard/main.qml"));
     viewer.showExpanded();
 
     return app->exec();

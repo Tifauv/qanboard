@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import Task 1.0
+import qanboard.app 1.0
 import "task"
 import "queue"
 import "tools"

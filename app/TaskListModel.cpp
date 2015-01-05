@@ -1,40 +1,61 @@
 #include "TaskListModel.h"
+#include <QList>
 #include <QtDebug>
 
+// CONSTRUCTORS
+/**
+ * @brief TaskListModel::TaskListModel
+ * @param p_parent
+ */
 TaskListModel::TaskListModel(QObject* p_parent) :
-	QAbstractListModel(p_parent) {
-	QHash<int, QByteArray> names;
-	names[TaskIdRole] = "taskId";
-	names[DescriptionRole] = "description";
-	names[CategoryRole] = "category";
-	names[AssigneeRole] = "assignee";
-	setRoleNames(names);
-	qDebug() << "(i) [TaskListModel] Created for queue " << m_tasks.name() << " with " << rowCount() << " tasks.";
-}
-
-
-TaskListModel::TaskListModel(const TaskQueue& p_tasks, QObject* p_parent) :
 	QAbstractListModel(p_parent),
-	m_tasks(p_tasks) {
+	m_name(""),
+	m_tasks() {
 	QHash<int, QByteArray> names;
 	names[TaskIdRole] = "taskId";
 	names[DescriptionRole] = "description";
 	names[CategoryRole] = "category";
 	names[AssigneeRole] = "assignee";
 	setRoleNames(names);
-	qDebug() << "(i) [TaskListModel] Created for queue " << m_tasks.name() << " with " << rowCount() << " tasks.";
+	qDebug() << "(i) [TaskListModel] Created.";
 }
 
 
+/**
+ * @brief TaskListModel::TaskListModel
+ * @param p_toCopy
+ */
 TaskListModel::TaskListModel(const TaskListModel& p_toCopy) :
-	QAbstractListModel() {
-	/*foreach (Task* task, p_toCopy.m_tasks.m_tasks) {
-		m_tasks.add(task);
-	}*/
-	qDebug() << "(i) [TaskListModel] Copied.";
+	QAbstractListModel(),
+	m_name(p_toCopy.name()),
+	m_tasks(p_toCopy.m_tasks) {
+	qDebug() << "(i) [TaskListModel] Copied queue " << m_name << " with " << m_tasks.count() << " tasks.";
 }
 
 
+// GETTERS
+/**
+ * @brief TasklistModel::name
+ * @return
+ */
+const QString& TaskListModel::name() const {
+	return m_name;
+}
+
+
+// SETTERS
+/**
+ * @brief TaskListModel::setName
+ * @param p_name
+ */
+void TaskListModel::setName(const QString &p_name) {
+	m_name = p_name;
+	qDebug() << "(i) [TaskListModel] Changed name to " << p_name;
+	emit nameChanged(p_name);
+}
+
+
+// Utilities
 /**
  * @brief Gives the identifier of an item.
  *
@@ -75,6 +96,7 @@ QVariant TaskListModel::itemData(Task* p_item, int p_role) const {
 }
 
 
+// MODEL/VIEW API
 /**
  * @brief TaskListModel::rowCount
  * @param p_parent
@@ -83,7 +105,7 @@ QVariant TaskListModel::itemData(Task* p_item, int p_role) const {
 int TaskListModel::rowCount(const QModelIndex& p_parent) const {
 	Q_UNUSED(p_parent);
 	//qDebug() << "(i) TaskListModel::rowCount()";
-	return m_tasks.count();
+	return m_tasks.size();
 }
 
 
@@ -95,7 +117,7 @@ int TaskListModel::rowCount(const QModelIndex& p_parent) const {
  */
 QVariant TaskListModel::data(const QModelIndex& p_index, int p_role) const {
 	qDebug() << "(i) TaskListModel::data()";
-	if (p_index.row() < 0 || p_index.row() >= m_tasks.count())
+	if (p_index.row() < 0 || p_index.row() >= rowCount())
 		return QVariant();
 	return itemData(m_tasks.at(p_index.row()), p_role);
 }
@@ -122,48 +144,48 @@ void TaskListModel::insertRow(int p_row, Task* p_item) {
  */
 bool TaskListModel::removeRow(int p_row, const QModelIndex& p_parent) {
 	Q_UNUSED(p_parent);
-	if (p_row < 0 || p_row >= m_tasks.count())
+	if (p_row < 0 || p_row >= rowCount())
 		return false;
 	beginRemoveRows(QModelIndex(), p_row, p_row);
-	delete m_tasks.remove(p_row);
+	Task* task = m_tasks.takeAt(p_row);
 	endRemoveRows();
+	qDebug() << "(i) [TaskListModel] Task " << task->taskId() << " removed from queue " << name();
 	return true;
 }
 
 
-// SLOTS
-int TaskListModel::count() const {
-	return m_tasks.count();
-}
-
+// RAW API
+/**
+ * @brief TaskListModel::at
+ * @param p_index
+ * @return
+ */
 Task* TaskListModel::at(int p_index) const {
+	if (p_index < 0 || p_index >= rowCount())
+		return NULL;
 	return m_tasks.at(p_index);
 }
 
+
+/**
+ * @brief TaskListModel::find
+ * @param p_taskId
+ * @return
+ */
 Task* TaskListModel::find(uint p_taskId) const {
-	return m_tasks.find(p_taskId);
-}
-
-void TaskListModel::add(Task* p_task) {
-	m_tasks.add(p_task);
-}
-
-void TaskListModel::insert(int p_index, Task* p_task) {
-	m_tasks.insert(p_index, p_task);
-}
-
-Task* TaskListModel::remove(int p_index) {
-	return m_tasks.remove(p_index);
-}
-
-QModelIndex TaskListModel::indexFromItem(const Task* p_item) const {
-	Q_ASSERT(p_item);
-	for (int row=0; row<m_tasks.count(); ++row) {
-		if (m_tasks.at(row) == p_item)
-			return index(row);
+	foreach(Task* task, m_tasks) {
+		if (task->taskId() == p_taskId)
+			return task;
 	}
-	return QModelIndex();
+	return NULL;
 }
 
 
-
+/**
+ * @brief TaskListModel::add
+ * @param p_task
+ */
+void TaskListModel::appendRow(Task* p_task) {
+	Q_ASSERT(p_task);
+	insertRow(rowCount(), p_task);
+}

@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import qanboard.app 1.0
 import "../task"
 
 Rectangle {
@@ -10,6 +11,10 @@ Rectangle {
 	property variant tasks
 
 	signal taskDragged(variant taskList, int index)
+
+	onTasksChanged: {
+		console.log("Tasks for " + title + " is now " + tasks);
+	}
 
 	VisualDataModel {
 		id: visualModel
@@ -80,7 +85,7 @@ Rectangle {
 
 
 	Component.onCompleted: {
-		console.log("(i) [TaskQueueView] Created for queue '" + title + "' with " + tasks.count() + " tasks.");
+		console.log("(i) [TaskQueueView] Created for queue '" + title + "' with " + tasks.count + " tasks.");
 	}
 
 	/**
