@@ -4,7 +4,7 @@
 #include <QtDebug>
 #include "qmlapplicationviewer.h"
 #include "Task.h"
-#include "TaskListModel.h"
+#include "TaskQueue.h"
 #include "Workflow.h"
 
 
@@ -13,7 +13,7 @@
  */
 void registerTypes() {
 	qmlRegisterType<Task>("qanboard.app", 1, 0, "Task");
-	qmlRegisterType<TaskListModel>("qanboard.app", 1, 0, "TaskListModel");
+	qmlRegisterType<TaskQueue>("qanboard.app", 1, 0, "TaskQueue");
 	qmlRegisterType<Workflow>("qanboard.app", 1, 0, "Workflow");
 }
 

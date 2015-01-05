@@ -45,7 +45,7 @@ uint Workflow::nextTaskId() {
  */
 int Workflow::rowCount(const QModelIndex& p_parent) const {
 	Q_UNUSED(p_parent);
-	qDebug() << "(i) [Workflow] Has " << m_queues.size() << " queues";
+	//qDebug() << "(i) [Workflow] Has " << m_queues.size() << " queues";
 	return m_queues.size();
 }
 
@@ -61,12 +61,12 @@ QVariant Workflow::data(const QModelIndex& p_index, int p_role) const {
 		return QVariant();
 
 	qDebug() << "(i) [Workflow] Looking for data at row " << p_index.row() << " with role " << p_role;
-	TaskListModel* queue = m_queues.at(p_index.row());
+	TaskQueue* queue = m_queues.at(p_index.row());
 	switch (p_role) {
 	case QueueNameRole:
 		return queue->name();
 	case TaskListRole:
-		return QVariant::fromValue(*queue);
+		return QVariant::fromValue(queue);
 	default:
 		return QVariant();
 	}
@@ -78,9 +78,9 @@ QVariant Workflow::data(const QModelIndex& p_index, int p_role) const {
  * @param p_name
  * @return
  */
-TaskListModel* Workflow::find(const QString& p_name) const {
+TaskQueue* Workflow::find(const QString& p_name) const {
 	qDebug() << "(i) [Workflow] Searching queue " << p_name;
-	foreach (TaskListModel* queue, m_queues) {
+	foreach (TaskQueue* queue, m_queues) {
 		if (queue->name() == p_name)
 			return queue;
 	}
@@ -94,7 +94,7 @@ TaskListModel* Workflow::find(const QString& p_name) const {
  * @param p_row
  * @param p_queue
  */
-void Workflow::insertRow(int p_row, TaskListModel* p_queue) {
+void Workflow::insertRow(int p_row, TaskQueue* p_queue) {
 	beginInsertRows(QModelIndex(), p_row, p_row);
 	m_queues.insert(p_row, p_queue);
 	endInsertRows();
@@ -107,7 +107,7 @@ void Workflow::insertRow(int p_row, TaskListModel* p_queue) {
  * @param p_name
  */
 void Workflow::createQueue(const QString& p_name) {
-	TaskListModel* queue = new TaskListModel(this);
+	TaskQueue* queue = new TaskQueue(this);
 	queue->setName(p_name);
 	insertRow(m_queues.size(), queue);
 }
@@ -120,7 +120,7 @@ void Workflow::createQueue(const QString& p_name) {
  * @return
  */
 uint Workflow::addTaskToQueue(Task* p_task, const QString& p_queue) {
-	TaskListModel* queue = find(p_queue);
+	TaskQueue* queue = find(p_queue);
 	if (queue) {
 		qDebug() << "(i) [Workflow] Queue " << p_queue << " found";
 		p_task->setTaskId(nextTaskId());

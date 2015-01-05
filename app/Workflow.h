@@ -3,7 +3,7 @@
 
 #include <QMetaType>
 #include <QAbstractListModel>
-#include "TaskListModel.h"
+#include "TaskQueue.h"
 
 class Workflow : public QAbstractListModel {
 	Q_OBJECT
@@ -23,9 +23,9 @@ public:
 
 	int rowCount(const QModelIndex& parent) const;
 	QVariant data(const QModelIndex& index, int role) const;
-	TaskListModel* find(const QString& name) const;
+	TaskQueue* find(const QString& name) const;
 
-	void insertRow(int row, TaskListModel* queue);
+	void insertRow(int row, TaskQueue* queue);
 
 signals:
 	void taskIdChanged(uint);
@@ -38,9 +38,9 @@ public slots:
 
 private:
 	uint m_taskId;
-	QList<TaskListModel*> m_queues;
+	QList<TaskQueue*> m_queues;
 };
 
-//Q_DECLARE_METATYPE(QList<TaskListModel*>)
+//Q_DECLARE_METATYPE(QList<TaskQueue*>)
 
 #endif // WORKFLOW_H

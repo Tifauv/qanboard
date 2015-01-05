@@ -12,10 +12,6 @@ Rectangle {
 
 	signal taskDragged(variant taskList, int index)
 
-	onTasksChanged: {
-		console.log("Tasks for " + title + " is now " + tasks);
-	}
-
 	VisualDataModel {
 		id: visualModel
 
@@ -85,7 +81,7 @@ Rectangle {
 
 
 	Component.onCompleted: {
-		console.log("(i) [TaskQueueView] Created for queue '" + title + "' with " + tasks.count + " tasks.");
+		console.log("(i) [TaskQueueView] Created for queue '" + title + "' with " + tasks.rowCount() + " tasks.");
 	}
 
 	/**
@@ -117,7 +113,7 @@ Rectangle {
 	 * Moves the item at a given position to a new position.
 	 */
 	function moveItem(p_origin, p_destination) {
-		tasks.move(p_origin, p_destination, 1);
+		tasks.moveRow(p_origin, p_destination);
 	}
 
 
@@ -126,10 +122,10 @@ Rectangle {
 	 */
 	function add(p_model, p_position) {
 		if (p_position === -1) {
-			tasks.add(p_model);
+			tasks.appendRow(p_model);
 		}
 		else {
-			tasks.insert(p_position, p_model);
+			tasks.insertRow(p_position, p_model);
 		}
 	}
 
@@ -138,6 +134,6 @@ Rectangle {
 	 * Removes the item at a given position.
 	 */
 	function remove(p_position) {
-		tasks.remove(p_position);
+		tasks.removeRow(p_position);
 	}
 }
