@@ -31,7 +31,7 @@ Rectangle {
 					tasks: model.tasks
 
 					onTaskDragged: {
-						draggedTask.beginDrag(queue, model.get(index), index);
+						draggedTask.beginDrag(queue, taskList.at(index), index);
 						workspace.state = "taskDragging";
 					}
 				}

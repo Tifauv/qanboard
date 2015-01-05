@@ -9,7 +9,7 @@ Rectangle {
 	property string title: "Title"
 	property variant tasks
 
-	signal taskDragged(variant model, int index)
+	signal taskDragged(variant taskList, int index)
 
 	VisualDataModel {
 		id: visualModel
@@ -72,7 +72,7 @@ Rectangle {
 						return;
 
 					// emit the taskDragged signal
-					taskDragged(visualModel.model, index);
+					taskDragged(tasks, index);
 				}
 			}
 		}
@@ -80,7 +80,7 @@ Rectangle {
 
 
 	Component.onCompleted: {
-		console.log("TaskQueueView '" + title + "' created with " + tasks.count + " tasks.");
+		console.log("(i) [TaskQueueView] Created for queue '" + title + "' with " + tasks.count() + " tasks.");
 	}
 
 	/**
@@ -121,7 +121,7 @@ Rectangle {
 	 */
 	function add(p_model, p_position) {
 		if (p_position === -1) {
-			tasks.append(p_model);
+			tasks.add(p_model);
 		}
 		else {
 			tasks.insert(p_position, p_model);

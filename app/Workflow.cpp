@@ -1,12 +1,17 @@
 #include "Workflow.h"
-#include "TaskModel.h"
-#include "TaskQueueModel.h"
+#include "TaskListModel.h"
 #include <QtDebug>
 
 
 Workflow::Workflow(QObject* p_parent) :
-	ListModel(new TaskQueueModel(), p_parent),
-	m_taskId(0) {
+	QAbstractListModel(p_parent),
+	m_taskId(0),
+	m_queues() {
+	QHash<int, QByteArray> names;
+	names[QueueNameRole] = "name";
+	names[TaskListRole] = "tasks";
+	setRoleNames(names);
+	qDebug() << "(i) [Workflow] Created";
 }
 
 
@@ -16,39 +21,76 @@ uint Workflow::taskId() const {
 
 
 uint Workflow::nextTaskId() {
+	qDebug() << "(i) [Workflow] Current taskId is " << m_taskId+1 ;
 	return ++m_taskId;
 }
 
 
-void Workflow::createQueue(const QString& p_name) {
-	qDebug() << "(i) Adding new queue " << p_name << " to the workflow.";
-	TaskQueue queue;
-	queue.setName(p_name);
-	qDebug() << "(i)   - Queue " << queue.name() << " created.";
-	appendRow(new TaskQueueModel(queue));
-	qDebug() << "(i)   - Queue " << queue.name() << " added to the workflow.";
+int Workflow::rowCount(const QModelIndex& p_parent) const {
+	Q_UNUSED(p_parent);
+	qDebug() << "(i) [Workflow] Has " << m_queues.size() << " queues";
+	return m_queues.size();
 }
 
 
-uint Workflow::addTaskToQueue(Task& p_task, const QString& p_queue) {
-	qDebug() << "(i) Adding new task to queue " << p_queue << "...";
-	ListItem* queue = find(p_queue);
+QVariant Workflow::data(const QModelIndex& p_index, int p_role) const {
+	if (p_index.row() < 0 || p_index.row() >= m_queues.size())
+		return QVariant();
+
+	TaskQueue* queue = m_queues.at(p_index.row());
+	switch (p_role) {
+	case QueueNameRole:
+		return queue->name();
+	case TaskListRole:
+		return qVariantFromValue(new TaskListModel(*queue));
+	default:
+		return QVariant();
+	}
+}
+
+
+TaskQueue* Workflow::find(const QString& p_name) const {
+	qDebug() << "(i) [Workflow] Searching queue " << p_name;
+	foreach (TaskQueue* queue, m_queues) {
+		if (queue->name() == p_name)
+			return queue;
+	}
+
+	return NULL;
+}
+
+
+void Workflow::insertRow(int p_row, TaskQueue* p_queue) {
+	beginInsertRows(QModelIndex(), p_row, p_row);
+	m_queues.insert(p_row, p_queue);
+	endInsertRows();
+	qDebug() << "(i) [Workflow] Queue " << p_queue->name() << " added";
+}
+
+
+void Workflow::createQueue(const QString& p_name) {
+	TaskQueue* queue = new TaskQueue(this);
+	queue->setName(p_name);
+	insertRow(m_queues.size(), queue);
+}
+
+
+uint Workflow::addTaskToQueue(Task* p_task, const QString& p_queue) {
+	TaskQueue* queue = find(p_queue);
 	if (queue) {
-		qDebug() << "(i)   - queue " << p_queue << " found.";
-		p_task.setTaskId(nextTaskId());
-		qDebug() << "(i)   - task has id " << p_task.taskId() << ".";
-		static_cast<TaskQueueModel*>(queue)->model().tasks()->appendRow(new TaskModel(p_task));
-		qDebug() << "(i)   - task " << p_task.taskId() << " added to queue " << p_queue << ".";
+		qDebug() << "(i) [Workflow] Queue " << p_queue << " found";
+		p_task->setTaskId(nextTaskId());
+		queue->add(p_task);
 	}
 	else {
-		qDebug() << "/!\\   - queue " << p_queue << " does not exist.";
+		qDebug() << "/!\\ [Workflow] Queue " << p_queue << " does not exist";
 	}
-	return p_task.taskId();
+	return p_task->taskId();
 }
 
 
 uint Workflow::createTaskInQueue(const QString& p_description, const QString& p_queue) {
 	qDebug() << "(i) Creating new task" << p_queue << "...";
-	Task task(p_description);
+	Task* task = new Task(p_description);
 	return addTaskToQueue(task, p_queue);
 }
