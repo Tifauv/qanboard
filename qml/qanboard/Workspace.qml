@@ -169,6 +169,16 @@ Rectangle {
 					easing.type: Easing.OutQuad
 				}
 			}
+		},
+		Transition {
+			from: "addingTask,taskDragging"
+			to: ""
+
+			AnchorAnimation {
+				targets: newTaskBtn
+				duration: 150
+				easing.type: Easing.OutQuad
+			}
 		}
 	]
 }

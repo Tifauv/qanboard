@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import "../tools"
 
 Rectangle {
 	id: task
@@ -25,16 +26,13 @@ Rectangle {
 			anchors.left: parent.left
 		}
 
-		Text {
+		Label {
 			id: descriptionLbl
 			text: qsTr(description)
 			wrapMode: Text.WordWrap
 			font.pointSize: 9
 			anchors.right: parent.right
-			anchors.rightMargin: 0
 			anchors.left: parent.left
-			anchors.leftMargin: 0
-			color: Qt.rgba(0, 0, 0, 0.87)
 		}
 	}
 }

@@ -3,7 +3,7 @@ import QtQuick 1.1
 Rectangle {
 	id: button
 	height: 32
-	width: childrenRect.width
+	width: btnLabel.width + 12 // 6 * 2 = margin
 
 	property string label: "Label"
 
@@ -15,10 +15,7 @@ Rectangle {
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.topMargin: 8
 		anchors.bottomMargin: 8
-		anchors.leftMargin: 6
-		anchors.rightMargin: 6
 		text: label
-		horizontalAlignment: Text.AlignRight
 		color: "#ffab00"
 		font.weight: Font.Bold
 	}

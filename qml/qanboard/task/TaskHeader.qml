@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import "../tools"
 
 Rectangle {
 	id: taskHeader
@@ -10,21 +11,19 @@ Rectangle {
 
 	Row {
 		id: layout
-		Text {
+		Label {
 			id: taskIdLbl
 			text: qsTr("#%1").arg(taskId)
 			anchors.verticalCenter: parent.verticalCenter
+			state: "secondary"
 			font.bold: true
-			font.pointSize: 8
-			color: Qt.rgba(0, 0, 0, 0.54)
 		}
 
-		Text {
+		Label {
 			id: assigneeLbl
 			text: qsTr(" - Assigned to %1").arg(assignee)
-			font.pointSize: 8
 			anchors.verticalCenter: parent.verticalCenter
-			color: Qt.rgba(0, 0, 0, 0.54)
+			state: "secondary"
 		}
 	}
 
@@ -35,7 +34,7 @@ Rectangle {
 			PropertyChanges {
 				target: assigneeLbl
 				text: qsTr(" - Nobody assigned")
-				color: Qt.rgba(0, 0, 0, 0.26)
+				state: "disabled"
 				font.italic: true
 			}
 		}

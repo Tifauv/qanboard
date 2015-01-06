@@ -63,7 +63,8 @@ Rectangle {
 				id: taskMouseArea
 				anchors.fill: taskList
 
-				onPressAndHold: {
+				//onPressAndHold: {
+				onDoubleClicked: {
 					// If we are sliding inside the view, dismiss
 					if (taskList.moving)
 						return;

@@ -8,7 +8,6 @@ Rectangle {
 	color: "#ffffff"
 	clip: true
 
-	property alias taskId: header.taskId
 	property string description: "Description"
 	property int margin: 5
 	property int spacing: 6
@@ -16,7 +15,7 @@ Rectangle {
 	signal addTask(int taskId, string description)
 	signal cancel()
 
-	TaskHeader {
+	Label {
 		id: header
 		height: 14
 		anchors.top: parent.top
@@ -25,7 +24,8 @@ Rectangle {
 		anchors.leftMargin: margin
 		anchors.right: parent.right
 		anchors.rightMargin: margin
-		assignee: ""
+		text: qsTr("Enter task description")
+		state: "secondary"
 	}
 
 	TextEdit {
@@ -50,7 +50,6 @@ Rectangle {
 		anchors.right: parent.right
 		anchors.left: parent.left
 		anchors.bottom: parent.bottom
-		spacing: 5
 
 		TextButton {
 			id: createBtn
