@@ -67,6 +67,7 @@ void loadModel(Workflow& p_workflow) {
 Q_DECL_EXPORT int main(int argc, char *argv[]) {
     QScopedPointer<QApplication> app(createApplication(argc, argv));
 	QCoreApplication::setApplicationName("Qanboard");
+	QCoreApplication::setApplicationVersion("0.3");
 
 	registerTypes();
 	Workflow wf;
@@ -76,7 +77,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[]) {
     viewer.addImportPath(QLatin1String("modules"));
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
 	viewer.rootContext()->setContextProperty("workflow", &wf);
-	viewer.setMainQmlFile(QLatin1String("qml/qanboard/main.qml"));
+	viewer.setMainQmlFile(QLatin1String("qml/main.qml"));
     viewer.showExpanded();
 
     return app->exec();

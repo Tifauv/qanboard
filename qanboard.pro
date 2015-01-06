@@ -1,6 +1,9 @@
+TARGET = qanboard
+TEMPLATE = app
+
 # Add more folders to ship with the application, here
-qml.source = qml/qanboard
-qml.target = qml
+qml.source = qml
+qml.target = /
 DEPLOYMENTFOLDERS = qml
 
 # Additional import path used to resolve QML modules in Creator's code model
@@ -13,5 +16,10 @@ include(app/app.pri)
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
 qtcAddDeployment()
 
-OTHER_FILES += \
-    qml/qanboard/tools/Label.qml
+
+# Installation
+target.path = /usr/local/bin
+desktop.path = /usr/share/applications
+desktop.file = qanboard.desktop
+
+INSTALLS = target desktop
