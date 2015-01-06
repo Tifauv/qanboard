@@ -12,7 +12,7 @@ Rectangle {
 	Text {
 		id: btnLabel
 		anchors.verticalCenter: parent.verticalCenter
-		anchors.right: parent.right
+		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.topMargin: 8
 		anchors.bottomMargin: 8
 		anchors.leftMargin: 6

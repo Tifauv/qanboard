@@ -11,7 +11,7 @@ Rectangle {
 
 	MouseArea {
 		id: rootMouseArea
-		anchors.fill: workspace
+		anchors.fill: parent
 		hoverEnabled: true
 
 		Row {

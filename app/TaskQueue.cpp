@@ -61,47 +61,6 @@ void TaskQueue::setName(const QString &p_name) {
 }
 
 
-// Utilities
-/**
- * @brief Gives the identifier of an item.
- *
- * @param p_item
- *
- * @return the identifier of the item in the list
- */
-QString TaskQueue::itemId(Task* p_item) const {
-	qDebug() << "(i) TaskQueue::itemId()";
-	return QString(p_item->taskId());
-}
-
-
-/**
- * @brief Retrieves the item's data for a given role.
- *
- * @param p_item
- *            the item from which to extract the data
- * @param p_role
- *            the data role
- *
- * @return the item's data
- */
-QVariant TaskQueue::itemData(Task* p_item, int p_role) const {
-	qDebug() << "(i) TaskQueue::itemData()";
-	switch (p_role) {
-	case TaskIdRole:
-		return p_item->taskId();
-	case DescriptionRole:
-		return p_item->description();
-	case CategoryRole:
-		return p_item->category();
-	case AssigneeRole:
-		return p_item->assignee();
-	default:
-		return QVariant();
-	}
-}
-
-
 // MODEL/VIEW API
 /**
  * @brief TaskQueue::rowCount
@@ -122,10 +81,23 @@ int TaskQueue::rowCount(const QModelIndex& p_parent) const {
  * @return
  */
 QVariant TaskQueue::data(const QModelIndex& p_index, int p_role) const {
-	qDebug() << "(i) TaskQueue::data()";
+	qDebug() << "(i) [TaskQueue] Query data for role " << p_role << " of task at row " << p_index.row();
 	if (p_index.row() < 0 || p_index.row() >= rowCount())
 		return QVariant();
-	return itemData(m_tasks.at(p_index.row()), p_role);
+
+	Task* task = m_tasks.at(p_index.row());
+	switch (p_role) {
+	case TaskIdRole:
+		return task->taskId();
+	case DescriptionRole:
+		return task->description();
+	case CategoryRole:
+		return task->category();
+	case AssigneeRole:
+		return task->assignee();
+	default:
+		return QVariant();
+	}
 }
 
 
@@ -134,11 +106,15 @@ QVariant TaskQueue::data(const QModelIndex& p_index, int p_role) const {
  * @param p_row
  * @param p_item
  */
-void TaskQueue::insertRow(int p_row, Task* p_item) {
+void TaskQueue::insertRow(int p_row, Task* p_task) {
 	beginInsertRows(QModelIndex(), p_row, p_row);
-	//connect(p_item, SIGNAL(dataChanged()), SLOT(handleItemChange()));
-	m_tasks.insert(p_row, p_item);
+	connect(p_task, SIGNAL(taskIdChanged(uint)),         SLOT(handleDataChanged()));
+	connect(p_task, SIGNAL(descriptionChanged(QString)), SLOT(handleDataChanged()));
+	connect(p_task, SIGNAL(assigneeChanged(QString)),    SLOT(handleDataChanged()));
+	connect(p_task, SIGNAL(categoryChanged(QString)),    SLOT(handleDataChanged()));
+	m_tasks.insert(p_row, p_task);
 	endInsertRows();
+	qDebug() << "(i) [TaskQueue] Task " << p_task->taskId() << " inserted into queue " << name() << " at position " << p_row;
 }
 
 
@@ -152,8 +128,10 @@ bool TaskQueue::removeRow(int p_row, const QModelIndex& p_parent) {
 	Q_UNUSED(p_parent);
 	if (p_row < 0 || p_row >= rowCount())
 		return false;
+
 	beginRemoveRows(QModelIndex(), p_row, p_row);
 	Task* task = m_tasks.takeAt(p_row);
+	task->disconnect(this, SLOT(handleDataChanged()));
 	endRemoveRows();
 	qDebug() << "(i) [TaskQueue] Task " << task->taskId() << " removed from queue " << name();
 	return true;
@@ -199,22 +177,35 @@ void TaskQueue::appendRow(Task* p_task) {
 
 /**
  * @brief TaskQueue::moveRow
- * @param p_origin
- * @param p_destination
+ * @param p_row
+ * @param p_destRow
  */
-void TaskQueue::moveRow(int p_row, int p_destination) {
-	int destination = p_destination;
-	if (destination == -1)
-		destination = rowCount();
+void TaskQueue::moveRow(int p_row, int p_destRow) {
+	int destRow = p_destRow;
+	int realDestRow = destRow;
+	if (destRow == -1 || destRow >= rowCount()) {
+		destRow = rowCount();
+		realDestRow = destRow - 1;
+	}
+	else if (destRow > p_row)
+		destRow += 1;
 
 	QModelIndex parent;
-	if (beginMoveRows(parent, p_row, p_row, parent, destination)) {
-		qDebug() << "(i) [TaskQueue] Moving task from row " << p_row << " to " << destination;
-		m_tasks.move(p_row, destination-1);
+	if (beginMoveRows(parent, p_row, p_row, parent, destRow)) {
+		m_tasks.move(p_row, realDestRow);
+		qDebug() << "(i) [TaskQueue] Moved task from row " << p_row << " to " << destRow << " (really " << realDestRow << ")";
 		endMoveRows();
 	}
 	else {
-		qDebug() << "(i) [TaskQueue] Moving task from row " << p_row << " to " << destination << " was rejected.";
+		qDebug() << "(i) [TaskQueue] Moving task from row " << p_row << " to " << destRow << " was rejected.";
 	}
 
+}
+
+
+// PRIVATE SLOTS : DATA CHANGE SIGNALLING
+void TaskQueue::handleDataChanged() {
+	Task* task = static_cast<Task*>(sender());
+	QModelIndex index = createIndex(m_tasks.indexOf(task), 0);
+	emit dataChanged(index, index);
 }

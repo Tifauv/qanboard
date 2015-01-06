@@ -5,7 +5,7 @@ Rectangle {
 	id: task
 	width: 240
 	height: 150
-	color: "#eeeeee"
+	color: "#ffffff"
 	clip: true
 
 	property alias taskId: header.taskId
@@ -39,27 +39,35 @@ Rectangle {
 		anchors.leftMargin: margin
 		anchors.right: parent.right
 		anchors.rightMargin: margin
-		anchors.bottom: cancelBtn.top
+		anchors.bottom: actionLayout.top
 		color: Qt.rgba(0, 0, 0, 0.87)
 	}
 
-	TextButton {
-		id: cancelBtn
-		label: qsTr("Annuler")
-		anchors.left: parent.left
-		anchors.right: createBtn.left
-		anchors.bottom: parent.bottom
-
-		onClicked: cancel()
-	}
-
-	TextButton {
-		id: createBtn
-		label: qsTr("Create")
-		anchors.top: cancelBtn.top
-		anchors.bottom: parent.bottom
+	Row {
+		id: actionLayout
+		height: 32
+		layoutDirection: Qt.RightToLeft
 		anchors.right: parent.right
+		anchors.left: parent.left
+		anchors.bottom: parent.bottom
+		spacing: 5
 
-		onClicked: addTask(header.taskId, descriptionTxt.text)
+		TextButton {
+			id: createBtn
+			anchors.top: parent.top
+			anchors.bottom: parent.bottom
+			label: qsTr("Create")
+
+			onClicked: addTask(header.taskId, descriptionTxt.text)
+		}
+
+		TextButton {
+			id: cancelBtn
+			anchors.top: parent.top
+			anchors.bottom: parent.bottom
+			label: qsTr("Cancel")
+
+			onClicked: cancel()
+		}
 	}
 }

@@ -40,11 +40,10 @@ public slots:
 signals:
 	void nameChanged(const QString&);
 
-private:
-	QString itemId(Task* item) const;
-	QVariant itemData(Task* item, int role) const;
-	QHash<int, QByteArray> roleNames() const;
+private slots:
+	void handleDataChanged();
 
+private:
 	QString      m_name;
 	QList<Task*> m_tasks;
 };

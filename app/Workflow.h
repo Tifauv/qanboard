@@ -9,6 +9,7 @@ class Workflow : public QAbstractListModel {
 	Q_OBJECT
 
 	Q_PROPERTY(uint taskId  READ taskId  NOTIFY taskIdChanged  DESIGNABLE false)
+	Q_PROPERTY(int  count   READ count   NOTIFY countChanged)
 
 public:
 	enum Roles {
@@ -27,14 +28,16 @@ public:
 
 	void insertRow(int row, TaskQueue* queue);
 
-signals:
-	void taskIdChanged(uint);
-
 public slots:
+	int count() const;
 	uint nextTaskId();
 	void createQueue(const QString&);
 	uint addTaskToQueue(Task* p_task, const QString& p_queue);
 	uint createTaskInQueue(const QString& p_description, const QString& p_queue);
+
+signals:
+	void taskIdChanged(uint);
+	void countChanged(int);
 
 private:
 	uint m_taskId;

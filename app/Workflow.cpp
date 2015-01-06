@@ -39,6 +39,15 @@ uint Workflow::nextTaskId() {
 
 
 /**
+ * @brief Workflow::count
+ * @return
+ */
+int Workflow::count() const {
+	return m_queues.count();
+}
+
+
+/**
  * @brief Workflow::rowCount
  * @param p_parent
  * @return
@@ -98,6 +107,7 @@ void Workflow::insertRow(int p_row, TaskQueue* p_queue) {
 	beginInsertRows(QModelIndex(), p_row, p_row);
 	m_queues.insert(p_row, p_queue);
 	endInsertRows();
+	emit countChanged(count());
 	qDebug() << "(i) [Workflow] Queue " << p_queue->name() << " added";
 }
 
