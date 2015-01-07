@@ -19,12 +19,22 @@ Workflow::Workflow(QObject* p_parent) :
 }
 
 
+// GETTERS
 /**
  * @brief Workflow::taskId
  * @return
  */
 uint Workflow::taskId() const {
 	return m_taskId;
+}
+
+
+/**
+ * @brief Workflow::count
+ * @return
+ */
+int Workflow::count() const {
+	return m_queues.count();
 }
 
 
@@ -38,15 +48,7 @@ uint Workflow::nextTaskId() {
 }
 
 
-/**
- * @brief Workflow::count
- * @return
- */
-int Workflow::count() const {
-	return m_queues.count();
-}
-
-
+// MODEL/VIEW API
 /**
  * @brief Workflow::rowCount
  * @param p_parent

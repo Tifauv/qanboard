@@ -30,7 +30,8 @@ Rectangle {
 	Title {
 		id: titleBox
 		height: 40
-		label: title
+		name: title
+		count: tasks.count
 		anchors.right: parent.right
 		anchors.left: parent.left
 		anchors.top: parent.top
@@ -82,7 +83,7 @@ Rectangle {
 
 
 	Component.onCompleted: {
-		console.log("(i) [TaskQueueView] Created for queue '" + title + "' with " + tasks.rowCount() + " tasks.");
+		console.log("(i) [TaskQueueView] Created for queue '" + title + "' with " + tasks.count + " tasks.");
 	}
 
 	/**

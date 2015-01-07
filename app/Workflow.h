@@ -1,5 +1,5 @@
-#ifndef WORKFLOW_H
-#define WORKFLOW_H
+#ifndef Workflow_H
+#define Workflow_H
 
 #include <QMetaType>
 #include <QAbstractListModel>
@@ -21,6 +21,7 @@ public:
 	~Workflow() {}
 
 	uint taskId() const;
+	int count() const;
 
 	int rowCount(const QModelIndex& parent) const;
 	QVariant data(const QModelIndex& index, int role) const;
@@ -29,7 +30,6 @@ public:
 	void insertRow(int row, TaskQueue* queue);
 
 public slots:
-	int count() const;
 	uint nextTaskId();
 	void createQueue(const QString&);
 	uint addTaskToQueue(Task* p_task, const QString& p_queue);
@@ -40,10 +40,8 @@ signals:
 	void countChanged(int);
 
 private:
-	uint m_taskId;
+	uint              m_taskId;
 	QList<TaskQueue*> m_queues;
 };
 
-//Q_DECLARE_METATYPE(QList<TaskQueue*>)
-
-#endif // WORKFLOW_H
+#endif // Workflow_H

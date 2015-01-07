@@ -1,5 +1,5 @@
-#ifndef TASK_H
-#define TASK_H
+#ifndef Task_H
+#define Task_H
 
 #include <QObject>
 
@@ -39,4 +39,4 @@ private:
 	QString m_assignee;
 };
 
-#endif // TASK_H
+#endif // Task_H

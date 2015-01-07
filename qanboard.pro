@@ -23,3 +23,6 @@ desktop.path = /usr/share/applications
 desktop.file = qanboard.desktop
 
 INSTALLS = target desktop
+
+OTHER_FILES += \
+    sample.xml

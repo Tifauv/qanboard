@@ -49,6 +49,15 @@ const QString& TaskQueue::name() const {
 }
 
 
+/**
+ * @brief TaskQueue::count
+ * @return
+ */
+int TaskQueue::count() const {
+	return m_tasks.count();
+}
+
+
 // SETTERS
 /**
  * @brief TaskQueue::setName
@@ -70,7 +79,7 @@ void TaskQueue::setName(const QString &p_name) {
 int TaskQueue::rowCount(const QModelIndex& p_parent) const {
 	Q_UNUSED(p_parent);
 	//qDebug() << "(i) TaskQueue::rowCount()";
-	return m_tasks.size();
+	return m_tasks.count();
 }
 
 
@@ -114,6 +123,7 @@ void TaskQueue::insertRow(int p_row, Task* p_task) {
 	connect(p_task, SIGNAL(categoryChanged(QString)),    SLOT(handleDataChanged()));
 	m_tasks.insert(p_row, p_task);
 	endInsertRows();
+	emit countChanged(count());
 	qDebug() << "(i) [TaskQueue] Task " << p_task->taskId() << " inserted into queue " << name() << " at position " << p_row;
 }
 
@@ -133,6 +143,7 @@ bool TaskQueue::removeRow(int p_row, const QModelIndex& p_parent) {
 	Task* task = m_tasks.takeAt(p_row);
 	task->disconnect(this, SLOT(handleDataChanged()));
 	endRemoveRows();
+	emit countChanged(count());
 	qDebug() << "(i) [TaskQueue] Task " << task->taskId() << " removed from queue " << name();
 	return true;
 }

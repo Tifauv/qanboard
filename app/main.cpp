@@ -6,6 +6,7 @@
 #include "Task.h"
 #include "TaskQueue.h"
 #include "Workflow.h"
+#include "MemoryStorage.h"
 
 
 /**
@@ -15,44 +16,6 @@ void registerTypes() {
 	qmlRegisterType<Task>("qanboard.app", 1, 0, "Task");
 	qmlRegisterType<TaskQueue>("qanboard.app", 1, 0, "TaskQueue");
 	qmlRegisterType<Workflow>("qanboard.app", 1, 0, "Workflow");
-}
-
-
-void loadModel(Workflow& p_workflow) {
-	qDebug() << "(i) Loading model...";
-	qDebug() << "(i) Initializing structure...";
-	p_workflow.createQueue("Backlog");
-	p_workflow.createQueue("Ready");
-	p_workflow.createQueue("Work in progress");
-	p_workflow.createQueue("Done");
-	qDebug() << "(i) Structure initialized...";
-
-	qDebug() << "(i) Loading tasks...";
-
-	p_workflow.addTaskToQueue(
-				new Task("Add this awesome feature", "Feature request", "demo1"),
-				"Work in progress");
-	p_workflow.addTaskToQueue(
-				new Task("Fix that bug [TB: 4h]", "Bug", "demo"),
-				"Ready");
-	p_workflow.addTaskToQueue(
-				new Task("Write documentation for the new API", "Documentation", QString::null),
-				"Backlog");
-	p_workflow.addTaskToQueue(
-				new Task("Install Redis on the server", "Sysadmins", QString::null),
-				"Backlog");
-	p_workflow.addTaskToQueue(
-				new Task("Fix that bug in prod", "Bug", "demo2"),
-				"Work in progress");
-	p_workflow.addTaskToQueue(
-				new Task("Code refactoring", "Improvement", QString::null),
-				"Done");
-	p_workflow.addTaskToQueue(
-				new Task("Write documentation about this new feature", "Documentation", QString::null),
-				"Backlog");
-	p_workflow.addTaskToQueue(
-				new Task("Implement a new algorithm", "Improvement", QString::null),
-				"Backlog");
 }
 
 
@@ -71,7 +34,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[]) {
 
 	registerTypes();
 	Workflow wf;
-	loadModel(wf);
+	MemoryStorage storage;
+	storage.load(wf);
 
     QmlApplicationViewer viewer;
     viewer.addImportPath(QLatin1String("modules"));

@@ -1,5 +1,5 @@
-#ifndef TASKQUEUE_H
-#define TASKQUEUE_H
+#ifndef TaskQueue_H
+#define TaskQueue_H
 
 #include <QMetaType>
 #include <QAbstractListModel>
@@ -9,6 +9,7 @@ class TaskQueue : public QAbstractListModel {
 	Q_OBJECT
 
 	Q_PROPERTY(QString name  READ name  WRITE setName  NOTIFY nameChanged  DESIGNABLE false)
+	Q_PROPERTY(int  count   READ count   NOTIFY countChanged)
 
 public:
 	enum Roles {
@@ -23,12 +24,13 @@ public:
 	~TaskQueue() {}
 
 	const QString& name() const;
+	int count() const;
 	void setName(const QString& p_name);
 
-public slots:
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
 	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 
+public slots:
 	void insertRow(int row, Task* item);
 	bool removeRow(int row, const QModelIndex &parent = QModelIndex());
 
@@ -39,6 +41,7 @@ public slots:
 
 signals:
 	void nameChanged(const QString&);
+	void countChanged(int);
 
 private slots:
 	void handleDataChanged();
@@ -52,4 +55,4 @@ Q_DECLARE_METATYPE(TaskQueue)
 Q_DECLARE_METATYPE(TaskQueue*)
 Q_DECLARE_METATYPE(QList<TaskQueue*>)
 
-#endif // TASKQUEUE_H
+#endif // TaskQueue_H

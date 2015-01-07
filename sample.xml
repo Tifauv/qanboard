@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Workflow nextId="9" xmlns="urn:qanboard:workflow:1.0">
+	<TaskQueue name="Backlog">
+		<Task id="3">
+			<Description>Write documentation for the new API</Description>
+			<Category>Documentation</Category>
+		</Task>
+		<Task id="4">
+			<Description>Install Redis on the server</Description>
+			<Category>Sysadmins</Category>
+		</Task>
+		<Task id="7">
+			<Description>Write documentation about this new feature</Description>
+			<Category>Documentation</Category>
+		</Task>
+		<Task id="8">
+			<Description>Implement a new algorithm</Description>
+			<Category>Improvement</Category>
+		</Task>
+	</TaskQueue>
+	<TaskQueue name="Ready">
+		<Task id="2">
+			<Description>Fix that bug [TB: 4h]</Description>
+			<Category>Bug</Category>
+			<Assignee>demo</Assignee>
+		</Task>
+	</TaskQueue>
+	<TaskQueue name="Work in progress">
+		<Task id="1">
+			<Description>Add this awesome feature</Description>
+			<Category>Feature request</Category>
+			<Assignee>demo1</Assignee>
+		</Task>
+		<Task id="5">
+			<Description>Fix that bug in prod</Description>
+			<Category>Bug</Category>
+			<Assignee>demo2</Assignee>
+		</Task>
+	</TaskQueue>
+	<TaskQueue name="Done">
+		<Task id="6">
+			<Description>Code refactoring</Description>
+			<Category>Improvement</Category>
+		</Task>
+	</TaskQueue>
+</Workflow>
