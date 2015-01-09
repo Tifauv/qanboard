@@ -70,11 +70,15 @@ Rectangle {
 					if (taskList.moving)
 						return;
 
+					// Find the index of the pointed item
 					var index = taskList.indexAt(mouse.x + taskList.contentX, mouse.y + taskList.contentY);
 					if (index === -1) // No index, nothing to do
 						return;
 
-					// emit the taskDragged signal
+					// Set the pointed item as current
+					taskList.currentIndex = index;
+
+					// Signal the drag has started
 					taskDragged(tasks, index);
 				}
 			}
@@ -91,6 +95,7 @@ Rectangle {
 	 */
 	function beginDragNDrop() {
 		taskList.interactive = false;
+		taskList.currentItem.state = "ghost";
 	}
 
 
@@ -98,6 +103,7 @@ Rectangle {
 	 * Finish the drag'n drop.
 	 */
 	function endDragNDrop() {
+		taskList.currentItem.state = "";
 		taskList.interactive = true;
 	}
 

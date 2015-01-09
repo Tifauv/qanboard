@@ -35,4 +35,14 @@ Rectangle {
 			anchors.left: parent.left
 		}
 	}
+ states: [
+	 State {
+		 name: "ghost"
+
+		 PropertyChanges {
+			 target: task
+			 opacity: 0.54
+		 }
+	 }
+ ]
 }
