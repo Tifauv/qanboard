@@ -3,10 +3,12 @@ SOURCES += $$PWD/main.cpp \
 	$$PWD/TaskQueue.cpp \
 	$$PWD/Workflow.cpp \
     app/MemoryStorage.cpp \
-    app/WorkflowStorage.cpp
+    app/WorkflowStorage.cpp \
+    app/XmlStorage.cpp
 HEADERS += $$PWD/Task.h \
 	$$PWD/TaskQueue.h \
 	$$PWD/Workflow.h \
     app/MemoryStorage.h \
-    app/WorkflowStorage.h
+    app/WorkflowStorage.h \
+    app/XmlStorage.h
 INCLUDEPATH += $$PWD

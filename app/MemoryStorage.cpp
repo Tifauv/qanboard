@@ -45,6 +45,6 @@ void MemoryStorage::load(Workflow& p_workflow) const {
 }
 
 
-void MemoryStorage::store(Workflow &) const {
+void MemoryStorage::store(const Workflow&) const {
 	qDebug() << "(i) [MemoryStorage] Storing is not supported.";
 }

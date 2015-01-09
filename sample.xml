@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Workflow nextId="9" xmlns="urn:qanboard:workflow:1.0">
+<Workflow nextId="26" xmlns="urn:qanboard:workflow:1.0">
 	<TaskQueue name="Backlog">
 		<Task id="3">
 			<Description>Write documentation for the new API</Description>
@@ -9,11 +9,11 @@
 			<Description>Install Redis on the server</Description>
 			<Category>Sysadmins</Category>
 		</Task>
-		<Task id="7">
+		<Task id="24">
 			<Description>Write documentation about this new feature</Description>
 			<Category>Documentation</Category>
 		</Task>
-		<Task id="8">
+		<Task id="25">
 			<Description>Implement a new algorithm</Description>
 			<Category>Improvement</Category>
 		</Task>
@@ -31,14 +31,14 @@
 			<Category>Feature request</Category>
 			<Assignee>demo1</Assignee>
 		</Task>
-		<Task id="5">
+		<Task id="22">
 			<Description>Fix that bug in prod</Description>
 			<Category>Bug</Category>
 			<Assignee>demo2</Assignee>
 		</Task>
 	</TaskQueue>
 	<TaskQueue name="Done">
-		<Task id="6">
+		<Task id="23">
 			<Description>Code refactoring</Description>
 			<Category>Improvement</Category>
 		</Task>

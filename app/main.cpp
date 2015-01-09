@@ -7,6 +7,7 @@
 #include "TaskQueue.h"
 #include "Workflow.h"
 #include "MemoryStorage.h"
+#include "XmlStorage.h"
 
 
 /**
@@ -34,7 +35,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[]) {
 
 	registerTypes();
 	Workflow wf;
-	MemoryStorage storage;
+	//MemoryStorage storage;
+	XmlStorage storage("/home/tifauv/Developpement/qanboard/sample.xml");
 	storage.load(wf);
 
     QmlApplicationViewer viewer;
@@ -44,5 +46,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[]) {
 	viewer.setMainQmlFile(QLatin1String("qml/main.qml"));
     viewer.showExpanded();
 
-    return app->exec();
+	int rc = app->exec();
+	storage.store(wf);
+	return rc;
 }

@@ -8,8 +8,8 @@
 class Workflow : public QAbstractListModel {
 	Q_OBJECT
 
-	Q_PROPERTY(uint taskId  READ taskId  NOTIFY taskIdChanged  DESIGNABLE false)
-	Q_PROPERTY(int  count   READ count   NOTIFY countChanged)
+	Q_PROPERTY(uint taskId  READ taskId  WRITE setTaskId  NOTIFY taskIdChanged  DESIGNABLE false)
+	Q_PROPERTY(int  count   READ count                    NOTIFY countChanged)
 
 public:
 	enum Roles {
@@ -22,6 +22,8 @@ public:
 
 	uint taskId() const;
 	int count() const;
+
+	void setTaskId(uint);
 
 	int rowCount(const QModelIndex& parent) const;
 	QVariant data(const QModelIndex& index, int role) const;

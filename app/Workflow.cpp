@@ -48,6 +48,16 @@ uint Workflow::nextTaskId() {
 }
 
 
+// SETTERS
+/**
+ * @brief Workflow::setTaskId
+ * @param p_taskId
+ */
+void Workflow::setTaskId(uint p_taskId) {
+	m_taskId = p_taskId;
+}
+
+
 // MODEL/VIEW API
 /**
  * @brief Workflow::rowCount
@@ -135,7 +145,6 @@ uint Workflow::addTaskToQueue(Task* p_task, const QString& p_queue) {
 	TaskQueue* queue = find(p_queue);
 	if (queue) {
 		qDebug() << "(i) [Workflow] Queue " << p_queue << " found";
-		p_task->setTaskId(nextTaskId());
 		queue->appendRow(p_task);
 	}
 	else {
@@ -154,5 +163,6 @@ uint Workflow::addTaskToQueue(Task* p_task, const QString& p_queue) {
 uint Workflow::createTaskInQueue(const QString& p_description, const QString& p_queue) {
 	qDebug() << "(i) [Workflow] Creating new task in queue " << p_queue << "...";
 	Task* task = new Task(p_description);
+	task->setTaskId(nextTaskId());
 	return addTaskToQueue(task, p_queue);
 }

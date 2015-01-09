@@ -10,7 +10,7 @@ public:
 	explicit MemoryStorage(QObject* parent = 0);
 
 	void load(Workflow&)  const;
-	void store(Workflow&) const;
+	void store(const Workflow&) const;
 };
 
 #endif // MemoryStorage_H
