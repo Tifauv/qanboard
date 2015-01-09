@@ -43,8 +43,8 @@ int Workflow::count() const {
  * @return
  */
 uint Workflow::nextTaskId() {
-	qDebug() << "(i) [Workflow] Current taskId is " << m_taskId+1 ;
-	return ++m_taskId;
+	qDebug() << "(i) [Workflow] Current taskId is " << m_taskId ;
+	return m_taskId++;
 }
 
 
@@ -66,7 +66,6 @@ void Workflow::setTaskId(uint p_taskId) {
  */
 int Workflow::rowCount(const QModelIndex& p_parent) const {
 	Q_UNUSED(p_parent);
-	//qDebug() << "(i) [Workflow] Has " << m_queues.size() << " queues";
 	return m_queues.size();
 }
 
@@ -157,7 +156,7 @@ uint Workflow::addTaskToQueue(Task* p_task, const QString& p_queue) {
 		queue->appendRow(p_task);
 	}
 	else {
-		qDebug() << "/!\\ [Workflow] Queue " << p_queue << " does not exist";
+		qWarning() << "/!\\ [Workflow] Queue " << p_queue << " does not exist";
 	}
 	return p_task->taskId();
 }

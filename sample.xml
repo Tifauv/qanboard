@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<n1:Workflow xmlns:n1="urn:qanboard:workflow:1.0" nextId="28">
+<n1:Workflow xmlns:n1="urn:qanboard:workflow:1.0" nextId="31">
     <n1:TaskQueue name="Backlog">
         <n1:Task id="3">
             <n1:Description>Write documentation for the new API</n1:Description>
@@ -21,17 +21,17 @@
             <n1:Category>Improvement</n1:Category>
             <n1:Assignee></n1:Assignee>
         </n1:Task>
-        <n1:Task id="27">
-            <n1:Description>Description</n1:Description>
-            <n1:Category></n1:Category>
-            <n1:Assignee></n1:Assignee>
-        </n1:Task>
     </n1:TaskQueue>
     <n1:TaskQueue name="Ready">
         <n1:Task id="2">
             <n1:Description>Fix that bug [TB: 4h]</n1:Description>
             <n1:Category>Bug</n1:Category>
             <n1:Assignee>demo</n1:Assignee>
+        </n1:Task>
+        <n1:Task id="29">
+            <n1:Description>Description</n1:Description>
+            <n1:Category></n1:Category>
+            <n1:Assignee></n1:Assignee>
         </n1:Task>
     </n1:TaskQueue>
     <n1:TaskQueue name="Work in progress">
@@ -50,11 +50,21 @@
             <n1:Category></n1:Category>
             <n1:Assignee></n1:Assignee>
         </n1:Task>
+        <n1:Task id="27">
+            <n1:Description>Description</n1:Description>
+            <n1:Category></n1:Category>
+            <n1:Assignee></n1:Assignee>
+        </n1:Task>
     </n1:TaskQueue>
     <n1:TaskQueue name="Done">
         <n1:Task id="23">
             <n1:Description>Code refactoring</n1:Description>
             <n1:Category>Improvement</n1:Category>
+            <n1:Assignee></n1:Assignee>
+        </n1:Task>
+        <n1:Task id="30">
+            <n1:Description>Description</n1:Description>
+            <n1:Category></n1:Category>
             <n1:Assignee></n1:Assignee>
         </n1:Task>
     </n1:TaskQueue>

@@ -28,12 +28,12 @@ void XmlStorage::load(Workflow& p_workflow) const {
 	QFile source(m_file);
 
 	if (!source.exists()) {
-		qDebug() << "/!\\ [XmlStorage] File " << m_file << " does not exist.";
+		qWarning() << "/!\\ [XmlStorage] File " << m_file << " does not exist.";
 		return;
 	}
 
 	if (!source.open(QIODevice::ReadOnly | QIODevice::Text)) {
-		qDebug() << "/!\\ [XmlStorage] File " << m_file << " could not be opened. Maybe you should check the file's permissions.";
+		qWarning() << "/!\\ [XmlStorage] File " << m_file << " could not be opened. Maybe you should check the file's permissions.";
 		return;
 	}
 
@@ -49,7 +49,7 @@ void XmlStorage::load(Workflow& p_workflow) const {
 	}
 
 	if (xml.hasError()) {
-		qDebug() << "/!\\ [XmlStorage] Error reading file " << m_file << ": " << xml.errorString();
+		qWarning() << "/!\\ [XmlStorage] Error reading file " << m_file << ": " << xml.errorString();
 	}
 
 	source.close();
@@ -70,7 +70,7 @@ void XmlStorage::readWorkflow(QXmlStreamReader& p_xml, Workflow& p_workflow) con
 	QString nextIdStr = p_xml.attributes().value(QWF_ATTR_NEXTID).toString();
 	uint nextId = nextIdStr.toUInt(&formatOk);
 	if (!formatOk) {
-		qDebug() << "/!\\ [XmlStorage] Failed to parse nextId " << nextIdStr << " as integer.";
+		qWarning() << "/!\\ [XmlStorage] Failed to parse nextId " << nextIdStr << " as integer.";
 		return;
 	}
 	p_workflow.setTaskId(nextId);
@@ -99,7 +99,7 @@ void XmlStorage::readTaskQueue(QXmlStreamReader& p_xml, Workflow& p_workflow) co
 			if (task != NULL)
 				p_workflow.addTaskToQueue(task, queueName);
 			else
-				qDebug() << "/!\\ [XmlStorage] Task could not be created and was skipped.";
+				qWarning() << "/!\\ [XmlStorage] Task could not be created and was skipped.";
 		}
 		else
 			p_xml.skipCurrentElement();
@@ -120,7 +120,7 @@ Task* XmlStorage::readTask(QXmlStreamReader& p_xml) const {
 	QString taskIdStr = p_xml.attributes().value(QWF_ATTR_TASKID).toString();
 	uint taskId = taskIdStr.toUInt(&formatOk);
 	if (!formatOk) {
-		qDebug() << "/!\\ [XmlStorage] Failed to parse taskId " << taskIdStr << " as integer; skipping this task.";
+		qWarning() << "/!\\ [XmlStorage] Failed to parse taskId " << taskIdStr << " as integer; skipping this task.";
 		return NULL;
 	}
 	Task* task = new Task();
@@ -150,12 +150,12 @@ void XmlStorage::store(const Workflow& p_workflow) const {
 	QFile source(m_file);
 
 	if (!source.exists()) {
-		qDebug() << "/!\\ [XmlStorage] File " << m_file << " does not exist.";
+		qWarning() << "/!\\ [XmlStorage] File " << m_file << " does not exist.";
 		return;
 	}
 
 	if (!source.open(QIODevice::WriteOnly | QIODevice::Text)) {
-		qDebug() << "/!\\ [XmlStorage] File " << m_file << " could not be opened. Maybe you should check the file's permissions.";
+		qWarning() << "/!\\ [XmlStorage] File " << m_file << " could not be opened. Maybe you should check the file's permissions.";
 		return;
 	}
 
