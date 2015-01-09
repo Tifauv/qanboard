@@ -95,6 +95,15 @@ QVariant Workflow::data(const QModelIndex& p_index, int p_role) const {
 
 
 /**
+ * @brief Workflow::iter
+ * @return
+ */
+QListIterator<TaskQueue*> Workflow::iter() const {
+	return QListIterator<TaskQueue*>(m_queues);
+}
+
+
+/**
  * @brief Workflow::find
  * @param p_name
  * @return
@@ -162,7 +171,5 @@ uint Workflow::addTaskToQueue(Task* p_task, const QString& p_queue) {
  */
 uint Workflow::createTaskInQueue(const QString& p_description, const QString& p_queue) {
 	qDebug() << "(i) [Workflow] Creating new task in queue " << p_queue << "...";
-	Task* task = new Task(p_description);
-	task->setTaskId(nextTaskId());
-	return addTaskToQueue(task, p_queue);
+	return addTaskToQueue(new Task(nextTaskId(), p_description), p_queue);
 }

@@ -4,6 +4,7 @@
 #include "WorkflowStorage.h"
 #include <QString>
 #include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 class XmlStorage : public WorkflowStorage {
 	Q_OBJECT
@@ -18,6 +19,10 @@ private:
 	void readWorkflow(QXmlStreamReader&, Workflow&) const;
 	void readTaskQueue(QXmlStreamReader&, Workflow&) const;
 	Task* readTask(QXmlStreamReader&) const;
+
+	void writeWorkflow(QXmlStreamWriter&, const Workflow&) const;
+	void writeTaskQueue(QXmlStreamWriter&, TaskQueue*) const;
+	void writeTask(QXmlStreamWriter&, Task*) const;
 
 	QString m_file;
 };

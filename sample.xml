@@ -1,46 +1,61 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Workflow nextId="26" xmlns="urn:qanboard:workflow:1.0">
-	<TaskQueue name="Backlog">
-		<Task id="3">
-			<Description>Write documentation for the new API</Description>
-			<Category>Documentation</Category>
-		</Task>
-		<Task id="4">
-			<Description>Install Redis on the server</Description>
-			<Category>Sysadmins</Category>
-		</Task>
-		<Task id="24">
-			<Description>Write documentation about this new feature</Description>
-			<Category>Documentation</Category>
-		</Task>
-		<Task id="25">
-			<Description>Implement a new algorithm</Description>
-			<Category>Improvement</Category>
-		</Task>
-	</TaskQueue>
-	<TaskQueue name="Ready">
-		<Task id="2">
-			<Description>Fix that bug [TB: 4h]</Description>
-			<Category>Bug</Category>
-			<Assignee>demo</Assignee>
-		</Task>
-	</TaskQueue>
-	<TaskQueue name="Work in progress">
-		<Task id="1">
-			<Description>Add this awesome feature</Description>
-			<Category>Feature request</Category>
-			<Assignee>demo1</Assignee>
-		</Task>
-		<Task id="22">
-			<Description>Fix that bug in prod</Description>
-			<Category>Bug</Category>
-			<Assignee>demo2</Assignee>
-		</Task>
-	</TaskQueue>
-	<TaskQueue name="Done">
-		<Task id="23">
-			<Description>Code refactoring</Description>
-			<Category>Improvement</Category>
-		</Task>
-	</TaskQueue>
-</Workflow>
+<?xml version="1.0" encoding="UTF-8"?>
+<n1:Workflow xmlns:n1="urn:qanboard:workflow:1.0" nextId="28">
+    <n1:TaskQueue name="Backlog">
+        <n1:Task id="3">
+            <n1:Description>Write documentation for the new API</n1:Description>
+            <n1:Category>Documentation</n1:Category>
+            <n1:Assignee></n1:Assignee>
+        </n1:Task>
+        <n1:Task id="4">
+            <n1:Description>Install Redis on the server</n1:Description>
+            <n1:Category>Sysadmins</n1:Category>
+            <n1:Assignee></n1:Assignee>
+        </n1:Task>
+        <n1:Task id="24">
+            <n1:Description>Write documentation about this new feature</n1:Description>
+            <n1:Category>Documentation</n1:Category>
+            <n1:Assignee></n1:Assignee>
+        </n1:Task>
+        <n1:Task id="25">
+            <n1:Description>Implement a new algorithm</n1:Description>
+            <n1:Category>Improvement</n1:Category>
+            <n1:Assignee></n1:Assignee>
+        </n1:Task>
+        <n1:Task id="27">
+            <n1:Description>Description</n1:Description>
+            <n1:Category></n1:Category>
+            <n1:Assignee></n1:Assignee>
+        </n1:Task>
+    </n1:TaskQueue>
+    <n1:TaskQueue name="Ready">
+        <n1:Task id="2">
+            <n1:Description>Fix that bug [TB: 4h]</n1:Description>
+            <n1:Category>Bug</n1:Category>
+            <n1:Assignee>demo</n1:Assignee>
+        </n1:Task>
+    </n1:TaskQueue>
+    <n1:TaskQueue name="Work in progress">
+        <n1:Task id="1">
+            <n1:Description>Add this awesome feature</n1:Description>
+            <n1:Category>Feature request</n1:Category>
+            <n1:Assignee>demo1</n1:Assignee>
+        </n1:Task>
+        <n1:Task id="22">
+            <n1:Description>Fix that bug in prod</n1:Description>
+            <n1:Category>Bug</n1:Category>
+            <n1:Assignee>demo2</n1:Assignee>
+        </n1:Task>
+        <n1:Task id="28">
+            <n1:Description>Bonjour</n1:Description>
+            <n1:Category></n1:Category>
+            <n1:Assignee></n1:Assignee>
+        </n1:Task>
+    </n1:TaskQueue>
+    <n1:TaskQueue name="Done">
+        <n1:Task id="23">
+            <n1:Description>Code refactoring</n1:Description>
+            <n1:Category>Improvement</n1:Category>
+            <n1:Assignee></n1:Assignee>
+        </n1:Task>
+    </n1:TaskQueue>
+</n1:Workflow>

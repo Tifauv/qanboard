@@ -31,11 +31,11 @@ void registerTypes() {
 Q_DECL_EXPORT int main(int argc, char *argv[]) {
     QScopedPointer<QApplication> app(createApplication(argc, argv));
 	QCoreApplication::setApplicationName("Qanboard");
-	QCoreApplication::setApplicationVersion("0.3");
+	QCoreApplication::setApplicationVersion("0.4");
 
 	registerTypes();
 	Workflow wf;
-	//MemoryStorage storage;
+	//MemoryStorage storage0;
 	XmlStorage storage("/home/tifauv/Developpement/qanboard/sample.xml");
 	storage.load(wf);
 

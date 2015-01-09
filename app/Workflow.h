@@ -3,6 +3,7 @@
 
 #include <QMetaType>
 #include <QAbstractListModel>
+#include <QListIterator>
 #include "TaskQueue.h"
 
 class Workflow : public QAbstractListModel {
@@ -30,6 +31,8 @@ public:
 	TaskQueue* find(const QString& name) const;
 
 	void insertRow(int row, TaskQueue* queue);
+
+	QListIterator<TaskQueue*> iter() const;
 
 public slots:
 	uint nextTaskId();

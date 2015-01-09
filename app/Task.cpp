@@ -1,9 +1,9 @@
 #include "Task.h"
 #include <QtDebug>
 
-Task::Task(const QString& p_description, const QString& p_category, const QString& p_assignee, QObject* p_parent) :
+Task::Task(uint p_taskId, const QString& p_description, const QString& p_category, const QString& p_assignee, QObject* p_parent) :
 	QObject(p_parent),
-	m_taskId(0),
+	m_taskId(p_taskId),
 	m_description(p_description),
 	m_category(p_category),
 	m_assignee(p_assignee) {
