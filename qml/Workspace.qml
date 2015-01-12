@@ -57,6 +57,14 @@ Rectangle {
 		}
 	}
 
+	Rectangle {
+		id: shadow
+		anchors.fill: parent
+		color: "#333333"
+		opacity: 0
+
+	}
+
 	AddButton {
 		id: newTaskBtn
 		anchors.left: parent.left
@@ -116,6 +124,11 @@ Rectangle {
 				width: 240
 				height: 150
 			}
+			PropertyChanges {
+				target: shadow
+				opacity: 0.5
+			}
+
 			AnchorChanges {
 				target: newTask
 				anchors.verticalCenter: workspace.verticalCenter
@@ -153,9 +166,14 @@ Rectangle {
 
 			PropertyAnimation {
 				target: newTask
-				properties: "height,width"
+				properties: "height,width,opacity"
 				duration:  150
 				easing.type: Easing.OutQuad
+			}
+			PropertyAnimation {
+				target: shadow
+				properties: "opacity"
+				duration:  150
 			}
 			ParallelAnimation {
 				AnchorAnimation {
@@ -174,6 +192,11 @@ Rectangle {
 			from: "addingTask,taskDragging"
 			to: ""
 
+			PropertyAnimation {
+				target: shadow
+				properties: "opacity"
+				duration:  150
+			}
 			AnchorAnimation {
 				targets: newTaskBtn
 				duration: 150
