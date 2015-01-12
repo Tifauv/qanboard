@@ -14,7 +14,7 @@ class WorkflowStorage : public QObject {
 public:
 	explicit WorkflowStorage(QObject* parent = 0);
 
-	virtual void load(Workflow&)  const = 0;
+	virtual void load(Workflow&)        const = 0;
 	virtual void store(const Workflow&) const = 0;
 };
 

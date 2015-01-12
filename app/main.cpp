@@ -6,8 +6,8 @@
 #include "Task.h"
 #include "TaskQueue.h"
 #include "Workflow.h"
-#include "MemoryStorage.h"
-#include "XmlStorage.h"
+#include "XmlSerializer.h"
+#include "FileStorage.h"
 
 
 /**
@@ -32,13 +32,26 @@ Q_DECL_EXPORT int main(int argc, char *argv[]) {
     QScopedPointer<QApplication> app(createApplication(argc, argv));
 	QCoreApplication::setApplicationName("Qanboard");
 	QCoreApplication::setApplicationVersion("0.4");
+	QCoreApplication::setOrganizationName("catwitch.eu");
 
 	registerTypes();
-	Workflow wf;
-	//MemoryStorage storage0;
-	XmlStorage storage("/home/tifauv/Developpement/qanboard/sample.xml");
-	storage.load(wf);
 
+	// Create the workflow and initialize the storage layer
+	Workflow wf;
+	XmlSerializer serializer;
+	FileStorage storage(serializer);
+
+	// Load the workflow
+	storage.load(wf);
+	// If no workflow was loaded, create an empty structure
+	if (wf.count() == 0) {
+		wf.createQueue("Backlog");
+		wf.createQueue("Ready");
+		wf.createQueue("Work in progress");
+		wf.createQueue("Done");
+	}
+
+	// Create the QML view & show it !
     QmlApplicationViewer viewer;
     viewer.addImportPath(QLatin1String("modules"));
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
@@ -47,6 +60,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[]) {
     viewer.showExpanded();
 
 	int rc = app->exec();
+	// Save the current workflow before leaving
 	storage.store(wf);
 	return rc;
 }

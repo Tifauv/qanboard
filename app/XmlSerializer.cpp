@@ -1,5 +1,4 @@
-#include "XmlStorage.h"
-#include <QFile>
+#include "XmlSerializer.h"
 #include <QtDebug>
 
 #define QWF_NS "urn:qanboard:workflow:1.0"
@@ -14,32 +13,31 @@
 #define QWF_ATTR_TASKID "id"
 
 
-XmlStorage::XmlStorage(const QString& p_file, QObject* p_parent) :
-	WorkflowStorage(p_parent),
-	m_file(p_file) {
+// CONSTRUCTOR
+/**
+ * @brief XmlSerializer::XmlSerializer
+ * @param p_parent
+ */
+XmlSerializer::XmlSerializer(QObject* p_parent) :
+	WorkflowSerializer(p_parent) {
 }
 
 
+// MAIN METHODS
 /**
- * @brief XmlStorage::load
+ * @brief XmlSerializer::read
+ * @param p_source
  * @param p_workflow
  */
-void XmlStorage::load(Workflow& p_workflow) const {
-	QFile source(m_file);
-
-	if (!source.exists()) {
-		qWarning() << "/!\\ [XmlStorage] File " << m_file << " does not exist.";
+void XmlSerializer::read(QIODevice& p_source, Workflow& p_workflow) const {
+	if (!p_source.open(QIODevice::ReadOnly | QIODevice::Text)) {
+		qWarning() << "/!\\ [XmlSerializer] Source could not be opened.";
 		return;
 	}
 
-	if (!source.open(QIODevice::ReadOnly | QIODevice::Text)) {
-		qWarning() << "/!\\ [XmlStorage] File " << m_file << " could not be opened. Maybe you should check the file's permissions.";
-		return;
-	}
-
-	qDebug() << "(i) [XmlStorage] Loading workflow from file " << m_file << ".";
+	qDebug() << "(i) [XmlSerializer] Loading workflow...";
 	QXmlStreamReader xml;
-	xml.setDevice(&source);
+	xml.setDevice(&p_source);
 
 	if (xml.readNextStartElement()) {
 		if (xml.name() == QWF_TAG_WORKFLOW && xml.namespaceUri() == QWF_NS)
@@ -49,20 +47,46 @@ void XmlStorage::load(Workflow& p_workflow) const {
 	}
 
 	if (xml.hasError()) {
-		qWarning() << "/!\\ [XmlStorage] Error reading file " << m_file << ": " << xml.errorString();
+		qWarning() << "/!\\ [XmlSerializer] Error reading source: " << xml.errorString();
 	}
 
-	source.close();
-	qDebug() << "(i) [XmlStorage] Workflow loaded from file " << m_file << ".";
+	p_source.close();
+	qDebug() << "(i) [XmlSerializer] Workflow loaded.";
 }
 
 
 /**
- * @brief XmlStorage::loadWorkflow
+ * @brief XmlSerializer::write
+ * @param p_source
+ * @param p_workflow
+ */
+void XmlSerializer::write(QIODevice& p_source, const Workflow& p_workflow) const {
+	if (!p_source.open(QIODevice::WriteOnly | QIODevice::Text)) {
+		qWarning() << "/!\\ [XmlSerializer] Source could not be opened.";
+		return;
+	}
+
+	qDebug() << "(i) [XmlSerializer] Writing workflow...";
+	QXmlStreamWriter xml;
+	xml.setDevice(&p_source);
+	xml.setAutoFormatting(true);
+
+	// Start the document
+	xml.writeStartDocument();
+	writeWorkflow(xml, p_workflow);
+	xml.writeEndDocument();
+	p_source.close();
+	qDebug() << "(i) [XmlSerializer] Workflow written.";
+}
+
+
+// READ METHODS BY ELEMENTS
+/**
+ * @brief XmlSerializer::loadWorkflow
  * @param p_xml
  * @param p_workflow
  */
-void XmlStorage::readWorkflow(QXmlStreamReader& p_xml, Workflow& p_workflow) const {
+void XmlSerializer::readWorkflow(QXmlStreamReader& p_xml, Workflow& p_workflow) const {
 	Q_ASSERT(p_xml.isStartElement() && p_xml.name() == QWF_TAG_WORKFLOW && p_xml.namespaceUri() == QWF_NS);
 
 	// Get the nextId
@@ -70,7 +94,7 @@ void XmlStorage::readWorkflow(QXmlStreamReader& p_xml, Workflow& p_workflow) con
 	QString nextIdStr = p_xml.attributes().value(QWF_ATTR_NEXTID).toString();
 	uint nextId = nextIdStr.toUInt(&formatOk);
 	if (!formatOk) {
-		qWarning() << "/!\\ [XmlStorage] Failed to parse nextId " << nextIdStr << " as integer.";
+		qWarning() << "/!\\ [XmlSerializer] Failed to parse nextId " << nextIdStr << " as integer.";
 		return;
 	}
 	p_workflow.setTaskId(nextId);
@@ -85,7 +109,12 @@ void XmlStorage::readWorkflow(QXmlStreamReader& p_xml, Workflow& p_workflow) con
 }
 
 
-void XmlStorage::readTaskQueue(QXmlStreamReader& p_xml, Workflow& p_workflow) const {
+/**
+ * @brief XmlSerializer::readTaskQueue
+ * @param p_xml
+ * @param p_workflow
+ */
+void XmlSerializer::readTaskQueue(QXmlStreamReader& p_xml, Workflow& p_workflow) const {
 	Q_ASSERT(p_xml.isStartElement() && p_xml.name() == QWF_TAG_TASKQUEUE && p_xml.namespaceUri() == QWF_NS);
 
 	// Get the task queue name
@@ -99,7 +128,7 @@ void XmlStorage::readTaskQueue(QXmlStreamReader& p_xml, Workflow& p_workflow) co
 			if (task != NULL)
 				p_workflow.addTaskToQueue(task, queueName);
 			else
-				qWarning() << "/!\\ [XmlStorage] Task could not be created and was skipped.";
+				qWarning() << "/!\\ [XmlSerializer] Task could not be created and was skipped.";
 		}
 		else
 			p_xml.skipCurrentElement();
@@ -108,11 +137,11 @@ void XmlStorage::readTaskQueue(QXmlStreamReader& p_xml, Workflow& p_workflow) co
 
 
 /**
- * @brief XmlStorage::readTask
+ * @brief XmlSerializer::readTask
  * @param p_xml
  * @return
  */
-Task* XmlStorage::readTask(QXmlStreamReader& p_xml) const {
+Task* XmlSerializer::readTask(QXmlStreamReader& p_xml) const {
 	Q_ASSERT(p_xml.isStartElement() && p_xml.name() == QWF_TAG_TASK && p_xml.namespaceUri() == QWF_NS);
 
 	// Get the task id
@@ -120,7 +149,7 @@ Task* XmlStorage::readTask(QXmlStreamReader& p_xml) const {
 	QString taskIdStr = p_xml.attributes().value(QWF_ATTR_TASKID).toString();
 	uint taskId = taskIdStr.toUInt(&formatOk);
 	if (!formatOk) {
-		qWarning() << "/!\\ [XmlStorage] Failed to parse taskId " << taskIdStr << " as integer; skipping this task.";
+		qWarning() << "/!\\ [XmlSerializer] Failed to parse taskId " << taskIdStr << " as integer; skipping this task.";
 		return NULL;
 	}
 	Task* task = new Task();
@@ -142,37 +171,13 @@ Task* XmlStorage::readTask(QXmlStreamReader& p_xml) const {
 }
 
 
+// WRITE METHODS BY ELEMENTS
 /**
- * @brief XmlStorage::store
+ * @brief XmlSerializer::writeWorkflow
+ * @param p_xml
  * @param p_workflow
  */
-void XmlStorage::store(const Workflow& p_workflow) const {
-	QFile source(m_file);
-
-	if (!source.exists()) {
-		qWarning() << "/!\\ [XmlStorage] File " << m_file << " does not exist.";
-		return;
-	}
-
-	if (!source.open(QIODevice::WriteOnly | QIODevice::Text)) {
-		qWarning() << "/!\\ [XmlStorage] File " << m_file << " could not be opened. Maybe you should check the file's permissions.";
-		return;
-	}
-
-	qDebug() << "(i) [XmlStorage] Writing workflow to file " << m_file << ".";
-	QXmlStreamWriter xml;
-	xml.setDevice(&source);
-	xml.setAutoFormatting(true);
-
-	// Start the document
-	xml.writeStartDocument();
-	writeWorkflow(xml, p_workflow);
-	xml.writeEndDocument();
-	qDebug() << "(i) [XmlStorage] Workflow written to file " << m_file << ".";
-}
-
-
-void XmlStorage::writeWorkflow(QXmlStreamWriter& p_xml, const Workflow& p_workflow) const {
+void XmlSerializer::writeWorkflow(QXmlStreamWriter& p_xml, const Workflow& p_workflow) const {
 	p_xml.writeStartElement(QWF_NS, QWF_TAG_WORKFLOW);
 	p_xml.writeAttribute(QWF_ATTR_NEXTID, QString::number(p_workflow.taskId()));
 
@@ -184,7 +189,12 @@ void XmlStorage::writeWorkflow(QXmlStreamWriter& p_xml, const Workflow& p_workfl
 }
 
 
-void XmlStorage::writeTaskQueue(QXmlStreamWriter& p_xml, TaskQueue* p_queue) const {
+/**
+ * @brief XmlSerializer::writeTaskQueue
+ * @param p_xml
+ * @param p_queue
+ */
+void XmlSerializer::writeTaskQueue(QXmlStreamWriter& p_xml, TaskQueue* p_queue) const {
 	Q_ASSERT(p_queue);
 
 	p_xml.writeStartElement(QWF_NS, QWF_TAG_TASKQUEUE);
@@ -197,7 +207,12 @@ void XmlStorage::writeTaskQueue(QXmlStreamWriter& p_xml, TaskQueue* p_queue) con
 }
 
 
-void XmlStorage::writeTask(QXmlStreamWriter& p_xml, Task* p_task) const {
+/**
+ * @brief XmlSerializer::writeTask
+ * @param p_xml
+ * @param p_task
+ */
+void XmlSerializer::writeTask(QXmlStreamWriter& p_xml, Task* p_task) const {
 	Q_ASSERT(p_task);
 
 	p_xml.writeStartElement(QWF_NS, QWF_TAG_TASK);

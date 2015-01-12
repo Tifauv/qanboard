@@ -1,19 +1,22 @@
-#ifndef XmlStorage_H
-#define XmlStorage_H
+#ifndef XmlSerializer_H
+#define XmlSerializer_H
 
-#include "WorkflowStorage.h"
-#include <QString>
+#include "WorkflowSerializer.h"
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-class XmlStorage : public WorkflowStorage {
+
+/**
+ * @brief The XmlSerializer class
+ */
+class XmlSerializer : public WorkflowSerializer {
 	Q_OBJECT
 
 public:
-	explicit XmlStorage(const QString& fileName, QObject *parent = 0);
+	explicit XmlSerializer(QObject* parent = 0);
 
-	void load(Workflow&) const;
-	void store(const Workflow&) const;
+	void read(QIODevice&, Workflow&) const;
+	void write(QIODevice&, const Workflow&) const;
 
 private:
 	void readWorkflow(QXmlStreamReader&, Workflow&) const;
@@ -23,8 +26,6 @@ private:
 	void writeWorkflow(QXmlStreamWriter&, const Workflow&) const;
 	void writeTaskQueue(QXmlStreamWriter&, TaskQueue*) const;
 	void writeTask(QXmlStreamWriter&, Task*) const;
-
-	QString m_file;
 };
 
-#endif // XmlStorage_H
+#endif // XmlSerializer_H
