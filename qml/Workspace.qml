@@ -83,8 +83,6 @@ Rectangle {
 		}
 
 		onCancel: workspace.state = ""
-
-		onWidthChanged: console.log("NewTask's width is now " + newTask.width + ", left margin is " + newTask.anchors.leftMargin)
 	}
 
 	states: [
