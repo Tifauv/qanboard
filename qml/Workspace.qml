@@ -78,7 +78,7 @@ Rectangle {
 		onClicked: workspace.state = "addingTask"
 
 		onAddTask: {
-			workflow.createTaskInQueue(description, "Backlog");
+			workflow.createTask(description);
 			workspace.state = ""
 		}
 

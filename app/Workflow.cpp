@@ -10,6 +10,7 @@
 Workflow::Workflow(QObject* p_parent) :
 	QAbstractListModel(p_parent),
 	m_taskId(0),
+	m_defaultQueue(),
 	m_queues() {
 	QHash<int, QByteArray> names;
 	names[QueueNameRole] = "name";
@@ -26,6 +27,15 @@ Workflow::Workflow(QObject* p_parent) :
  */
 uint Workflow::taskId() const {
 	return m_taskId;
+}
+
+
+/**
+ * @brief Workflow::defaultQueue
+ * @return
+ */
+const QString& Workflow::defaultQueue() const {
+	return m_defaultQueue;
 }
 
 
@@ -55,6 +65,15 @@ uint Workflow::nextTaskId() {
  */
 void Workflow::setTaskId(uint p_taskId) {
 	m_taskId = p_taskId;
+}
+
+
+/**
+ * @brief Workflow::setDefaultQueue
+ * @param p_queueName
+ */
+void Workflow::setDefaultQueue(const QString& p_queueName) {
+	m_defaultQueue = p_queueName;
 }
 
 
@@ -171,4 +190,15 @@ uint Workflow::addTaskToQueue(Task* p_task, const QString& p_queue) {
 uint Workflow::createTaskInQueue(const QString& p_description, const QString& p_queue) {
 	qDebug() << "(i) [Workflow] Creating new task in queue " << p_queue << "...";
 	return addTaskToQueue(new Task(nextTaskId(), p_description), p_queue);
+}
+
+
+/**
+ * @brief Reimplementation of Workflow::createTaskInQueue() that uses the defaultQueue.
+ * @param p_description
+ * @param p_queue
+ * @return
+ */
+uint Workflow::createTask(const QString& p_description) {
+	return createTaskInQueue(p_description, defaultQueue());
 }

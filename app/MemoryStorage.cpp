@@ -14,6 +14,7 @@ void MemoryStorage::load(Workflow& p_workflow) const {
 	p_workflow.createQueue("Ready");
 	p_workflow.createQueue("Work in progress");
 	p_workflow.createQueue("Done");
+	p_workflow.setDefaultQueue("Backlog");
 	qDebug() << "(i) [MemoryStorage] Structure initialized...";
 
 	qDebug() << "(i) [MemoryStorage] Loading tasks...";

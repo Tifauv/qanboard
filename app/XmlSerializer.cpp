@@ -9,6 +9,7 @@
 #define QWF_TAG_CATEGORY "Category"
 #define QWF_TAG_ASSIGNEE "Assignee"
 #define QWF_ATTR_NEXTID "nextId"
+#define QWF_ATTR_DEFAULTQUEUE "defaultQueue"
 #define QWF_ATTR_NAME "name"
 #define QWF_ATTR_TASKID "id"
 
@@ -99,6 +100,9 @@ void XmlSerializer::readWorkflow(QXmlStreamReader& p_xml, Workflow& p_workflow) 
 	}
 	p_workflow.setTaskId(nextId);
 
+	// Get the default queue
+	p_workflow.setDefaultQueue(p_xml.attributes().value(QWF_ATTR_DEFAULTQUEUE).toString());
+
 	// Load the task queues
 	while (p_xml.readNextStartElement()) {
 		if (p_xml.name() == QWF_TAG_TASKQUEUE)
@@ -180,6 +184,7 @@ Task* XmlSerializer::readTask(QXmlStreamReader& p_xml) const {
 void XmlSerializer::writeWorkflow(QXmlStreamWriter& p_xml, const Workflow& p_workflow) const {
 	p_xml.writeStartElement(QWF_NS, QWF_TAG_WORKFLOW);
 	p_xml.writeAttribute(QWF_ATTR_NEXTID, QString::number(p_workflow.taskId()));
+	p_xml.writeAttribute(QWF_ATTR_DEFAULTQUEUE, p_workflow.defaultQueue());
 
 	QListIterator<TaskQueue*> i = p_workflow.iter();
 	while (i.hasNext())

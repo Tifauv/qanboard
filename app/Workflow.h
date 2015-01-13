@@ -9,8 +9,9 @@
 class Workflow : public QAbstractListModel {
 	Q_OBJECT
 
-	Q_PROPERTY(uint taskId  READ taskId  WRITE setTaskId  NOTIFY taskIdChanged  DESIGNABLE false)
-	Q_PROPERTY(int  count   READ count                    NOTIFY countChanged)
+	Q_PROPERTY(uint    taskId        READ taskId        WRITE setTaskId        NOTIFY taskIdChanged  DESIGNABLE false)
+	Q_PROPERTY(QString defaultQueue  READ defaultQueue  WRITE setDefaultQueue)
+	Q_PROPERTY(int     count         READ count                                NOTIFY countChanged)
 
 public:
 	enum Roles {
@@ -22,9 +23,11 @@ public:
 	~Workflow() {}
 
 	uint taskId() const;
+	const QString& defaultQueue() const;
 	int count() const;
 
 	void setTaskId(uint);
+	void setDefaultQueue(const QString&);
 
 	int rowCount(const QModelIndex& parent) const;
 	QVariant data(const QModelIndex& index, int role) const;
@@ -39,6 +42,7 @@ public slots:
 	void createQueue(const QString&);
 	uint addTaskToQueue(Task* p_task, const QString& p_queue);
 	uint createTaskInQueue(const QString& p_description, const QString& p_queue);
+	uint createTask(const QString& p_description);
 
 signals:
 	void taskIdChanged(uint);
@@ -46,6 +50,7 @@ signals:
 
 private:
 	uint              m_taskId;
+	QString           m_defaultQueue;
 	QList<TaskQueue*> m_queues;
 };
 

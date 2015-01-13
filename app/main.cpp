@@ -49,6 +49,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[]) {
 		wf.createQueue("Ready");
 		wf.createQueue("Work in progress");
 		wf.createQueue("Done");
+		wf.setDefaultQueue("Backlog");
 	}
 
 	// Create the QML view & show it !
