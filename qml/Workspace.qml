@@ -65,27 +65,17 @@ Rectangle {
 
 	}
 
-	AddButton {
-		id: newTaskBtn
+	NewTask {
+		id: newTask
+		fullWidth: 240
+		fullHeight: 150
+		state: "button"
 		anchors.left: parent.left
 		anchors.leftMargin: 8
 		anchors.bottom: parent.bottom
 		anchors.bottomMargin: 8
-		visible: true
-		height: 32
-		z: 3
 
 		onClicked: workspace.state = "addingTask"
-	}
-
-	NewTask {
-		id: newTask
-		visible: false
-		anchors.verticalCenter: newTaskBtn.verticalCenter
-		anchors.horizontalCenter: newTaskBtn.horizontalCenter
-		width: 32
-		height: 32
-		z: 2
 
 		onAddTask: {
 			workflow.createTaskInQueue(description, "Backlog");
@@ -93,6 +83,8 @@ Rectangle {
 		}
 
 		onCancel: workspace.state = ""
+
+		onWidthChanged: console.log("NewTask's width is now " + newTask.width + ", left margin is " + newTask.anchors.leftMargin)
 	}
 
 	states: [
@@ -110,7 +102,7 @@ Rectangle {
 				visible: true
 			}
 			AnchorChanges {
-				target: newTaskBtn
+				target: newTask
 				anchors.bottom: undefined
 				anchors.top: workspace.bottom
 			}
@@ -119,25 +111,14 @@ Rectangle {
 		State {
 			name: "addingTask"
 			PropertyChanges {
-				target: newTask
-				visible: true
-				width: 240
-				height: 150
-			}
-			PropertyChanges {
 				target: shadow
 				opacity: 0.5
 			}
-
-			AnchorChanges {
+			PropertyChanges {
 				target: newTask
-				anchors.verticalCenter: workspace.verticalCenter
-				anchors.horizontalCenter: workspace.horizontalCenter
-			}
-			AnchorChanges {
-				target: newTaskBtn
-				anchors.bottom: undefined
-				anchors.top: workspace.bottom
+				state: ""
+				anchors.leftMargin: (workspace.width - newTask.fullWidth) / 2
+				anchors.bottomMargin: (workspace.height - newTask.fullHeight) / 2
 			}
 		}
 	]
@@ -147,58 +128,55 @@ Rectangle {
 			from: ""
 			to: "taskDragging"
 
-			ParallelAnimation {
-				AnchorAnimation {
-					targets: newTaskBtn
-					duration: 150
-					easing.type: Easing.OutQuad
-				}
-				PropertyAnimation {
-					target: draggedTask
-					properties: "x,y"
-					duration: 0
-				}
+			AnchorAnimation {
+				targets: newTask
+				duration: 150
+				easing.type: Easing.OutQuad
+			}
+			PropertyAnimation {
+				target: draggedTask
+				properties: "x,y"
+				duration: 0
+			}
+		},
+		Transition {
+			from: "taskDragging"
+			to: ""
+
+			AnchorAnimation {
+				targets: newTask
+				duration: 150
+				easing.type: Easing.OutQuad
 			}
 		},
 		Transition {
 			from: ""
 			to: "addingTask"
 
-			PropertyAnimation {
-				target: newTask
-				properties: "height,width,opacity"
-				duration:  150
-				easing.type: Easing.OutQuad
-			}
-			PropertyAnimation {
+			NumberAnimation {
 				target: shadow
 				properties: "opacity"
-				duration:  150
+				duration:  100
 			}
-			ParallelAnimation {
-				AnchorAnimation {
-					targets: newTask
-					duration: 150
-					easing.type: Easing.OutQuad
-				}
-				AnchorAnimation {
-					targets: newTaskBtn
-					duration: 150
-					easing.type: Easing.OutQuad
-				}
+			NumberAnimation {
+				target: newTask
+				properties: "anchors.leftMargin,anchors.bottomMargin"
+				duration: 150
+				easing.type: Easing.OutQuad
 			}
 		},
 		Transition {
-			from: "addingTask,taskDragging"
+			from: "addingTask"
 			to: ""
 
-			PropertyAnimation {
+			NumberAnimation {
 				target: shadow
 				properties: "opacity"
-				duration:  150
+				duration:  100
 			}
-			AnchorAnimation {
-				targets: newTaskBtn
+			NumberAnimation {
+				targets: newTask
+				properties: "anchors.leftMargin,anchors.bottomMargin"
 				duration: 150
 				easing.type: Easing.OutQuad
 			}

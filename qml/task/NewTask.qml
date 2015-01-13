@@ -3,15 +3,18 @@ import "../tools"
 
 Rectangle {
 	id: task
-	width: 240
-	height: 150
+	width: fullWidth
+	height: fullHeight
 	color: "#ffffff"
 	clip: true
 
 	property string description: "Description"
 	property int margin: 5
 	property int spacing: 6
+	property int fullWidth: 240
+	property int fullHeight: 150
 
+	signal clicked()
 	signal addTask(int taskId, string description)
 	signal cancel()
 
@@ -69,4 +72,62 @@ Rectangle {
 			onClicked: cancel()
 		}
 	}
+
+	MouseArea {
+		id: button
+		anchors.fill: parent
+		opacity: 0
+
+		onClicked: task.clicked()
+
+		Text {
+			color: "white"
+			text: "+"
+			font.pointSize: parent.height * 0.75
+			anchors.horizontalCenter: parent.horizontalCenter
+			anchors.verticalCenter: parent.verticalCenter
+		}
+	}
+
+	states: [
+		State {
+			name: "button"
+			PropertyChanges {
+				target: task
+				height: 32
+				width: 32
+				color: "#ffab00"
+				radius: height/2
+			}
+			PropertyChanges {
+				target: actionLayout
+				opacity: 0
+			}
+			PropertyChanges {
+				target: descriptionTxt
+				opacity: 0
+			}
+			PropertyChanges {
+				target: header
+				opacity: 0
+			}
+			PropertyChanges {
+				target: button
+				opacity: 1
+			}
+		}
+	]
+
+	transitions: [
+		Transition {
+			PropertyAnimation {
+				properties: "width,height,opacity,radius"
+				duration: 150
+				easing.type: Easing.OutQuad
+			}
+			ColorAnimation {
+				duration: 150
+			}
+		}
+	]
 }
