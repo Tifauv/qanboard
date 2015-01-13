@@ -99,10 +99,9 @@ Rectangle {
 				y: rootMouseArea.mouseY - draggedTask.height/2
 				visible: true
 			}
-			AnchorChanges {
+			PropertyChanges {
 				target: newTask
-				anchors.bottom: undefined
-				anchors.top: workspace.bottom
+				anchors.bottomMargin: - newTask.height - 10 // Should be at least the previous bottomMargin
 			}
 		},
 
@@ -126,12 +125,13 @@ Rectangle {
 			from: ""
 			to: "taskDragging"
 
-			AnchorAnimation {
+			NumberAnimation {
 				targets: newTask
+				properties: "anchors.bottomMargin"
 				duration: 150
 				easing.type: Easing.OutQuad
 			}
-			PropertyAnimation {
+			NumberAnimation {
 				target: draggedTask
 				properties: "x,y"
 				duration: 0
@@ -141,8 +141,9 @@ Rectangle {
 			from: "taskDragging"
 			to: ""
 
-			AnchorAnimation {
+			NumberAnimation {
 				targets: newTask
+				properties: "anchors.bottomMargin"
 				duration: 150
 				easing.type: Easing.OutQuad
 			}
