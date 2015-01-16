@@ -4,41 +4,45 @@ Rectangle {
 	id: toolbar
 	color: "#bbdefb"
 	width: 800
-	height: 48
-	state: "reduced"
+	height: 0
 
-	signal addTask()
+	//signal delTask()
 
 	Row {
 		id: layout
+		visible: false
 		anchors.fill: parent
 		anchors.margins: 8
 		height: parent.height - anchors.topMargin - anchors.bottomMargin
 
-		AddButton {
+		/*AddButton {
 			height: layout.height
-			onClicked: toolbar.addTask()
-		}
-	}
-
-	MouseArea {
-		id: mouseArea
-		anchors.fill: parent
-		hoverEnabled: true
+			onClicked: toolbar.delTask()
+		}*/
 	}
 
 	states: [
 		State {
-			name: "reduced"
-			when: !mouseArea.containsMouse
+			name: "taskActions"
 
 			PropertyChanges {
 				target: toolbar
-				height: 8
+				height: 48
 			}
 			PropertyChanges {
 				target: layout
-				visible: false
+				visible: true
+			}
+		}
+	]
+
+	transitions: [
+		Transition {
+			NumberAnimation {
+				target: toolbar
+				properties: "height"
+				duration: 150
+				easing.type: Easing.OutQuad
 			}
 		}
 	]

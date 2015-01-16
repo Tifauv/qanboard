@@ -11,7 +11,11 @@ Rectangle {
 
 	MouseArea {
 		id: rootMouseArea
-		anchors.fill: parent
+		//anchors.fill: parent
+		anchors.top: parent.top
+		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.bottom: toolbar.top
 		hoverEnabled: true
 
 		Row {
@@ -57,6 +61,14 @@ Rectangle {
 		}
 	}
 
+	Toolbar {
+		id: toolbar
+		anchors.bottom: parent.bottom
+		anchors.left: parent.left
+		anchors.right: parent.right
+	}
+
+
 	Rectangle {
 		id: shadow
 		anchors.fill: parent
@@ -99,6 +111,11 @@ Rectangle {
 				y: rootMouseArea.mouseY - draggedTask.height/2
 				visible: true
 			}
+			PropertyChanges {
+				target: toolbar
+				state: "taskActions"
+			}
+
 			PropertyChanges {
 				target: newTask
 				anchors.bottomMargin: - newTask.height - 10 // Should be at least the previous bottomMargin
