@@ -16,6 +16,7 @@ TaskQueue::TaskQueue(QObject* p_parent) :
 	names[DescriptionRole] = "description";
 	names[CategoryRole] = "category";
 	names[AssigneeRole] = "assignee";
+	names[SelectedRole] = "selected";
 	setRoleNames(names);
 	qDebug() << "(i) [TaskQueue] Created.";
 }
@@ -34,6 +35,7 @@ TaskQueue::TaskQueue(const TaskQueue& p_toCopy) :
 	names[DescriptionRole] = "description";
 	names[CategoryRole] = "category";
 	names[AssigneeRole] = "assignee";
+	names[SelectedRole] = "selected";
 	setRoleNames(names);
 	qDebug() << "(i) [TaskQueue] Copied queue " << m_name << " with " << m_tasks.count() << " tasks.";
 }
@@ -104,9 +106,38 @@ QVariant TaskQueue::data(const QModelIndex& p_index, int p_role) const {
 		return task->category();
 	case AssigneeRole:
 		return task->assignee();
+	case SelectedRole:
+		return task->isSelected();
 	default:
 		return QVariant();
 	}
+}
+
+
+bool TaskQueue::setData(const QModelIndex& p_index, const QVariant& p_value, int p_role) {
+	qDebug() << "(i) [TaskQueue] Setting data for role " << p_role << " of task at row " << p_index.row();
+	if (p_index.row() < 0 || p_index.row() >= rowCount())
+		return false;
+
+	Task* task = m_tasks.at(p_index.row());
+	switch (p_role) {
+/*  TaskId should not be editable.
+ *	case TaskIdRole:
+ *		task->setTaskId(p_value.toUInt());
+ */
+	case DescriptionRole:
+		task->setDescription(p_value.toString());
+	case CategoryRole:
+		task->setCategory(p_value.toString());
+	case AssigneeRole:
+		task->setAssignee(p_value.toString());
+	case SelectedRole:
+		task->setSelected(p_value.toBool());
+	default:
+		return false;
+	}
+	emit dataChanged(p_index, p_index);
+	return true;
 }
 
 
