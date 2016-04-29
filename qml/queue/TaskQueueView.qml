@@ -1,4 +1,4 @@
-import QtQuick 1.1
+import QtQuick 2.4
 import qanboard.app 1.0
 import "../task"
 
@@ -11,6 +11,7 @@ Rectangle {
 	property variant tasks
 
 	signal taskDragged(variant taskList, int index)
+	signal taskSelected(variant taskList, int index)
 
 	VisualDataModel {
 		id: visualModel
@@ -24,6 +25,7 @@ Rectangle {
 			taskId: model.taskId
 			assignee: model.assignee
 			description: model.description
+			selected: model.selected
 		}
 	}
 
@@ -63,8 +65,31 @@ Rectangle {
 			MouseArea {
 				id: taskMouseArea
 				anchors.fill: taskList
+				hoverEnabled: true
 
-				//onPressAndHold: {
+				onPressed: {
+					console.log("onPressed");
+
+					// If we are sliding inside the view, dismiss
+					if (taskList.moving)
+						return;
+					console.log("! moving");
+
+					// Find the index of the pointed item
+					var index = taskList.indexAt(mouse.x + taskList.contentX, mouse.y + taskList.contentY);
+					if (index === -1) // No index, nothing to do
+						return;
+					console.log("index=" + index);
+					console.log("name:" + tasks.at(index).description)
+
+					// Invert the "selected" state
+					tasks.at(index).selected = ! tasks.at(index).selected;
+					console.log("selected state inverted");
+
+					// Do not forward the event
+					mouse.accepted = true;
+				}
+
 				onDoubleClicked: {
 					// If we are sliding inside the view, dismiss
 					if (taskList.moving)
@@ -74,6 +99,9 @@ Rectangle {
 					var index = taskList.indexAt(mouse.x + taskList.contentX, mouse.y + taskList.contentY);
 					if (index === -1) // No index, nothing to do
 						return;
+
+					// Do not forward the event
+					mouse.accepted = true;
 
 					// Set the pointed item as current
 					taskList.currentIndex = index;

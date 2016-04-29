@@ -1,8 +1,7 @@
-#include <QCoreApplication>
-#include <QApplication>
-#include <QtDeclarative>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QtQml>
 #include <QtDebug>
-#include "qmlapplicationviewer.h"
 #include "Task.h"
 #include "TaskQueue.h"
 #include "Workflow.h"
@@ -28,11 +27,12 @@ void registerTypes() {
  * @param p_argv
  *            array of parameters
  */
-Q_DECL_EXPORT int main(int argc, char *argv[]) {
-    QScopedPointer<QApplication> app(createApplication(argc, argv));
-	QCoreApplication::setApplicationName("Qanboard");
-	QCoreApplication::setApplicationVersion("0.4");
-	QCoreApplication::setOrganizationName("catwitch.eu");
+int main(int argc, char *argv[]) {
+	QGuiApplication app(argc, argv);
+	app.setApplicationDisplayName("Qanboard");
+	app.setApplicationName("Qanboard");
+	app.setApplicationVersion("0.5");
+	app.setOrganizationName("catwitch.eu");
 
 	registerTypes();
 
@@ -53,14 +53,14 @@ Q_DECL_EXPORT int main(int argc, char *argv[]) {
 	}
 
 	// Create the QML view & show it !
-    QmlApplicationViewer viewer;
-    viewer.addImportPath(QLatin1String("modules"));
-    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-	viewer.rootContext()->setContextProperty("workflow", &wf);
-	viewer.setMainQmlFile(QLatin1String("qml/main.qml"));
-    viewer.showExpanded();
+	QQmlApplicationEngine engine;
+	engine.addImportPath(QStringLiteral("modules"));
+	//engine.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+	engine.rootContext()->setContextProperty("workflow", &wf);
 
-	int rc = app->exec();
+	engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
+
+	int rc = app.exec();
 	// Save the current workflow before leaving
 	storage.store(wf);
 	return rc;

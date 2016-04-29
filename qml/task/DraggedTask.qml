@@ -1,4 +1,4 @@
-import QtQuick 1.1
+import QtQuick 2.4
 
 TaskView {
 	opacity: 0.8
@@ -41,5 +41,9 @@ TaskView {
 			p_queue.add(model, p_position);
 			originalQueue.remove(originalPosition);
 		}
+	}
+
+	function remove() {
+		originalQueue.remove(originalPosition);
 	}
 }

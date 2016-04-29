@@ -12,10 +12,6 @@ Workflow::Workflow(QObject* p_parent) :
 	m_taskId(0),
 	m_defaultQueue(),
 	m_queues() {
-	QHash<int, QByteArray> names;
-	names[QueueNameRole] = "name";
-	names[TaskListRole] = "tasks";
-	setRoleNames(names);
 	qDebug() << "(i) [Workflow] Created";
 }
 
@@ -86,6 +82,18 @@ void Workflow::setDefaultQueue(const QString& p_queueName) {
 int Workflow::rowCount(const QModelIndex& p_parent) const {
 	Q_UNUSED(p_parent);
 	return m_queues.size();
+}
+
+
+/**
+ * @brief Workflow::roleNames
+ * @return
+ */
+QHash<int, QByteArray> Workflow::roleNames() const {
+	QHash<int, QByteArray> names;
+	names[QueueNameRole] = "name";
+	names[TaskListRole] = "tasks";
+	return names;
 }
 
 

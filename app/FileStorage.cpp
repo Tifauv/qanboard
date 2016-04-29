@@ -1,5 +1,5 @@
 #include "FileStorage.h"
-#include <QDesktopServices>
+#include <QStandardPaths>
 #include <QtDebug>
 
 #define WF_FILE "workflow.xml"
@@ -42,7 +42,7 @@ void FileStorage::store(const Workflow& p_workflow) const {
  */
 void FileStorage::checkDataDir() {
 	// Get the application configuration directory
-	QString location = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+	QString location = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
 
 
 	// If the configuration directory does not exist...

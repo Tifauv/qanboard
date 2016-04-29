@@ -28,10 +28,11 @@ public:
 	int count() const;
 	void setName(const QString& p_name);
 
-	int rowCount(const QModelIndex& parent = QModelIndex()) const;
-	QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
+	int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+	QHash<int, QByteArray> roleNames() const override;
+	QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
-	bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
+	bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
 
 public slots:
 	void insertRow(int row, Task* item);

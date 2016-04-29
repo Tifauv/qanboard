@@ -1,4 +1,4 @@
-import QtQuick 1.1
+import QtQuick 2.4
 import "../tools"
 
 Rectangle {
@@ -10,6 +10,11 @@ Rectangle {
 	property alias taskId: header.taskId
 	property alias assignee: header.assignee
 	property string description: "Description"
+	property bool selected: false
+
+	onSelectedChanged: {
+		console.log("selected changed : " + selected)
+	}
 
 	Column {
 		id: mainLayout
@@ -35,14 +40,25 @@ Rectangle {
 			anchors.left: parent.left
 		}
 	}
- states: [
-	 State {
-		 name: "ghost"
 
-		 PropertyChanges {
-			 target: task
-			 opacity: 0.54
-		 }
-	 }
- ]
+	states: [
+		State {
+			name: "ghost"
+
+			PropertyChanges {
+				target: task
+				opacity: 0.54
+			}
+		},
+		State {
+			name: "selected"
+			when: task.selected == true
+
+			PropertyChanges {
+				target: task
+				color: "#eeeeee"
+			}
+		}
+
+	]
 }

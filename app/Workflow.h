@@ -29,8 +29,9 @@ public:
 	void setTaskId(uint);
 	void setDefaultQueue(const QString&);
 
-	int rowCount(const QModelIndex& parent) const;
-	QVariant data(const QModelIndex& index, int role) const;
+	int rowCount(const QModelIndex& parent) const override;
+	QHash<int, QByteArray> roleNames() const override;
+	QVariant data(const QModelIndex& index, int role) const override;
 	TaskQueue* find(const QString& name) const;
 
 	void insertRow(int row, TaskQueue* queue);

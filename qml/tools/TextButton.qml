@@ -1,4 +1,4 @@
-import QtQuick 1.1
+import QtQuick 2.4
 
 Rectangle {
 	id: button
@@ -8,6 +8,8 @@ Rectangle {
 	property string label: "Label"
 
 	signal clicked()
+	signal pressed()
+	signal released()
 
 	Text {
 		id: btnLabel
@@ -26,6 +28,8 @@ Rectangle {
 		hoverEnabled: true
 
 		onClicked: button.clicked()
+		onPressed: button.pressed()
+		onReleased: button.released()
 	}
 
 	states: [

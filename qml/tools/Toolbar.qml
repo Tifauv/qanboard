@@ -1,4 +1,4 @@
-import QtQuick 1.1
+import QtQuick 2.4
 
 Rectangle {
 	id: toolbar
@@ -6,7 +6,7 @@ Rectangle {
 	width: 800
 	height: 0
 
-	//signal delTask()
+	signal removeTask()
 
 	Row {
 		id: layout
@@ -15,10 +15,13 @@ Rectangle {
 		anchors.margins: 8
 		height: parent.height - anchors.topMargin - anchors.bottomMargin
 
-		/*AddButton {
+		TextButton {
+			id: delTask
 			height: layout.height
-			onClicked: toolbar.delTask()
-		}*/
+			label: qsTr("Delete task")
+
+			onClicked: toolbar.removeTask()
+		}
 	}
 
 	states: [
@@ -31,6 +34,10 @@ Rectangle {
 			}
 			PropertyChanges {
 				target: layout
+				visible: true
+			}
+			PropertyChanges {
+				target: delTask
 				visible: true
 			}
 		}

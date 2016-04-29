@@ -2,6 +2,7 @@
 #define WorkflowSerializer_H
 
 #include <QObject>
+#include <QIODevice>
 #include "Workflow.h"
 
 

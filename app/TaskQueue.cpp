@@ -11,13 +11,6 @@ TaskQueue::TaskQueue(QObject* p_parent) :
 	QAbstractListModel(p_parent),
 	m_name(""),
 	m_tasks() {
-	QHash<int, QByteArray> names;
-	names[TaskIdRole] = "taskId";
-	names[DescriptionRole] = "description";
-	names[CategoryRole] = "category";
-	names[AssigneeRole] = "assignee";
-	names[SelectedRole] = "selected";
-	setRoleNames(names);
 	qDebug() << "(i) [TaskQueue] Created.";
 }
 
@@ -30,13 +23,6 @@ TaskQueue::TaskQueue(const TaskQueue& p_toCopy) :
 	QAbstractListModel(),
 	m_name(p_toCopy.name()),
 	m_tasks(p_toCopy.m_tasks) {
-	QHash<int, QByteArray> names;
-	names[TaskIdRole] = "taskId";
-	names[DescriptionRole] = "description";
-	names[CategoryRole] = "category";
-	names[AssigneeRole] = "assignee";
-	names[SelectedRole] = "selected";
-	setRoleNames(names);
 	qDebug() << "(i) [TaskQueue] Copied queue " << m_name << " with " << m_tasks.count() << " tasks.";
 }
 
@@ -82,6 +68,21 @@ int TaskQueue::rowCount(const QModelIndex& p_parent) const {
 	Q_UNUSED(p_parent);
 	//qDebug() << "(i) TaskQueue::rowCount()";
 	return m_tasks.count();
+}
+
+
+/**
+ * @brief TaskQueue::roleNames
+ * @return
+ */
+QHash<int, QByteArray> TaskQueue::roleNames() const {
+	QHash<int, QByteArray> names;
+	names[TaskIdRole] = "taskId";
+	names[DescriptionRole] = "description";
+	names[CategoryRole] = "category";
+	names[AssigneeRole] = "assignee";
+	names[SelectedRole] = "selected";
+	return names;
 }
 
 

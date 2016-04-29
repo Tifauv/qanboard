@@ -1,28 +1,17 @@
 TARGET = qanboard
 TEMPLATE = app
-
-# Add more folders to ship with the application, here
-qml.source = qml
-qml.target = /
-DEPLOYMENTFOLDERS = qml
-
-# Additional import path used to resolve QML modules in Creator's code model
-QML_IMPORT_PATH =
+QT += qml quick
+CONFIG += c++11
 
 # Import the C++ code
 include(app/app.pri)
 
-# Please do not modify the following two lines. Required for deployment.
-include(qmlapplicationviewer/qmlapplicationviewer.pri)
-qtcAddDeployment()
+RESOURCES += qml.qrc
 
+OTHER_FILES += sample.xml
 
-# Installation
-target.path = /usr/local/bin
-desktop.path = /usr/share/applications
-desktop.file = qanboard.desktop
+# Additional import path used to resolve QML modules in Qt Creator's code model
+QML_IMPORT_PATH =
 
-INSTALLS = target desktop
-
-OTHER_FILES += \
-    sample.xml
+# Default rules for deployment
+include(deployment.pri)

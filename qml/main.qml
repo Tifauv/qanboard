@@ -1,6 +1,8 @@
-import QtQuick 1.1
+import QtQuick 2.4
+import QtQuick.Window 2.2
 
-Rectangle {
+Window {
+	visible: true
 	width: 800
 	height: 320
 

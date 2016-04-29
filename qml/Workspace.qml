@@ -1,4 +1,4 @@
-import QtQuick 1.1
+import QtQuick 2.4
 import qanboard.app 1.0
 import "task"
 import "queue"
@@ -11,16 +11,16 @@ Rectangle {
 
 	MouseArea {
 		id: rootMouseArea
-		//anchors.fill: parent
-		anchors.top: parent.top
-		anchors.left: parent.left
-		anchors.right: parent.right
-		anchors.bottom: toolbar.top
+		anchors.fill: parent
 		hoverEnabled: true
 
 		Row {
 			id: layout
-			anchors.fill: parent
+			anchors.top: parent.top
+			anchors.left: parent.left
+			anchors.right: parent.right
+			anchors.bottom: toolbar.top
+			//anchors.fill: parent
 
 			Repeater {
 				id: queueRepeater
@@ -42,6 +42,20 @@ Rectangle {
 			}
 		}
 
+		Toolbar {
+			id: toolbar
+			anchors.bottom: parent.bottom
+			anchors.left: parent.left
+			anchors.right: parent.right
+
+			onRemoveTask: {
+				console.log("Asked to delete task");
+
+				//Cleanup
+				workspace.state = ""
+			}
+		}
+
 		DraggedTask {
 			id: draggedTask
 			visible: false
@@ -50,24 +64,19 @@ Rectangle {
 		onReleased: {
 			if (workspace.state === "taskDragging") {
 				// Find the destination queue
-				var queue = layout.childAt(mouse.x, mouse.y);
-				var newPosition = queue.findItemPosition(mapToItem(queue, mouse.x, mouse.y));
+				var layoutMappedMouse = mapToItem(layout, mouse.x, mouse.y);
+				var queue = layout.childAt(layoutMappedMouse.x, layoutMappedMouse.y);
+				var	newPosition = queue.findItemPosition(mapToItem(queue, mouse.x, mouse.y));
+
 				// Move the task
 				draggedTask.move(queue, newPosition);
+
 				// Cleanup
 				workspace.state = "";
 				draggedTask.endDrag();
 			}
 		}
 	}
-
-	Toolbar {
-		id: toolbar
-		anchors.bottom: parent.bottom
-		anchors.left: parent.left
-		anchors.right: parent.right
-	}
-
 
 	Rectangle {
 		id: shadow
@@ -111,14 +120,10 @@ Rectangle {
 				y: rootMouseArea.mouseY - draggedTask.height/2
 				visible: true
 			}
-			PropertyChanges {
-				target: toolbar
-				state: "taskActions"
-			}
 
 			PropertyChanges {
 				target: newTask
-				anchors.bottomMargin: - newTask.height - 10 // Should be at least the previous bottomMargin
+				anchors.bottomMargin: - newTask.height - 10 // 10 should be at least the previous bottomMargin
 			}
 		},
 
