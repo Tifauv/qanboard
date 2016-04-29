@@ -15,8 +15,8 @@ class XmlSerializer : public WorkflowSerializer {
 public:
 	explicit XmlSerializer(QObject* parent = 0);
 
-	void read(QIODevice&, Workflow&) const;
-	void write(QIODevice&, const Workflow&) const;
+	void read(QIODevice&, Workflow&)        const override;
+	void write(QIODevice&, const Workflow&) const override;
 
 private:
 	void readWorkflow(QXmlStreamReader&, Workflow&) const;

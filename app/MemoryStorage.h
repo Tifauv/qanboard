@@ -9,8 +9,8 @@ class MemoryStorage : public WorkflowStorage {
 public:
 	explicit MemoryStorage(QObject* parent = 0);
 
-	void load(Workflow&)  const;
-	void store(const Workflow&) const;
+	void load(Workflow&)        const override;
+	void store(const Workflow&) const override;
 };
 
 #endif // MemoryStorage_H
