@@ -3,9 +3,12 @@
         <file>qml/Colors.qml</file>
         <file>qml/main.qml</file>
         <file>qml/Workspace.qml</file>
+        <file>qml/Workspace2.qml</file>
         <file>qml/queue/TaskQueueView.qml</file>
+        <file>qml/queue/TaskQueueView2.qml</file>
         <file>qml/queue/Title.qml</file>
         <file>qml/tools/AddButton.qml</file>
+        <file>qml/tools/Handle.qml</file>
         <file>qml/tools/Label.qml</file>
         <file>qml/tools/SelectButton.qml</file>
         <file>qml/tools/TextButton.qml</file>
@@ -14,5 +17,6 @@
         <file>qml/task/NewTask.qml</file>
         <file>qml/task/TaskHeader.qml</file>
         <file>qml/task/TaskView.qml</file>
+        <file>qml/task/TaskView2.qml</file>
     </qresource>
 </RCC>
