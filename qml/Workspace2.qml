@@ -127,6 +127,11 @@ Rectangle {
 				target: newTask
 				anchors.bottomMargin: - newTask.height - 10 // 10 should be at least the previous bottomMargin
 			}
+			
+			PropertyChanges {
+				target: toolbar
+				state: "taskActions"
+			}
 		},
 
 		State {

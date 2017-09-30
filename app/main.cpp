@@ -1,7 +1,7 @@
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QtQml>
 #include <QtDebug>
+#include <QGuiApplication>
+#include <QtQml>
+#include <QQmlApplicationEngine>
 #include "Task.h"
 #include "TaskQueue.h"
 #include "Workflow.h"
@@ -27,8 +27,8 @@ void registerTypes() {
  * @param p_argv
  *            array of parameters
  */
-int main(int argc, char *argv[]) {
-	QGuiApplication app(argc, argv);
+int main(int p_argc, char *p_argv[]) {
+	QGuiApplication app(p_argc, p_argv);
 	app.setApplicationDisplayName("Qanboard");
 	app.setApplicationName("Qanboard");
 	app.setApplicationVersion("0.5");

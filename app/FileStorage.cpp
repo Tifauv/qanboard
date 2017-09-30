@@ -18,6 +18,7 @@ FileStorage::FileStorage(WorkflowSerializer& p_serializer, QObject* p_parent) :
  * @brief FileStorage::load
  *
  * @param p_workflow
+ *            the workflow to load
  */
 void FileStorage::load(Workflow& p_workflow) const {
 	QFile file(m_dataDir.filePath(WF_FILE));
@@ -29,6 +30,7 @@ void FileStorage::load(Workflow& p_workflow) const {
  * @brief FileStorage::store
  *
  * @param p_workflow
+ *            the workflow to save
  */
 void FileStorage::store(const Workflow& p_workflow) const {
 	QFile file(m_dataDir.filePath(WF_FILE));
