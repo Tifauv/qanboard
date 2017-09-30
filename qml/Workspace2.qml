@@ -20,7 +20,6 @@ Rectangle {
 			anchors.left: parent.left
 			anchors.right: parent.right
 			anchors.bottom: toolbar.top
-			//anchors.fill: parent
 
 			Repeater {
 				id: queueRepeater
@@ -124,6 +123,11 @@ Rectangle {
 			PropertyChanges {
 				target: newTask
 				anchors.bottomMargin: - newTask.height - 10 // 10 should be at least the previous bottomMargin
+			}
+			
+			PropertyChanges {
+				target: toolbar
+				state: "taskActions"
 			}
 		},
 

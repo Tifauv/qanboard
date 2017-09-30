@@ -5,7 +5,6 @@
 #include "WorkflowSerializer.h"
 #include <QDir>
 
-//template <class Serializer>
 class FileStorage : public WorkflowStorage {
 	Q_OBJECT
 
