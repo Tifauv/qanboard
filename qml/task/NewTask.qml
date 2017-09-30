@@ -75,8 +75,12 @@ Rectangle {
 
 	MouseArea {
 		id: button
-		anchors.fill: parent
-		opacity: 0
+        anchors {
+            top: parent.bottom
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.left
+        }
 
 		onClicked: task.clicked()
 
@@ -111,10 +115,13 @@ Rectangle {
 				target: header
 				opacity: 0
 			}
-			PropertyChanges {
-				target: button
-				opacity: 1
-			}
+            AnchorChanges {
+                target: button
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+            }
 		}
 	]
 

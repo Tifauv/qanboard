@@ -3,7 +3,7 @@ import QtQuick 2.4
 Rectangle {
 	id: button
 	height: 32
-	width: btnLabel.width + 12 // 6 * 2 = margin
+    width: btnLabel.width + 12 // 6 * 2 = margin
 
 	property string label: "Label"
 

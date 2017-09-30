@@ -18,5 +18,6 @@
         <file>qml/task/TaskHeader.qml</file>
         <file>qml/task/TaskView.qml</file>
         <file>qml/task/TaskView2.qml</file>
+        <file>qml/task/Draggable.qml</file>
     </qresource>
 </RCC>

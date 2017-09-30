@@ -20,7 +20,6 @@ Rectangle {
 			anchors.left: parent.left
 			anchors.right: parent.right
 			anchors.bottom: toolbar.top
-			//anchors.fill: parent
 
 			Repeater {
 				id: queueRepeater
@@ -61,7 +60,7 @@ Rectangle {
 			visible: false
 		}
 
-		onReleased: {
+        /*onReleased: {
 			if (workspace.state === "taskDragging") {
 				// Find the destination queue
 				var layoutMappedMouse = mapToItem(layout, mouse.x, mouse.y);
@@ -75,7 +74,7 @@ Rectangle {
 				workspace.state = "";
 				draggedTask.endDrag();
 			}
-		}
+        }*/
 	}
 
 	Rectangle {
@@ -103,7 +102,10 @@ Rectangle {
 			workspace.state = ""
 		}
 
-		onCancel: workspace.state = ""
+        onCancel: {
+            console.log("(i) [NewTask] onCancel()");
+            workspace.state = ""
+        }
 	}
 
 	states: [
