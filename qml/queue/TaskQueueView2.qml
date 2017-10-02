@@ -10,7 +10,6 @@ Rectangle {
 	property string title: "Title"
 	property variant tasks
 
-	signal taskDragged(variant taskList, int index)
 	signal taskSelected(variant taskList, int index)
 
 	VisualDataModel {
@@ -18,35 +17,28 @@ Rectangle {
 
 		model: tasks
 
-		delegate: TaskView2 {
-			id: task
+		delegate: Draggable {
+			id: draggable
 			width: taskList.width
 
-			taskId: model.taskId
-			assignee: model.assignee
-			description: model.description
-			selected: model.selected
+			    TaskView2 {
+				id: task
+				width: taskList.width
 
-			onDragged: {
-				console.log("(i) [TaskQueueView] Task with index " + index + " dragged");
+				taskId: model.taskId
+				assignee: model.assignee
+				description: model.description
+				selected: model.selected
 
-				// Set the pointed item as current
-				taskList.currentIndex = index;
+				onClicked: {
+					console.log("(i) [TaskQueueView] Task with index " + index + " selected");
 
-				// Signal the drag has started
-				taskDragged(tasks, index);
-			}
-			onDropped: {
-				console.log("(i) [TaskQueueView] onDropped()");
-			}
-			onClicked: {
-				console.log("(i) [TaskQueueView] Task with index " + index + " selected");
+					// Set the pointed item as current
+					taskList.currentIndex = index;
 
-				// Set the pointed item as current
-				taskList.currentIndex = index;
-
-				// Signal the drag has started
-				taskSelected(tasks, index);
+					// Signal the drag has started
+					taskSelected(tasks, index);
+				}
 			}
 		}
 	}

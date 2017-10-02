@@ -7,6 +7,9 @@ Rectangle {
 
 	color: "#cccccc"
 
+	property Item dragTarget
+	property bool active: mouseArea.drag.active
+
 	signal pressed()
 	signal released()
 
@@ -14,9 +17,14 @@ Rectangle {
 		id: mouseArea
 		anchors.fill: parent
 		hoverEnabled: true
+		drag.target: dragTarget
+		drag.smoothed: false
 
 		onPressed: button.pressed(mouse)
-		onReleased: button.released(mouse)
+		onReleased: {
+			if (drag.active)
+				button.released(mouse);
+		}
 	}
 
 	states: [

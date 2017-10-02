@@ -16,26 +16,11 @@ Rectangle {
 		console.log("selected changed : " + selected)
 	}
 
-	signal dragged()
-	signal dropped()
 	signal clicked()
-
-	Handle {
-		id: dragHandle
-		anchors.left: parent.left
-		anchors.top: parent.top
-		anchors.bottom: parent.bottom
-
-		onPressed: task.dragged()
-		onReleased: task.dropped()
-	}
 
 	MouseArea {
 		id: mouseArea
-		anchors.left: dragHandle.right
-		anchors.top: parent.top
-		anchors.right: parent.right
-		anchors.bottom: parent.bottom
+		anchors.fill: parent
 		hoverEnabled: true
 
 		onPressAndHold: task.clicked()
