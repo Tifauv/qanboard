@@ -8,6 +8,7 @@
         <file>qml/queue/TaskQueueView2.qml</file>
         <file>qml/queue/Title.qml</file>
         <file>qml/tools/AddButton.qml</file>
+        <file>qml/tools/Draggable.qml</file>
         <file>qml/tools/Handle.qml</file>
         <file>qml/tools/Label.qml</file>
         <file>qml/tools/SelectButton.qml</file>
@@ -18,6 +19,5 @@
         <file>qml/task/TaskHeader.qml</file>
         <file>qml/task/TaskView.qml</file>
         <file>qml/task/TaskView2.qml</file>
-        <file>qml/task/Draggable.qml</file>
     </qresource>
 </RCC>

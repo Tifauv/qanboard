@@ -1,5 +1,6 @@
 import QtQuick 2.4
 import qanboard.app 1.0
+import "../tools"
 import "../task"
 
 Rectangle {
@@ -21,7 +22,7 @@ Rectangle {
 			id: draggable
 			width: taskList.width
 
-			    TaskView2 {
+			TaskView2 {
 				id: task
 				width: taskList.width
 

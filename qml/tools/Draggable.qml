@@ -1,13 +1,14 @@
 import QtQuick 2.0
-import "../tools"
+import "../task"
 
 Item {
     id: draggable
-	width: contentItem.width
+	width: wrapperParent.width
 	height: topPlaceholder.height + wrapperParent.height + bottomPlaceholder.height
 
+
 	/* The real item wrapped in this draggable. */
-	default property Item contentItem
+	//default property Item contentItem: task
 
 	/* This item will become the contentItem's parent while it is dragged. */
     property Item draggedItemParent
@@ -22,7 +23,10 @@ Item {
 	property int _scrollingDirection: 0
 
 	/* The content item is reparented to the wrapper. */
-	onContentItemChanged: contentItem.parent = wrapper2
+	/*onContentItemChanged: {
+		contentItem.parent = wrapper2;
+		contentItem.visible = true;
+	}*/
 
 	/* The top placeholder, only used to move an item at the top of the list. */
     Rectangle {
@@ -45,6 +49,7 @@ Item {
             right: parent.right
         }
 		height: contentItem.height
+		width: dragHandle.width + contentItem.width
 
         Rectangle {
             id: wrapper
@@ -71,12 +76,15 @@ Item {
 
 			Rectangle {
 				id: wrapper2
-				//width: parent.width - dragHandle.width
 				anchors {
 					top: parent.top
 					left: dragHandle.right
 					right: parent.right
 					bottom: parent.bottom
+				}
+
+				TaskView2 {
+					id: contentItem
 				}
 			}
         }
@@ -227,10 +235,10 @@ Item {
 		// Scroll the ListView to ensure the droped item is visible. This is required when dropping an item after the
 		// last item of the view. Delay the scroll using a timer because we have to wait until the view has moved the
 		// item before we can scroll to it.
-		makeDroppedItemVisibleTimer.start();
+		//makeDroppedItemVisibleTimer.start();
 	}
 
-
+/*
 	Timer {
 		id: makeDroppedItemVisibleTimer
 		interval: 0
@@ -238,4 +246,5 @@ Item {
 			draggable.ListView.view.positionViewAtIndex(model.index, ListView.Contain);
 		}
 	}
+*/
 }
