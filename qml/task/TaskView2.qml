@@ -5,7 +5,7 @@ Rectangle {
 	id: task
 	width: 180
 	height: 80
-	color: "#e3f2fd"
+	color: "#ffffff"
 
 	property alias taskId: header.taskId
 	property alias assignee: header.assignee

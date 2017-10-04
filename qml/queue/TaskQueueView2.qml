@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.6
 import qanboard.app 1.0
 import "../tools"
 import "../task"
@@ -20,11 +20,11 @@ Rectangle {
 
 		delegate: Draggable {
 			id: draggable
-			width: taskList.width
+			width: taskList.width - taskList.leftMargin - taskList.rightMargin
+			draggedItemParent: queue.parent
 
 			TaskView2 {
 				id: task
-				width: taskList.width
 
 				taskId: model.taskId
 				assignee: model.assignee
@@ -56,23 +56,23 @@ Rectangle {
 	}
 
 	Rectangle {
-		id: taskWrapper
 		height: 280
 		anchors.right: parent.right
 		anchors.left: parent.left
 		anchors.top: titleBox.bottom
 		anchors.bottom: parent.bottom
-		border.color: Qt.rgba(0, 0, 0, 0.12)
+		color: "#fafafa"
 		z:0
 
 		ListView {
 			id: taskList
-			height: 280
-			anchors.fill: parent
-			anchors.leftMargin: 8
-			anchors.topMargin: 8
-			anchors.rightMargin: 8
-			anchors.bottomMargin: 8
+			anchors {
+				fill: parent
+				topMargin: 8
+				leftMargin: 4
+				rightMargin: 4
+				bottomMargin: 8
+			}
 			spacing: 8
 
 			model: visualModel

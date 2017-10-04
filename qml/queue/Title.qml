@@ -9,7 +9,7 @@ Rectangle {
 	property int    count: 0
 	property color  labelColor: "#ffffff"
 
-	color: "#2196f3"
+	color: "#1976d2"
 
 	Text {
 		id: nameLbl

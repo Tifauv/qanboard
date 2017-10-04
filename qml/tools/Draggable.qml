@@ -1,20 +1,20 @@
-import QtQuick 2.0
+import QtQuick 2.6
+import QtGraphicalEffects 1.0
 import "../task"
 
 Item {
     id: draggable
-	width: wrapperParent.width
-	height: topPlaceholder.height + wrapperParent.height + bottomPlaceholder.height
+	height: topPlaceholder.height + itemPlaceholder.height + bottomPlaceholder.height
 
 
 	/* The real item wrapped in this draggable. */
-	//default property Item contentItem: task
+	default property Item contentItem
 
 	/* This item will become the contentItem's parent while it is dragged. */
     property Item draggedItemParent
 
 	/* The width of the contentItem's drag handle added at its left. */
-	property int dragHandleWidth: 8
+	property int handleWidth: 8
 
 	/* Size of the area at the top and bottom of the list where drag-scrolling happens. */
 	property int scrollEdgeSize: 6
@@ -23,10 +23,7 @@ Item {
 	property int _scrollingDirection: 0
 
 	/* The content item is reparented to the wrapper. */
-	/*onContentItemChanged: {
-		contentItem.parent = wrapper2;
-		contentItem.visible = true;
-	}*/
+	onContentItemChanged: contentItem.parent = wrapper2
 
 	/* The top placeholder, only used to move an item at the top of the list. */
     Rectangle {
@@ -37,23 +34,27 @@ Item {
             right: parent.right
         }
         height: 0
-        color: "green"
+
+		color: "red"
     }
 
-	/* The contentItem wrapper */
+	/* The item placeholder inside the ListView */
     Item {
-        id: wrapperParent
+		id: itemPlaceholder
         anchors {
             top: topPlaceholder.bottom
             left: parent.left
             right: parent.right
         }
 		height: contentItem.height
-		width: dragHandle.width + contentItem.width
 
         Rectangle {
             id: wrapper
-            anchors.fill: parent
+			anchors.top: parent.top
+			anchors.left: parent.left
+			anchors.right: parent.right
+			anchors.bottom: parent.bottom
+
 			Drag.active: dragHandle.active
             Drag.hotSpot {
                 x: contentItem.width / 2
@@ -62,7 +63,7 @@ Item {
 
 			Handle {
 				id: dragHandle
-				width: dragHandleWidth
+				width: handleWidth
 				anchors {
 					top: parent.top
 					left: parent.left
@@ -70,7 +71,6 @@ Item {
 				}
 
 				dragTarget: parent
-
 				onReleased: emitMoveItemRequested()
 			}
 
@@ -82,25 +82,34 @@ Item {
 					right: parent.right
 					bottom: parent.bottom
 				}
-
-				TaskView2 {
-					id: contentItem
-				}
 			}
         }
-    }
+
+
+		DropShadow {
+			id: shadow
+			anchors.fill: wrapper
+			cached: true
+			verticalOffset: 1
+			radius: 8.0
+			samples: 16
+			color: "#80000000"
+			source: wrapper
+		}
+	}
 
 	/* The main placeholder is _after_ the wrapped item. */
     Rectangle {
         id: bottomPlaceholder
         anchors {
-            top: wrapperParent.bottom
+			top: itemPlaceholder.bottom
             left: parent.left
             right: parent.right
         }
         height: 0
-        color: "red"
-    }
+		color: "#ffe082"
+		border.color: "#caae53"
+	}
 
 	/* Scroll the view upward when the dragged element is at the top */
 	SmoothedAnimation {
@@ -127,7 +136,7 @@ Item {
 		anchors {
 			left: parent.left
 			right: parent.right
-			bottom: wrapperParent.verticalCenter
+			bottom: itemPlaceholder.verticalCenter
 		}
 		height: contentItem.height
 		sourceComponent: Component {
@@ -141,11 +150,11 @@ Item {
 	DropArea {
 		id: bottomDropArea
 		anchors {
-			top: wrapperParent.verticalCenter
+			top: itemPlaceholder.verticalCenter
 			left: parent.left
 			right: parent.right
 		}
-		property bool isLast: model.view === draggable.ListView.view.count - 1
+		property bool isLast: model.index === draggable.ListView.view.count - 1
 		height: isLast ? draggable.ListView.view.contentHeight - y : contentItem.height
 		property int dropIndex: model.index + 1
 	}
@@ -159,15 +168,28 @@ Item {
 				target: wrapper
 				parent: draggedItemParent
 			}
-			PropertyChanges {
+			AnchorChanges {
 				target: wrapper
-				opacity: 0.9
-				anchors.fill: undefined
-				width: dragHandle.width + contentItem.width
-				height: contentItem.height
+				anchors {
+					top: undefined
+					left: undefined
+					right: undefined
+					bottom: undefined
+				}
 			}
 			PropertyChanges {
-				target: wrapperParent
+				target: wrapper
+				width: draggable.width
+				height: contentItem.height
+			}
+
+			PropertyChanges {
+				target: shadow
+				visible: false
+			}
+
+			PropertyChanges {
+				target: itemPlaceholder
 				height: 0
 			}
 			PropertyChanges {
@@ -186,29 +208,37 @@ Item {
 		},
 
 		State {
-			when: bottomDropArea.containsDrag
-			name: "droppingBelow"
-
-			PropertyChanges {
-				target: bottomPlaceholder
-				height: contentItem.height
-			}
-			PropertyChanges {
-				target: bottomDropArea
-				height: contentItem.height * 2
-			}
-		},
-
-		State {
 			when: topDropAreaLoader.containsDrag
 			name: "droppingAbove"
 
 			PropertyChanges {
 				target: topPlaceholder
 				height: contentItem.height
+				anchors {
+					topMargin: 8
+					bottomMargin: 8
+				}
 			}
 			PropertyChanges {
 				target: topDropAreaLoader
+				height: contentItem.height * 2
+			}
+		},
+
+		State {
+			when: bottomDropArea.containsDrag
+			name: "droppingBelow"
+
+			PropertyChanges {
+				target: bottomPlaceholder
+				height: contentItem.height
+				anchors {
+					topMargin: 8
+					bottomMargin: 8
+				}
+			}
+			PropertyChanges {
+				target: bottomDropArea
 				height: contentItem.height * 2
 			}
 		}
