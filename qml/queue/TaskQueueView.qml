@@ -32,7 +32,7 @@ Rectangle {
 
 			onInternalMoveRequested: {
                 console.log("{d} [TaskQueueView] Internal move required of item " + from + " to position " + to);
-                tasks.moveRow(p_origin, p_destination);
+                tasks.moveRow(from, to);
 			}
 
 			onExternalMoveRequested: {
@@ -41,11 +41,11 @@ Rectangle {
                 target.log();
 
                 var movedTask = tasks.at(from);
-                console.log("{d} [TaskQueueView] Moved task is " + movedTask.taskId);
+                console.log("{d} [TaskQueueView] #1 Moved task is " + movedTask.taskId);
                 if (tasks.removeRow(from)) {
-                    console.log("{d} [TaskQueueView] Moved task is " + movedTask.taskId);
+                    console.log("{d} [TaskQueueView] #2 Moved task is " + movedTask.taskId);
                     target.add(movedTask, to);
-                    console.log("{d} [TaskQueueView] Moved task is " + movedTask.taskId);
+                    console.log("{d} [TaskQueueView] #3 Moved task is " + movedTask.taskId);
                 }
 
                 queue.log();
