@@ -10,11 +10,20 @@ Item {
 	/* The real item wrapped in this root. */
 	default property Item contentItem
 
+	/* The target of the drop areas. */
+	property Item dropTargetItem
+
 	/* This item will become the contentItem's parent while it is dragged. */
     property Item draggedItemParent
 
-	/* Signals a drag requested from 'from' position to 'to' position. */
-	signal moveItemRequested(int from, int to)
+	/* */
+	signal dragStarted()
+
+	/* Signals a drag requested from 'from' position to 'to' position inside the list. */
+	signal internalMoveRequested(int from, int to)
+
+	/* Signals a drag requested from 'from' position to 'to' position in the 'target' list. */
+	signal externalMoveRequested(int from, var target, int to)
 
 	/* The width of the contentItem's drag handle added at its left. */
 	property int handleWidth: 8
@@ -98,7 +107,10 @@ Item {
                     }
 
 					dragTarget: movableItem
-                    onReleased: emitMoveItemRequested()
+
+					onDragged: root.dragStarted()
+
+					onDropped: emitMoveItemRequested()
                 }
 
                 Rectangle {
@@ -116,8 +128,8 @@ Item {
                 id: shadow
                 anchors.fill: shadowWrapper
                 cached: true
-                verticalOffset: 1
-                radius: 8.0
+				verticalOffset: 1
+				radius: 8.0
                 samples: 16
                 color: "#80000000"
                 source: shadowWrapper
@@ -179,6 +191,7 @@ Item {
 		sourceComponent: Component {
 			DropArea {
 				property int dropIndex: 0
+				property Item targetList: dropTargetItem
 			}
 		}
 	}
@@ -194,6 +207,7 @@ Item {
 		property bool isLast: model.index === _listView.count - 1
 		height: isLast ? _listView.contentHeight - y : contentItem.height
 		property int dropIndex: model.index + 1
+		property Item targetList: dropTargetItem
 	}
 
 	states: [
@@ -275,16 +289,30 @@ Item {
 			return;
 		}
 		var dropIndex = dropArea.dropIndex;
+		var dropList = dropArea.targetList;
 
-		// If the target item is below us, then decrement dropIndex because the target item is going to move up when
-		// our item leaves its place
-		if (model.index < dropIndex) {
-			dropIndex--;
+		console.log("Source list: " + dropTargetItem)
+		console.log("Target list: " + dropList)
+
+		if (dropList === dropTargetItem) {
+			console.log("Dropping on same list");
+
+			// If the target item is below us, then decrement dropIndex because the target item is going to move up when
+			// our item leaves its place
+			if (model.index < dropIndex) {
+				dropIndex--;
+			}
+			if (model.index === dropIndex) {
+				return;
+			}
+			console.log("emitting internalMoveRequested(" + model.index + ", " + dropIndex + ")")
+			root.internalMoveRequested(model.index, dropIndex);
 		}
-		if (model.index === dropIndex) {
-			return;
+		else {
+			console.log("Dropping on another list");
+			console.log("emitting externalMoveRequested(" + model.index + ", " + dropList + ", " + dropIndex + ")")
+			root.externalMoveRequested(model.index, dropList, dropIndex);
 		}
-		root.moveItemRequested(model.index, dropIndex);
 
         // Scroll the ListView to ensure the dropped item is visible. This is required when dropping an item after the
 		// last item of the view. Delay the scroll using a timer because we have to wait until the view has moved the

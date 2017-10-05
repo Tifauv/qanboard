@@ -22,6 +22,7 @@ Rectangle {
 			id: draggable
 			width: taskList.width - taskList.leftMargin - taskList.rightMargin
 			draggedItemParent: queue.parent
+			dropTargetItem: queue
 
 			TaskView2 {
 				id: task
@@ -40,6 +41,18 @@ Rectangle {
 					// Signal the drag has started
 					taskSelected(tasks, index);
 				}
+			}
+
+			onInternalMoveRequested: {
+				console.log("{d} [TaskQueueView2] Internal move required of item " + from + " to position " + to);
+				moveItem(from, to);
+			}
+
+			onExternalMoveRequested: {
+				console.log("{d} [TaskQueueView2] External move required of item " + from + " to list " + target + " at position " + to);
+				var task = tasks.at(from);
+				remove(from);
+				target.add(task, to);
 			}
 		}
 	}

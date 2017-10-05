@@ -12,7 +12,8 @@ Rectangle {
 	property alias mouseX: mouseArea.mouseX
 	property alias mouseY: mouseArea.mouseY
 
-	signal released()
+	signal dragged()
+	signal dropped()
 
 	MouseArea {
 		id: mouseArea
@@ -21,9 +22,14 @@ Rectangle {
 		drag.target: dragTarget
 		drag.smoothed: false
 
+		onPressed: {
+			if (!drag.active)
+				button.dragged(mouse);
+		}
+
 		onReleased: {
 			if (drag.active)
-				button.released(mouse);
+				button.dropped(mouse);
 		}
 	}
 
