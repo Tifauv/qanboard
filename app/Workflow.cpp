@@ -141,7 +141,7 @@ TaskQueue* Workflow::find(const QString& p_name) const {
 			return queue;
 	}
 
-	return NULL;
+    return nullptr;
 }
 
 

@@ -40,6 +40,15 @@ Item {
 	/* The content item is reparented to the contentWrapper. */
 	onContentItemChanged: contentItem.parent = contentWrapper;
 
+    Component.onCompleted: {
+        console.log("{d} [Draggable] created for item " + model.index + " of list " + dropTargetItem);
+        dropTargetItem.log();
+    }
+    Component.onDestruction: {
+        console.log("{d} [Draggable] destroying for item " + model.index + " of list " + dropTargetItem);
+        dropTargetItem.log();
+    }
+
 	/* The top placeholder, only used to move an item at the top of the list. */
     Rectangle {
         id: topPlaceholder
@@ -295,8 +304,6 @@ Item {
 		console.log("Target list: " + dropList)
 
 		if (dropList === dropTargetItem) {
-			console.log("Dropping on same list");
-
 			// If the target item is below us, then decrement dropIndex because the target item is going to move up when
 			// our item leaves its place
 			if (model.index < dropIndex) {
@@ -305,12 +312,12 @@ Item {
 			if (model.index === dropIndex) {
 				return;
 			}
-			console.log("emitting internalMoveRequested(" + model.index + ", " + dropIndex + ")")
+
+            // Emit the signal
 			root.internalMoveRequested(model.index, dropIndex);
 		}
 		else {
-			console.log("Dropping on another list");
-			console.log("emitting externalMoveRequested(" + model.index + ", " + dropList + ", " + dropIndex + ")")
+            // Emit the signal
 			root.externalMoveRequested(model.index, dropList, dropIndex);
 		}
 

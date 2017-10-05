@@ -81,7 +81,6 @@ QHash<int, QByteArray> TaskQueue::roleNames() const {
 	names[DescriptionRole] = "description";
 	names[CategoryRole] = "category";
 	names[AssigneeRole] = "assignee";
-	names[SelectedRole] = "selected";
 	return names;
 }
 
@@ -107,8 +106,6 @@ QVariant TaskQueue::data(const QModelIndex& p_index, int p_role) const {
 		return task->category();
 	case AssigneeRole:
 		return task->assignee();
-	case SelectedRole:
-		return task->isSelected();
 	default:
 		return QVariant();
 	}
@@ -132,8 +129,6 @@ bool TaskQueue::setData(const QModelIndex& p_index, const QVariant& p_value, int
 		task->setCategory(p_value.toString());
 	case AssigneeRole:
 		task->setAssignee(p_value.toString());
-	case SelectedRole:
-		task->setSelected(p_value.toBool());
 	default:
 		return false;
 	}
@@ -189,7 +184,7 @@ bool TaskQueue::removeRow(int p_row, const QModelIndex& p_parent) {
  */
 Task* TaskQueue::at(int p_index) const {
 	if (p_index < 0 || p_index >= rowCount())
-		return NULL;
+        return nullptr;
 	return m_tasks.at(p_index);
 }
 
@@ -204,7 +199,7 @@ Task* TaskQueue::find(uint p_taskId) const {
 		if (task->taskId() == p_taskId)
 			return task;
 	}
-	return NULL;
+    return nullptr;
 }
 
 

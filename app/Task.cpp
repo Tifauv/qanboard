@@ -20,8 +20,7 @@ Task::Task(uint p_taskId, const QString& p_description, const QString& p_categor
 	m_taskId(p_taskId),
 	m_description(p_description),
 	m_category(p_category),
-	m_assignee(p_assignee),
-	m_selected(false) {
+    m_assignee(p_assignee) {
 	qDebug() << "(i) [Task] Created " << m_description << " in category " << m_category;
 }
 
@@ -37,8 +36,7 @@ Task::Task(const Task& p_task) :
 	m_taskId(p_task.taskId()),
 	m_description(p_task.description()),
 	m_category(p_task.category()),
-	m_assignee(p_task.assignee()),
-	m_selected(false) {
+    m_assignee(p_task.assignee()) {
 	qDebug() << "(i) [Task] Copied task " << m_taskId << " with " << m_description << " in category " << m_category;
 }
 
@@ -81,16 +79,6 @@ const QString& Task::assignee() const {
 
 
 /**
- * @brief Tells whether the task is marked as selected or not.
- *
- * @return true if the task is selected, false otherwise
- */
-bool Task::isSelected() const {
-	return m_selected;
-}
-
-
-/**
  * @brief Task::setTaskId
  * @param p_taskId
  */
@@ -127,14 +115,4 @@ void Task::setCategory(const QString& p_category) {
 void Task::setAssignee(const QString& p_assignee) {
 	m_assignee = p_assignee;
 	emit assigneeChanged(m_assignee);
-}
-
-
-/**
- * @brief Task::setSelected
- * @param p_selected
- */
-void Task::setSelected(const bool p_selected) {
-	m_selected = p_selected;
-	emit selectedChanged(m_selected);
 }

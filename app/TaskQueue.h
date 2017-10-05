@@ -9,15 +9,14 @@ class TaskQueue : public QAbstractListModel {
 	Q_OBJECT
 
 	Q_PROPERTY(QString name  READ name  WRITE setName  NOTIFY nameChanged  DESIGNABLE false)
-	Q_PROPERTY(int  count   READ count   NOTIFY countChanged)
+    Q_PROPERTY(int     count READ count                NOTIFY countChanged)
 
 public:
 	enum Roles {
 		TaskIdRole = Qt::UserRole+1,
 		DescriptionRole,
 		CategoryRole,
-		AssigneeRole,
-		SelectedRole
+        AssigneeRole
 	};
 
 	explicit TaskQueue(QObject* parent = 0);

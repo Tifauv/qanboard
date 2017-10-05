@@ -6,7 +6,7 @@ Window {
 	width: 800
 	height: 320
 
-	Workspace2 {
+    Workspace {
 		anchors.fill: parent
 	}
 }

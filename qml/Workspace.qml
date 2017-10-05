@@ -9,72 +9,39 @@ Rectangle {
 	width: 800
 	height: 320
 
-	MouseArea {
-		id: rootMouseArea
-		anchors.fill: parent
-		hoverEnabled: true
+	Row {
+		id: layout
+		anchors.top: parent.top
+		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.bottom: toolbar.top
 
-		Row {
-			id: layout
-			anchors.top: parent.top
-			anchors.left: parent.left
-			anchors.right: parent.right
-			anchors.bottom: toolbar.top
-			//anchors.fill: parent
+		Repeater {
+			id: queueRepeater
+			model: workflow
 
-			Repeater {
-				id: queueRepeater
-				model: workflow
+            TaskQueueView {
+				id: queue
+				width: workspace.width / queueRepeater.model.count
+				height: workspace.height
 
-				TaskQueueView {
-					id: queue
-					width: workspace.width / queueRepeater.model.count
-					height: workspace.height
-
-					title: model.name
-					tasks: model.tasks
-
-					onTaskDragged: {
-						draggedTask.beginDrag(queue, taskList.at(index), index);
-						workspace.state = "taskDragging";
-					}
-				}
+				title: model.name
+				tasks: model.tasks
 			}
 		}
+	}
 
-		Toolbar {
-			id: toolbar
-			anchors.bottom: parent.bottom
-			anchors.left: parent.left
-			anchors.right: parent.right
+	Toolbar {
+		id: toolbar
+		anchors.bottom: parent.bottom
+		anchors.left: parent.left
+		anchors.right: parent.right
 
-			onRemoveTask: {
-				console.log("Asked to delete task");
+		onRemoveTask: {
+			console.log("Asked to delete task");
 
-				//Cleanup
-				workspace.state = ""
-			}
-		}
-
-		DraggedTask {
-			id: draggedTask
-			visible: false
-		}
-
-		onReleased: {
-			if (workspace.state === "taskDragging") {
-				// Find the destination queue
-				var layoutMappedMouse = mapToItem(layout, mouse.x, mouse.y);
-				var queue = layout.childAt(layoutMappedMouse.x, layoutMappedMouse.y);
-				var	newPosition = queue.findItemPosition(mapToItem(queue, mouse.x, mouse.y));
-
-				// Move the task
-				draggedTask.move(queue, newPosition);
-
-				// Cleanup
-				workspace.state = "";
-				draggedTask.endDrag();
-			}
+			//Cleanup
+			workspace.state = ""
 		}
 	}
 
@@ -103,27 +70,23 @@ Rectangle {
 			workspace.state = ""
 		}
 
-		onCancel: workspace.state = ""
+        onCancel: {
+            console.log("(i) [NewTask] onCancel()");
+            workspace.state = ""
+        }
 	}
 
 	states: [
 		State {
 			name: "taskDragging"
 			PropertyChanges {
-				target: rootMouseArea
-				drag.target: draggedTask
-				drag.filterChildren: true
-			}
-			PropertyChanges {
-				target: draggedTask
-				x: rootMouseArea.mouseX - draggedTask.width/2
-				y: rootMouseArea.mouseY - draggedTask.height/2
-				visible: true
-			}
-
-			PropertyChanges {
 				target: newTask
 				anchors.bottomMargin: - newTask.height - 10 // 10 should be at least the previous bottomMargin
+			}
+			
+			PropertyChanges {
+				target: toolbar
+				state: "taskActions"
 			}
 		},
 

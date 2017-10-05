@@ -129,7 +129,7 @@ void XmlSerializer::readTaskQueue(QXmlStreamReader& p_xml, Workflow& p_workflow)
 	while (p_xml.readNextStartElement()) {
 		if (p_xml.name() == QWF_TAG_TASK) {
 			Task* task = readTask(p_xml);
-			if (task != NULL)
+            if (task != nullptr)
 				p_workflow.addTaskToQueue(task, queueName);
 			else
 				qWarning() << "/!\\ [XmlSerializer] Task could not be created and was skipped.";
@@ -154,7 +154,7 @@ Task* XmlSerializer::readTask(QXmlStreamReader& p_xml) const {
 	uint taskId = taskIdStr.toUInt(&formatOk);
 	if (!formatOk) {
 		qWarning() << "/!\\ [XmlSerializer] Failed to parse taskId " << taskIdStr << " as integer; skipping this task.";
-		return NULL;
+        return nullptr;
 	}
 	Task* task = new Task();
 	task->setTaskId(taskId);
