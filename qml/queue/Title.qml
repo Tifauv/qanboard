@@ -13,15 +13,19 @@ Rectangle {
 
 	Text {
 		id: nameLbl
-		anchors.top: parent.top
-		anchors.bottom: parent.bottom
-		anchors.left: parent.left
-		anchors.topMargin: 5
-		anchors.bottomMargin: 5
-		anchors.leftMargin: 5
+		anchors {
+			top: parent.top
+			bottom: parent.bottom
+			left: parent.left
+			topMargin: 5
+			bottomMargin: 5
+			leftMargin: 5
+		}
 		text: qsTr(name)
-		font.bold: true
-		font.pointSize: 11
+		font {
+			bold: true
+			pointSize: 11
+		}
 		verticalAlignment: Text.AlignVCenter
 		wrapMode: Text.WrapAnywhere
 		color: labelColor
@@ -29,14 +33,13 @@ Rectangle {
 
 	Text {
 		id: countLbl
-		anchors.top: parent.top
-		anchors.bottom: parent.bottom
-		anchors.left: nameLbl.right
-		anchors.right: parent.right
-		anchors.topMargin: 5
-		anchors.bottomMargin: 5
-		anchors.leftMargin: 5
-		anchors.rightMargin: 5
+		anchors {
+			top: parent.top
+			bottom: parent.bottom
+			left: nameLbl.right
+			right: parent.right
+			margins: 5
+		}
 		text: count
 		font.pointSize: 8
 		verticalAlignment: Text.AlignVCenter
