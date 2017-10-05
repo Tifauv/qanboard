@@ -3,15 +3,18 @@ import QtGraphicalEffects 1.0
 import "../task"
 
 Item {
-    id: draggable
+	id: root
 	height: topPlaceholder.height + itemPlaceholder.height + bottomPlaceholder.height
 
 
-	/* The real item wrapped in this draggable. */
+	/* The real item wrapped in this root. */
 	default property Item contentItem
 
 	/* This item will become the contentItem's parent while it is dragged. */
     property Item draggedItemParent
+
+	/* Signals a drag requested from 'from' position to 'to' position. */
+	signal moveItemRequested(int from, int to)
 
 	/* The width of the contentItem's drag handle added at its left. */
 	property int handleWidth: 8
@@ -22,8 +25,11 @@ Item {
 	/* Internal: -1 when drag-scrolling up / 1 when drag-scrolling down */
 	property int _scrollingDirection: 0
 
-	/* The content item is reparented to the wrapper. */
-	onContentItemChanged: contentItem.parent = wrapper2
+	/* Internal: shortcup to avoid repeating root.ListView.view */
+	property Item _listView: root.ListView.view
+
+	/* The content item is reparented to the contentWrapper. */
+	onContentItemChanged: contentItem.parent = contentWrapper;
 
 	/* The top placeholder, only used to move an item at the top of the list. */
     Rectangle {
@@ -35,7 +41,17 @@ Item {
         }
         height: 0
 
-		color: "red"
+
+		Rectangle {
+			id: fakeTopPlaceholderItem
+			anchors {
+				fill: parent
+				bottomMargin: _listView.spacing
+			}
+
+			color: "#ffe082"
+			border.color: "#caae53"
+		}
     }
 
 	/* The item placeholder inside the ListView */
@@ -49,7 +65,7 @@ Item {
 		height: contentItem.height
 
         Rectangle {
-            id: wrapper
+			id: movableItem
             anchors {
                 top: parent.top
                 left: parent.left
@@ -81,12 +97,12 @@ Item {
                         bottom: parent.bottom
                     }
 
-                    dragTarget: wrapper
+					dragTarget: movableItem
                     onReleased: emitMoveItemRequested()
                 }
 
                 Rectangle {
-                    id: wrapper2
+					id: contentWrapper
                     anchors {
                         top: parent.top
                         left: dragHandle.right
@@ -116,16 +132,26 @@ Item {
 			top: itemPlaceholder.bottom
             left: parent.left
             right: parent.right
+			topMargin: _listView.spacing
         }
         height: 0
-		color: "#ffe082"
-		border.color: "#caae53"
+
+		Rectangle {
+			id: fakeBottomPlaceholderItem
+			anchors {
+				fill: parent
+				bottomMargin: _listView.spacing
+			}
+
+			color: "#ffe082"
+			border.color: "#caae53"
+		}
 	}
 
 	/* Scroll the view upward when the dragged element is at the top */
 	SmoothedAnimation {
 		id: scrollUpAnim
-		target: draggable.ListView.view
+		target: _listView
 		property: "contentY"
 		to: 0
 		running: _scrollingDirection == -1
@@ -134,9 +160,9 @@ Item {
 	/* Scroll the view downward when the dragged element is at the bottom */
 	SmoothedAnimation {
 		id: scrollDownAnim
-		target: draggable.ListView.view
+		target: _listView
 		property: "contentY"
-		to: draggable.ListView.view.contentHeight - draggable.ListView.view.height
+		to: _listView.contentHeight - _listView.height
 		running: _scrollingDirection == 1
 	}
 
@@ -165,8 +191,8 @@ Item {
 			left: parent.left
 			right: parent.right
 		}
-		property bool isLast: model.index === draggable.ListView.view.count - 1
-		height: isLast ? draggable.ListView.view.contentHeight - y : contentItem.height
+		property bool isLast: model.index === _listView.count - 1
+		height: isLast ? _listView.contentHeight - y : contentItem.height
 		property int dropIndex: model.index + 1
 	}
 
@@ -176,11 +202,11 @@ Item {
 			name: "dragging"
 
 			ParentChange {
-				target: wrapper
+				target: movableItem
 				parent: draggedItemParent
 			}
 			AnchorChanges {
-				target: wrapper
+				target: movableItem
 				anchors {
 					top: undefined
 					left: undefined
@@ -189,22 +215,22 @@ Item {
 				}
 			}
 			PropertyChanges {
-				target: wrapper
-				width: draggable.width
+				target: movableItem
+				width: root.width
 				height: contentItem.height
 			}
 
             PropertyChanges {
 				target: itemPlaceholder
-                height: - draggable.ListView.view.spacing // Cancel the view's spacing
+				height: - _listView.spacing // Cancel the view's spacing
 			}
 			PropertyChanges {
-				target: draggable
+				target: root
 				_scrollingDirection: {
-					var yCoord = draggable.ListView.view.mapFromItem(dragHandle, 0, dragHandle.mouseY).y;
+					var yCoord = _listView.mapFromItem(dragHandle, 0, dragHandle.mouseY).y;
 					if (yCoord < scrollEdgeSize) {
 						-1;
-					} else if (yCoord > draggable.ListView.view.height - scrollEdgeSize) {
+					} else if (yCoord > _listView.height - scrollEdgeSize) {
 						1;
 					} else {
 						0;
@@ -214,16 +240,12 @@ Item {
 		},
 
 		State {
-			when: topDropAreaLoader.containsDrag
+			when: topDropAreaLoader.item.containsDrag
 			name: "droppingAbove"
 
 			PropertyChanges {
 				target: topPlaceholder
-				height: contentItem.height
-				anchors {
-					topMargin: 8
-					bottomMargin: 8
-				}
+				height: contentItem.height + _listView.spacing
 			}
 			PropertyChanges {
 				target: topDropAreaLoader
@@ -237,11 +259,7 @@ Item {
 
 			PropertyChanges {
 				target: bottomPlaceholder
-				height: contentItem.height
-				anchors {
-					topMargin: 8
-					bottomMargin: 8
-				}
+				height: contentItem.height + _listView.spacing
 			}
 			PropertyChanges {
 				target: bottomDropArea
@@ -252,7 +270,7 @@ Item {
 
 
 	function emitMoveItemRequested() {
-		var dropArea = 	wrapper.Drag.target;
+		var dropArea = 	movableItem.Drag.target;
 		if (!dropArea) {
 			return;
 		}
@@ -266,7 +284,7 @@ Item {
 		if (model.index === dropIndex) {
 			return;
 		}
-		draggable.moveItemRequested(model.index, dropIndex);
+		root.moveItemRequested(model.index, dropIndex);
 
         // Scroll the ListView to ensure the dropped item is visible. This is required when dropping an item after the
 		// last item of the view. Delay the scroll using a timer because we have to wait until the view has moved the
@@ -279,7 +297,7 @@ Item {
 		id: makeDroppedItemVisibleTimer
 		interval: 0
 		onTriggered: {
-			draggable.ListView.view.positionViewAtIndex(model.index, ListView.Contain);
+			_listView.positionViewAtIndex(model.index, ListView.Contain);
 		}
 	}
 */
