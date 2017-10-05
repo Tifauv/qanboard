@@ -50,10 +50,12 @@ Item {
 
         Rectangle {
             id: wrapper
-			anchors.top: parent.top
-			anchors.left: parent.left
-			anchors.right: parent.right
-			anchors.bottom: parent.bottom
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
+            }
 
 			Drag.active: dragHandle.active
             Drag.hotSpot {
@@ -61,41 +63,50 @@ Item {
                 y: contentItem.height / 2
             }
 
-			Handle {
-				id: dragHandle
-				width: handleWidth
-				anchors {
-					top: parent.top
-					left: parent.left
-					bottom: parent.bottom
-				}
+            Rectangle {
+                id: shadowWrapper
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                }
 
-				dragTarget: parent
-				onReleased: emitMoveItemRequested()
-			}
+                Handle {
+                    id: dragHandle
+                    width: handleWidth
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                        bottom: parent.bottom
+                    }
 
-			Rectangle {
-				id: wrapper2
-				anchors {
-					top: parent.top
-					left: dragHandle.right
-					right: parent.right
-					bottom: parent.bottom
-				}
-			}
+                    dragTarget: wrapper
+                    onReleased: emitMoveItemRequested()
+                }
+
+                Rectangle {
+                    id: wrapper2
+                    anchors {
+                        top: parent.top
+                        left: dragHandle.right
+                        right: parent.right
+                        bottom: parent.bottom
+                    }
+                }
+            }
+
+            DropShadow {
+                id: shadow
+                anchors.fill: shadowWrapper
+                cached: true
+                verticalOffset: 1
+                radius: 8.0
+                samples: 16
+                color: "#80000000"
+                source: shadowWrapper
+            }
         }
-
-
-		DropShadow {
-			id: shadow
-			anchors.fill: wrapper
-			cached: true
-			verticalOffset: 1
-			radius: 8.0
-			samples: 16
-			color: "#80000000"
-			source: wrapper
-		}
 	}
 
 	/* The main placeholder is _after_ the wrapped item. */
@@ -183,12 +194,7 @@ Item {
 				height: contentItem.height
 			}
 
-			PropertyChanges {
-				target: shadow
-				visible: false
-			}
-
-			PropertyChanges {
+            PropertyChanges {
 				target: itemPlaceholder
 				height: 0
 			}
@@ -262,7 +268,7 @@ Item {
 		}
 		draggable.moveItemRequested(model.index, dropIndex);
 
-		// Scroll the ListView to ensure the droped item is visible. This is required when dropping an item after the
+        // Scroll the ListView to ensure the dropped item is visible. This is required when dropping an item after the
 		// last item of the view. Delay the scroll using a timer because we have to wait until the view has moved the
 		// item before we can scroll to it.
 		//makeDroppedItemVisibleTimer.start();
