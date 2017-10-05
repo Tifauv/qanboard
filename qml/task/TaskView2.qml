@@ -16,14 +16,12 @@ Rectangle {
 		console.log("selected changed : " + selected)
 	}
 
-	signal clicked()
-
 	MouseArea {
 		id: mouseArea
 		anchors.fill: parent
 		hoverEnabled: true
 
-		onPressAndHold: task.clicked()
+		onPressAndHold: selected = true
 
 		Column {
 			id: mainLayout
@@ -53,20 +51,12 @@ Rectangle {
 
 	states: [
 		State {
-			name: "ghost"
-
-			PropertyChanges {
-				target: task
-				opacity: 0.54
-			}
-		},
-		State {
 			name: "selected"
 			when: task.selected == true
 
 			PropertyChanges {
 				target: task
-				color: "#eeeeee"
+				border.color: "#1976d2"
 			}
 		}
 

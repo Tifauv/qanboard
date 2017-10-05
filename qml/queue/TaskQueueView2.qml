@@ -31,7 +31,7 @@ Rectangle {
 				description: model.description
 				selected: model.selected
 
-				onClicked: {
+				onSelectedChanged: {
 					console.log("(i) [TaskQueueView] Task with index " + index + " selected");
 
 					// Set the pointed item as current
