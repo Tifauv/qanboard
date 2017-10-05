@@ -196,7 +196,7 @@ Item {
 
             PropertyChanges {
 				target: itemPlaceholder
-				height: 0
+                height: - draggable.ListView.view.spacing // Cancel the view's spacing
 			}
 			PropertyChanges {
 				target: draggable
