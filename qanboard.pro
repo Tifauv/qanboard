@@ -1,14 +1,16 @@
-TARGET = qanboard
-TEMPLATE = app
-QT += qml quick
 CONFIG += c++11
 
 # Import the C++ code
-include(app/app.pri)
+include(app/app_src.pri)
 
-RESOURCES += qml.qrc
+test {
+    message(Building Qanboard unit tests...)
 
-OTHER_FILES += sample.xml
+    include(test/test.pri)
+}
+else {
+    message(Building Qanboard app...)
 
-# Default rules for deployment
-include(deployment.pri)
+    include(app/app.pri)
+    include(deployment.pri)
+}
