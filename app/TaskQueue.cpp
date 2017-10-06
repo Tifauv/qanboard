@@ -219,8 +219,17 @@ void TaskQueue::appendRow(Task* p_task) {
  * @param p_destRow
  */
 void TaskQueue::moveRow(int p_row, int p_destRow) {
+	if (p_row < 0 || p_row >= rowCount()) {
+		qDebug() << "(i) [TaskQueue] Moved skipped because there is no index " << p_row;
+		return;
+	}
+
 	int destRow = p_destRow;
 	int realDestRow = destRow;
+	if (destRow < -1) {
+		qDebug() << "(i) [TaskQueue] Moved skipped because target index " << destRow << " is invalid";
+		return;
+	}
 	if (destRow == -1 || destRow >= rowCount()) {
 		destRow = rowCount();
 		realDestRow = destRow - 1;
