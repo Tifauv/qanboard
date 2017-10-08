@@ -149,6 +149,7 @@ void TaskQueue::insertRow(int p_row, Task* p_task) {
 	connect(p_task, SIGNAL(assigneeChanged(QString)),    SLOT(handleDataChanged()));
 	connect(p_task, SIGNAL(categoryChanged(QString)),    SLOT(handleDataChanged()));
 	m_tasks.insert(p_row, p_task);
+	p_task->setParent(this);
 	endInsertRows();
 	emit countChanged(count());
 	qDebug() << "(i) [TaskQueue] Task " << p_task->taskId() << " inserted into queue " << name() << " at position " << p_row;
@@ -247,6 +248,19 @@ void TaskQueue::moveRow(int p_row, int p_destRow) {
 		qDebug() << "(i) [TaskQueue] Moving task from row " << p_row << " to " << destRow << " was rejected.";
 	}
 
+}
+
+
+void TaskQueue::log() {
+	qDebug() << "{d} [TaskQueue] Queue " << m_name << " ----------";
+	for (int i=0; i<m_tasks.count(); ++i) {
+		Task* task = m_tasks.at(i);
+		if (task == nullptr)
+			qDebug() << "{d} [TaskQueue]   #" << i << ": <null>";
+		else
+			qDebug() << "{d} [TaskQueue]   #" << i << ": id " << task->taskId() << "  -  desc. " << task->description() << "  -  cat. " << task->category() << "  -  assgn. " << task->assignee();
+	}
+	qDebug() << "{d} [TaskQueue] ----------------------------------------";
 }
 
 

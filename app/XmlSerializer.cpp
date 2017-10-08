@@ -156,8 +156,7 @@ Task* XmlSerializer::readTask(QXmlStreamReader& p_xml) const {
 		qWarning() << "/!\\ [XmlSerializer] Failed to parse taskId " << taskIdStr << " as integer; skipping this task.";
         return nullptr;
 	}
-	Task* task = new Task();
-	task->setTaskId(taskId);
+	Task* task = new Task(taskId);
 
 	// Load the task's content
 	while (p_xml.readNextStartElement()) {

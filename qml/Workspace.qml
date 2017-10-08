@@ -27,6 +27,8 @@ Rectangle {
 
 				title: model.name
 				tasks: model.tasks
+
+				draggedTaskParent: workspace
 			}
 		}
 	}

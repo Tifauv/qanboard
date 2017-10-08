@@ -16,7 +16,7 @@ Item {
 	/* This item will become the contentItem's parent while it is dragged. */
     property Item draggedItemParent
 
-	/* */
+	/* Signals that a drag has started. Usefull to change the state of some upper component. */
 	signal dragStarted()
 
 	/* Signals a drag requested from 'from' position to 'to' position inside the list. */
@@ -39,15 +39,6 @@ Item {
 
 	/* The content item is reparented to the contentWrapper. */
 	onContentItemChanged: contentItem.parent = contentWrapper;
-
-    Component.onCompleted: {
-        console.log("{d} [Draggable] created for item " + model.index + " of list " + dropTargetItem);
-        dropTargetItem.log();
-    }
-    Component.onDestruction: {
-        console.log("{d} [Draggable] destroying for item " + model.index + " of list " + dropTargetItem);
-        dropTargetItem.log();
-    }
 
 	/* The top placeholder, only used to move an item at the top of the list. */
     Rectangle {
@@ -299,9 +290,6 @@ Item {
 		}
 		var dropIndex = dropArea.dropIndex;
 		var dropList = dropArea.targetList;
-
-		console.log("Source list: " + dropTargetItem)
-		console.log("Target list: " + dropList)
 
 		if (dropList === dropTargetItem) {
 			// If the target item is below us, then decrement dropIndex because the target item is going to move up when

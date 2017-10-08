@@ -42,6 +42,8 @@ public slots:
 	void appendRow(Task* task);
 	void moveRow(int origin, int destination);
 
+	void log();
+
 signals:
 	void nameChanged(const QString&);
 	void countChanged(int);

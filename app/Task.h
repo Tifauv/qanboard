@@ -19,9 +19,9 @@ class Task : public QObject {
 	Q_PROPERTY(QString assignee    READ assignee    WRITE setAssignee    NOTIFY assigneeChanged    DESIGNABLE false)
 
 public:
-	explicit Task(uint p_taskId = 0, const QString& p_description = QString::null, const QString& p_category = QString::null, const QString& p_assignee = QString::null, QObject* p_parent = 0);
+	explicit Task(uint p_taskId = 0, const QString& p_description = QString::null, const QString& p_category = QString::null, const QString& p_assignee = QString::null, QObject* p_parent = nullptr);
 	explicit Task(const Task&);
-	~Task() {}
+	~Task();
 
 	uint taskId() const;
 	const QString& description() const;

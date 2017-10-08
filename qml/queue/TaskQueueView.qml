@@ -10,49 +10,7 @@ Rectangle {
 
 	property string title: "Title"
 	property variant tasks
-
-	VisualDataModel {
-		id: visualModel
-
-		model: tasks
-
-		delegate: Draggable {
-			id: draggable
-			width: taskList.width - taskList.leftMargin - taskList.rightMargin
-			draggedItemParent: queue.parent
-			dropTargetItem: queue
-
-            TaskView {
-				id: task
-
-				taskId: model.taskId
-				assignee: model.assignee
-				description: model.description
-			}
-
-			onInternalMoveRequested: {
-                console.log("{d} [TaskQueueView] Internal move required of item " + from + " to position " + to);
-                tasks.moveRow(from, to);
-			}
-
-			onExternalMoveRequested: {
-                console.log("{d} [TaskQueueView] External move required of item " + from + " to list " + target + " at position " + to);
-                queue.log();
-                target.log();
-
-                var movedTask = tasks.at(from);
-                console.log("{d} [TaskQueueView] #1 Moved task is " + movedTask.taskId);
-                if (tasks.removeRow(from)) {
-                    console.log("{d} [TaskQueueView] #2 Moved task is " + movedTask.taskId);
-                    target.add(movedTask, to);
-                    console.log("{d} [TaskQueueView] #3 Moved task is " + movedTask.taskId);
-                }
-
-                queue.log();
-                target.log();
-            }
-		}
-	}
+	property Item draggedTaskParent
 
 	Title {
 		id: titleBox
@@ -85,7 +43,33 @@ Rectangle {
 			}
 			spacing: 8
 
-			model: visualModel
+			model: tasks
+
+			delegate: Draggable {
+				id: draggable
+				width: taskList.width - taskList.leftMargin - taskList.rightMargin
+				draggedItemParent: queue.draggedTaskParent
+				dropTargetItem: queue
+
+				TaskView {
+					taskId: model.taskId
+					assignee: model.assignee
+					description: model.description
+				}
+
+				onInternalMoveRequested: {
+					console.log("{d} [TaskQueueView] Internal move required of item " + from + " to position " + to);
+					tasks.moveRow(from, to);
+				}
+
+				onExternalMoveRequested: {
+					console.log("{d} [TaskQueueView] External move required of item " + from + " to list " + target + " at position " + to);
+					var movedTask = tasks.at(from);
+					if (tasks.removeRow(from)) {
+						target.add(movedTask, to);
+					}
+				}
+			}
 		}
 	}
 
@@ -95,18 +79,9 @@ Rectangle {
 	}
 
 
-    function log() {
-        console.log("{d} [TaskQueueView] #tasks for " + title + ": " + tasks.count);
-        for (var i=0; i<tasks.count; ++i) {
-            var tstTask = tasks.at(i);
-            if (tstTask) {
-                console.log("  [" + i + "] " + tstTask.taskId);
-            }
-            else {
-                console.log("  [" + i + "] <null>");
-            }
-        }
-    }
+	function log() {
+		tasks.log()
+	}
 
 	/**
 	 * Adds an item at a given position.
@@ -118,13 +93,5 @@ Rectangle {
 		else {
 			tasks.insertRow(p_position, p_model);
 		}
-	}
-
-
-	/**
-	 * Removes the item at a given position.
-	 */
-	function remove(p_position) {
-		tasks.removeRow(p_position);
 	}
 }

@@ -41,6 +41,11 @@ Task::Task(const Task& p_task) :
 }
 
 
+// DESTRUCTORS
+Task::~Task() {
+	qDebug() << "(i) [Task] Destroying task " << m_taskId;
+}
+
 // GETTERS
 /**
  * @brief Task::taskId
