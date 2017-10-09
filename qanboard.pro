@@ -1,16 +1,10 @@
-CONFIG += c++11
+TEMPLATE = subdirs
+CONFIG += ordered
 
-# Import the C++ code
-include(app/app_src.pri)
+SUBDIRS = core \
+          test \
+          app
+test.depends = core
+app.depends  = core
 
-test {
-    message(Building Qanboard unit tests...)
-
-    include(test/test.pri)
-}
-else {
-    message(Building Qanboard app...)
-
-    include(app/app.pri)
-    include(deployment.pri)
-}
+OTHER_FILES += sample.xml
