@@ -204,8 +204,11 @@ Item {
 			left: parent.left
 			right: parent.right
 		}
+		enabled: !dragHandle.active
 		property bool isLast: model.index === _listView.count - 1
-		height: isLast ? _listView.contentHeight - y : contentItem.height
+		property int defaultHeight: contentItem.height
+		property int heightIfLast: Math.max(_listView.height - y - ((contentItem.height + 8) * (_listView.count - 1)), contentItem.height)
+		height: isLast ? heightIfLast : defaultHeight
 		property int dropIndex: model.index + 1
 		property Item targetList: dropTargetItem
 	}
@@ -277,7 +280,7 @@ Item {
 			}
 			PropertyChanges {
 				target: bottomDropArea
-				height: contentItem.height * 2
+				height: isLast ? heightIfLast : defaultHeight * 2
 			}
 		}
 	]
