@@ -12,6 +12,12 @@ Rectangle {
 	property variant tasks
 	property Item draggedTaskParent
 
+	/* Signals the item at the given index has been dragged. */
+	signal itemDragStarted(int index)
+
+	/* Signals the item at the given index has been dropped. */
+	signal itemDragEnded(int index)
+
 	Title {
 		id: titleBox
 		height: 40
@@ -68,6 +74,16 @@ Rectangle {
 					if (tasks.removeRow(from)) {
 						target.add(movedTask, to);
 					}
+				}
+
+				onDragStarted: {
+					console.log("{d} [TaskQueueView] Item drag started");
+					queue.itemDragStarted(model.index);
+				}
+
+				onDragEnded: {
+					console.log("{d} [TaskQueueView] Item drag ended");
+					queue.itemDragEnded(model.index);
 				}
 			}
 		}

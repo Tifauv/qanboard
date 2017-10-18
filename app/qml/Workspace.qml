@@ -29,6 +29,9 @@ Rectangle {
 				tasks: model.tasks
 
 				draggedTaskParent: workspace
+
+				onItemDragStarted: workspace.state = "taskDragging"
+				onItemDragEnded:   workspace.state = ""
 			}
 		}
 	}
@@ -117,11 +120,6 @@ Rectangle {
 				properties: "anchors.bottomMargin"
 				duration: 150
 				easing.type: Easing.OutQuad
-			}
-			NumberAnimation {
-				target: draggedTask
-				properties: "x,y"
-				duration: 0
 			}
 		},
 		Transition {

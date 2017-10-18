@@ -19,6 +19,9 @@ Item {
 	/* Signals that a drag has started. Usefull to change the state of some upper component. */
 	signal dragStarted()
 
+	/* Signals that a drag has ended. Usefull to change the state of some upper component. */
+	signal dragEnded()
+
 	/* Signals a drag requested from 'from' position to 'to' position inside the list. */
 	signal internalMoveRequested(int from, int to)
 
@@ -110,7 +113,10 @@ Item {
 
 					onDragged: root.dragStarted()
 
-					onDropped: emitMoveItemRequested()
+					onDropped: {
+						emitMoveItemRequested();
+						root.dragEnded()
+					}
                 }
 
                 Rectangle {
