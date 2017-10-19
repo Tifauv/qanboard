@@ -12,6 +12,8 @@ SOURCES += main.cpp
 
 RESOURCES += qml.qrc
 
+include(fontawesome.pri/fontawesome.pri)
+
 isEmpty(target.path) {
     target.path = /opt/$${TARGET}/bin
     export(target.path)

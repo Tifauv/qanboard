@@ -58,6 +58,7 @@ int main(int p_argc, char *p_argv[]) {
 	//engine.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
 	engine.rootContext()->setContextProperty("workflow", &wf);
 
+	engine.addImportPath("qrc:///");
 	engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 
 	int rc = app.exec();
