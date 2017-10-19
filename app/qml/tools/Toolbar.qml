@@ -1,4 +1,5 @@
-import QtQuick 2.4
+import QtQuick 2.6
+import FontAwesome 1.0
 
 Rectangle {
 	id: toolbar
@@ -15,9 +16,10 @@ Rectangle {
 		anchors.margins: 8
 		height: parent.height - anchors.topMargin - anchors.bottomMargin
 
-		TextButton {
+		DropButton {
 			id: delTask
 			height: layout.height
+			icon: FontAwesome.trash
 			label: qsTr("Delete task")
 
 			onClicked: toolbar.removeTask()
