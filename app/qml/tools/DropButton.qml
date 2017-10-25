@@ -4,42 +4,25 @@ import FontAwesome 1.0
 Rectangle {
 	id: button
 	height: 32
-	width: btnIcon.width + btnLabel.anchors.leftMargin + btnLabel.width + 12 // 6 = right margin
+	width: labelWithIcon.width
 
 	property string label: "Label"
 	property string icon: FontAwesome.fontAwesome
 	property color textColor: "#ffab00"
 
-	signal clicked()
-	signal pressed()
-	signal released()
+	signal activated()
 
-	Text {
-		id: btnIcon
+	IconLabel {
+		id: labelWithIcon
+
+		text: button.label
+		icon: button.icon
+		color: button.textColor
+
 		anchors {
 			verticalCenter: parent.verticalCenter
-			topMargin: 8
-			bottomMargin: 8
-			left: button.left
-			leftMargin: 6
+			horizontalCenter: parent.horizontalCenter
 		}
-		font.family: FontAwesome.fontFamily
-		text: button.icon
-		color: textColor
-	}
-
-	Text {
-		id: btnLabel
-		anchors {
-			verticalCenter: parent.verticalCenter
-			topMargin: 8
-			bottomMargin: 8
-			left: btnIcon.right
-			leftMargin: 8
-		}
-		text: label
-		color: textColor
-		font.weight: Font.Bold
 	}
 
 	MouseArea {
@@ -47,9 +30,7 @@ Rectangle {
 		anchors.fill: parent
 		hoverEnabled: true
 
-		onClicked: button.clicked()
-		onPressed: button.pressed()
-		onReleased: button.released()
+		onClicked: button.activated()
 	}
 
 	states: [
@@ -61,11 +42,7 @@ Rectangle {
 				color: "#ffab00"
 			}
 			PropertyChanges {
-				target: btnIcon
-				color: "white"
-			}
-			PropertyChanges {
-				target: btnLabel
+				target: labelWithIcon
 				color: "white"
 			}
 		}

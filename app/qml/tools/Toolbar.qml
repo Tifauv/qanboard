@@ -22,7 +22,7 @@ Rectangle {
 			icon: FontAwesome.trash
 			label: qsTr("Delete task")
 
-			onClicked: toolbar.removeTask()
+			onActivated: toolbar.removeTask()
 		}
 	}
 
