@@ -56,6 +56,7 @@ Rectangle {
 				width: taskList.width - taskList.leftMargin - taskList.rightMargin
 				draggedItemParent: queue.draggedTaskParent
 				dropTargetItem: queue
+				dragKey: "task"
 
 				TaskView {
 					taskId: model.taskId
@@ -64,14 +65,14 @@ Rectangle {
 				}
 
 				onInternalMoveRequested: {
-					console.log("{d} [TaskQueueView] Internal move required of item " + from + " to position " + to);
-					tasks.moveRow(from, to);
+					console.log("{d} [TaskQueueView] Internal move required of item " + from + " to position " + to + " inside list " + source);
+					source.move(from, to);
 				}
 
 				onExternalMoveRequested: {
-					console.log("{d} [TaskQueueView] External move required of item " + from + " to list " + target + " at position " + to);
-					var movedTask = tasks.at(from);
-					if (tasks.removeRow(from)) {
+					console.log("{d} [TaskQueueView] External move required of item " + from + " from list " + source + " to list " + target + " at position " + to);
+					var movedTask = source.at(from);
+					if (source.remove(from)) {
 						target.add(movedTask, to);
 					}
 				}
@@ -95,12 +96,16 @@ Rectangle {
 	}
 
 
+	/**
+	 * Logs the view's model content.
+	 */
 	function log() {
 		tasks.log()
 	}
 
+
 	/**
-	 * Adds an item at a given position.
+	 * Adds an item with model p_model at p_position.
 	 */
 	function add(p_model, p_position) {
 		if (p_position === -1) {
@@ -109,5 +114,31 @@ Rectangle {
 		else {
 			tasks.insertRow(p_position, p_model);
 		}
+	}
+
+
+	/**
+	 * Removes the item at position p_position.
+	 *
+	 * @return true  if an item was removed,
+	 *         false otherwise
+	 */
+	function remove(p_position) {
+		return tasks.removeRow(p_position);
+	}
+
+
+	/**
+	 * Returns the item at the given p_position.
+	 */
+	function at(p_position) {
+		return tasks.at(p_position);
+	}
+
+	/**
+	 * Moves the item at position p_from to position p_to.
+	 */
+	function move(p_from, p_to) {
+		tasks.moveRow(p_from, p_to);
 	}
 }

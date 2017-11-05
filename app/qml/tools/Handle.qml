@@ -1,4 +1,4 @@
-import QtQuick 2.6
+import QtQuick 2.7
 
 Rectangle {
 	id: button
@@ -22,14 +22,18 @@ Rectangle {
 		drag.target: dragTarget
 		drag.smoothed: false
 
-		onPressed: {
-			if (!drag.active)
+		onPressAndHold: {
+			if (!drag.active) {
+				dragTarget.Drag.startDrag(Qt.MoveAction);
 				button.dragged(mouse);
+			}
 		}
 
 		onReleased: {
-			if (drag.active)
+			if (drag.active) {
+				dragTarget.Drag.drop();
 				button.dropped(mouse);
+			}
 		}
 	}
 

@@ -16,23 +16,28 @@ Item {
 	/* This item will become the contentItem's parent while it is dragged. */
     property Item draggedItemParent
 
+	/* This is the type of object that this Draggable will drag */
+	property string dragKey
+
 	/* Signals that a drag has started. Usefull to change the state of some upper component. */
 	signal dragStarted()
 
 	/* Signals that a drag has ended. Usefull to change the state of some upper component. */
 	signal dragEnded()
 
-	/* Signals a drag requested from 'from' position to 'to' position inside the list. */
-	signal internalMoveRequested(int from, int to)
+	/* Signals a drag requested from 'from' position to 'to' position inside the 'source' list. */
+	signal internalMoveRequested(var source, int from, int to)
 
-	/* Signals a drag requested from 'from' position to 'to' position in the 'target' list. */
-	signal externalMoveRequested(int from, var target, int to)
+	/* Signals a drag requested from 'from' position in the 'source' list to 'to' position in the 'target' list. */
+	signal externalMoveRequested(var source, int from, var target, int to)
 
 	/* The width of the contentItem's drag handle added at its left. */
 	property int handleWidth: 8
 
 	/* Size of the area at the top and bottom of the list where drag-scrolling happens. */
 	property int scrollEdgeSize: 6
+
+	property int modelIndex: model.index
 
 	/* Internal: -1 when drag-scrolling up / 1 when drag-scrolling down */
 	property int _scrollingDirection: 0
@@ -86,10 +91,12 @@ Item {
             }
 
 			Drag.active: dragHandle.active
+			Drag.source: root
             Drag.hotSpot {
                 x: contentItem.width / 2
                 y: contentItem.height / 2
             }
+			Drag.keys: [ dragKey ]
 
             Rectangle {
                 id: shadowWrapper
@@ -111,12 +118,8 @@ Item {
 
 					dragTarget: movableItem
 
-					onDragged: root.dragStarted()
-
-					onDropped: {
-						emitMoveItemRequested();
-						root.dragEnded()
-					}
+					onDragged: root.dragStarted();
+					onDropped: root.dragEnded()
                 }
 
                 Rectangle {
@@ -172,7 +175,7 @@ Item {
 		target: _listView
 		property: "contentY"
 		to: 0
-		running: _scrollingDirection == -1
+		running: false//_scrollingDirection == -1
 	}
 
 	/* Scroll the view downward when the dragged element is at the bottom */
@@ -181,7 +184,7 @@ Item {
 		target: _listView
 		property: "contentY"
 		to: _listView.contentHeight - _listView.height
-		running: _scrollingDirection == 1
+		running: false//_scrollingDirection == 1
 	}
 
 	/* The top drop area is loaded only for the listview's top item. */
@@ -194,10 +197,31 @@ Item {
 			bottom: itemPlaceholder.verticalCenter
 		}
 		height: contentItem.height
+
 		sourceComponent: Component {
 			DropArea {
-				property int dropIndex: 0
+				keys: [ dragKey ]
+
+				property int targetIndex: 0
 				property Item targetList: dropTargetItem
+
+				onDropped : {
+					var sourceList  = drop.source.dropTargetItem;
+					var sourceIndex = drop.source.modelIndex;
+
+					if (targetList === sourceList) {
+						// If the target item is below us, then decrement targetIndex because the target item is going to move up when
+						// our item leaves its place
+						if (sourceIndex < targetIndex)
+							targetIndex--;
+						if (sourceIndex === targetIndex)
+							return;
+
+						root.internalMoveRequested(sourceList, sourceIndex, targetIndex);
+					}
+					else
+						root.externalMoveRequested(sourceList, sourceIndex, targetList, targetIndex);
+				}
 			}
 		}
 	}
@@ -210,13 +234,33 @@ Item {
 			left: parent.left
 			right: parent.right
 		}
+
 		enabled: !dragHandle.active
+		keys: [ dragKey ]
+
 		property bool isLast: model.index === _listView.count - 1
 		property int defaultHeight: contentItem.height
 		property int heightIfLast: Math.max(_listView.height - y - ((contentItem.height + 8) * (_listView.count - 1)), contentItem.height)
 		height: isLast ? heightIfLast : defaultHeight
-		property int dropIndex: model.index + 1
+
+		property int targetIndex: model.index + 1
 		property Item targetList: dropTargetItem
+
+		onDropped : {
+			var sourceList  = drop.source.dropTargetItem;
+			var sourceIndex = drop.source.modelIndex;
+
+			if (targetList === sourceList) {
+				if (sourceIndex < targetIndex)
+					targetIndex--;
+				if (sourceIndex === targetIndex)
+					return;
+
+				root.internalMoveRequested(sourceList, sourceIndex, targetIndex);
+			}
+			else
+				root.externalMoveRequested(sourceList, sourceIndex, targetList, targetIndex);
+		}
 	}
 
 	states: [
@@ -290,39 +334,6 @@ Item {
 			}
 		}
 	]
-
-
-	function emitMoveItemRequested() {
-		var dropArea = 	movableItem.Drag.target;
-		if (!dropArea) {
-			return;
-		}
-		var dropIndex = dropArea.dropIndex;
-		var dropList = dropArea.targetList;
-
-		if (dropList === dropTargetItem) {
-			// If the target item is below us, then decrement dropIndex because the target item is going to move up when
-			// our item leaves its place
-			if (model.index < dropIndex) {
-				dropIndex--;
-			}
-			if (model.index === dropIndex) {
-				return;
-			}
-
-            // Emit the signal
-			root.internalMoveRequested(model.index, dropIndex);
-		}
-		else {
-            // Emit the signal
-			root.externalMoveRequested(model.index, dropList, dropIndex);
-		}
-
-        // Scroll the ListView to ensure the dropped item is visible. This is required when dropping an item after the
-		// last item of the view. Delay the scroll using a timer because we have to wait until the view has moved the
-		// item before we can scroll to it.
-		//makeDroppedItemVisibleTimer.start();
-	}
 
 /*
 	Timer {
