@@ -8,9 +8,13 @@ Rectangle {
 
 	property string label: "Label"
 	property string icon: FontAwesome.fontAwesome
-	property color textColor: "#ffab00"
+	property color textColor: Qt.rgba(0, 0, 0, 0.87)
+	property color bgColor: "#00ffffff"
+	property string dropKey
 
 	signal activated()
+
+	color: bgColor
 
 	IconLabel {
 		id: labelWithIcon
@@ -25,18 +29,23 @@ Rectangle {
 		}
 	}
 
-	MouseArea {
-		id: mouseArea
-		anchors.fill: parent
-		hoverEnabled: true
+	DropArea {
+		id: dropArea
+		anchors.fill: button
 
-		onClicked: button.activated()
+		keys: [ dropKey ]
+
+		onDropped: {
+			console.log("Dropped");
+			button.activated();
+		}
 	}
 
 	states: [
 		State {
-			name: "highlighted"
-			when: mouseArea.containsMouse
+			name: "hovered"
+			when: dropArea.containsDrag
+
 			PropertyChanges {
 				target: button
 				color: "#ffab00"

@@ -3,27 +3,27 @@ import FontAwesome 1.0
 
 Rectangle {
 	id: toolbar
-	color: "#bbdefb"
+	color: "#ffe082"
 	width: 800
 	height: 0
 
 	signal removeTask()
 
-	Row {
-		id: layout
-		visible: false
-		anchors.fill: parent
-		anchors.margins: 8
-		height: parent.height - anchors.topMargin - anchors.bottomMargin
-
-		DropButton {
-			id: delTask
-			height: layout.height
-			icon: FontAwesome.trash
-			label: qsTr("Delete task")
-
-			onActivated: toolbar.removeTask()
+	DropButton {
+		id: delTask
+		anchors {
+			verticalCenter: toolbar.verticalCenter
+			horizontalCenter: toolbar.horizontalCenter
 		}
+		height: toolbar.height
+
+		visible: toolbar.height > 0
+
+		icon: FontAwesome.trash
+		label: qsTr("Delete task")
+		dropKey: "task"
+
+		onActivated: toolbar.removeTask()
 	}
 
 	states: [
@@ -32,15 +32,7 @@ Rectangle {
 
 			PropertyChanges {
 				target: toolbar
-				height: 48
-			}
-			PropertyChanges {
-				target: layout
-				visible: true
-			}
-			PropertyChanges {
-				target: delTask
-				visible: true
+				height: 32
 			}
 		}
 	]
