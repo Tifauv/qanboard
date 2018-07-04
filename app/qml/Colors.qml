@@ -48,7 +48,7 @@ Rectangle {
 
 		Text {
 			id: titleLbl
-			color: Qt.rgba(1, 1, 1, 0.87)
+			color: Qt.rgba(1, 1, 1, 0.87) // mainText
 			anchors {
 				fill: parent
 				margins: 8
@@ -91,7 +91,7 @@ Rectangle {
 					rightMargin: 6
 					bottomMargin: 4
 				}
-				color: Qt.rgba(0, 0, 0, 0.87)
+				color: Qt.rgba(0, 0, 0, 0.87) // normalText
 				font.pointSize: 10
 				text: "Normal Text"
 			}
@@ -108,7 +108,7 @@ Rectangle {
 					rightMargin: 6
 					bottomMargin: 4
 				}
-				color: Qt.rgba(0, 0, 0, 0.54)
+				color: Qt.rgba(0, 0, 0, 0.54) // secondaryText
 				text: "Secondary Text"
 			}
 		}
@@ -132,7 +132,7 @@ Rectangle {
 					rightMargin: 6
 					bottomMargin: 4
 				}
-				color: Qt.rgba(0, 0, 0, 0.26)
+				color: Qt.rgba(0, 0, 0, 0.26) // disabledText
 				font.pointSize: 10
 				text: "Disabled Text"
 			}
