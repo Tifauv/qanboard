@@ -10,7 +10,7 @@ INCLUDEPATH += ../core
 
 SOURCES += main.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += ui.qrc
 
 include(fontawesome.pri/fontawesome.pri)
 
