@@ -122,13 +122,17 @@ bool TaskQueue::setData(const QModelIndex& p_index, const QVariant& p_value, int
 /*  TaskId should not be editable.
  *	case TaskIdRole:
  *		task->setTaskId(p_value.toUInt());
+ *		break;
  */
 	case DescriptionRole:
 		task->setDescription(p_value.toString());
+		break;
 	case CategoryRole:
 		task->setCategory(p_value.toString());
+		break;
 	case AssigneeRole:
 		task->setAssignee(p_value.toString());
+		break;
 	default:
 		return false;
 	}
