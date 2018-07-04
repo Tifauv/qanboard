@@ -39,9 +39,6 @@ Item {
 
 	property int modelIndex: model.index
 
-	/* Internal: -1 when drag-scrolling up / 1 when drag-scrolling down */
-	property int _scrollingDirection: 0
-
 	/* Internal: shortcup to avoid repeating root.ListView.view */
 	property Item _listView: root.ListView.view
 
@@ -97,6 +94,7 @@ Item {
                 y: contentItem.height / 2
             }
 			Drag.keys: [ dragKey ]
+			Drag.proposedAction: Qt.MoveAction
 
             Rectangle {
                 id: shadowWrapper
@@ -118,9 +116,12 @@ Item {
 
 					dragTarget: movableItem
 
-					onDragged: root.dragStarted();
-					onDropped: root.dragEnded()
-                }
+					onPressed: root.dragStarted();
+					onReleased: {
+						movableItem.Drag.drop();
+						root.dragEnded();
+					}
+				}
 
                 Rectangle {
 					id: contentWrapper
@@ -169,24 +170,6 @@ Item {
 		}
 	}
 
-	/* Scroll the view upward when the dragged element is at the top */
-	SmoothedAnimation {
-		id: scrollUpAnim
-		target: _listView
-		property: "contentY"
-		to: 0
-		running: false//_scrollingDirection == -1
-	}
-
-	/* Scroll the view downward when the dragged element is at the bottom */
-	SmoothedAnimation {
-		id: scrollDownAnim
-		target: _listView
-		property: "contentY"
-		to: _listView.contentHeight - _listView.height
-		running: false//_scrollingDirection == 1
-	}
-
 	/* The top drop area is loaded only for the listview's top item. */
 	Loader {
 		id: topDropAreaLoader
@@ -218,9 +201,12 @@ Item {
 							return;
 
 						root.internalMoveRequested(sourceList, sourceIndex, targetIndex);
+						drop.accept(Qt.MoveAction);
 					}
-					else
+					else {
 						root.externalMoveRequested(sourceList, sourceIndex, targetList, targetIndex);
+						drop.accept(Qt.MoveAction);
+					}
 				}
 			}
 		}
@@ -235,7 +221,7 @@ Item {
 			right: parent.right
 		}
 
-		enabled: !dragHandle.active
+		enabled: !movableItem.Drag.active
 		keys: [ dragKey ]
 
 		property bool isLast: model.index === _listView.count - 1
@@ -247,6 +233,7 @@ Item {
 		property Item targetList: dropTargetItem
 
 		onDropped : {
+			console.log("Dropped at index " + targetIndex)
 			var sourceList  = drop.source.dropTargetItem;
 			var sourceIndex = drop.source.modelIndex;
 
@@ -257,15 +244,22 @@ Item {
 					return;
 
 				root.internalMoveRequested(sourceList, sourceIndex, targetIndex);
+				drop.accept(Qt.MoveAction);
 			}
-			else
+			else {
 				root.externalMoveRequested(sourceList, sourceIndex, targetList, targetIndex);
+				drop.accept(Qt.MoveAction);
+			}
 		}
+	}
+
+	onStateChanged: {
+		console.log("Item " + modelIndex + " of queue '" + _listView + "' entering state '" + state +"'")
 	}
 
 	states: [
 		State {
-			when: dragHandle.active
+			when: movableItem.Drag.active
 			name: "dragging"
 
 			ParentChange {
@@ -290,19 +284,6 @@ Item {
             PropertyChanges {
 				target: itemPlaceholder
 				height: - _listView.spacing // Cancel the view's spacing
-			}
-			PropertyChanges {
-				target: root
-				_scrollingDirection: {
-					var yCoord = _listView.mapFromItem(dragHandle, 0, dragHandle.mouseY).y;
-					if (yCoord < scrollEdgeSize) {
-						-1;
-					} else if (yCoord > _listView.height - scrollEdgeSize) {
-						1;
-					} else {
-						0;
-					}
-				}
 			}
 		},
 

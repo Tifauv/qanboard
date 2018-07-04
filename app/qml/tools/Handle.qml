@@ -12,8 +12,8 @@ Rectangle {
 	property alias mouseX: mouseArea.mouseX
 	property alias mouseY: mouseArea.mouseY
 
-	signal dragged()
-	signal dropped()
+	signal pressed()
+	signal released()
 
 	MouseArea {
 		id: mouseArea
@@ -22,19 +22,8 @@ Rectangle {
 		drag.target: dragTarget
 		drag.smoothed: false
 
-		onPressAndHold: {
-			if (!drag.active) {
-				dragTarget.Drag.startDrag(Qt.MoveAction);
-				button.dragged(mouse);
-			}
-		}
-
-		onReleased: {
-			if (drag.active) {
-				dragTarget.Drag.drop();
-				button.dropped(mouse);
-			}
-		}
+		onPressed: button.pressed()
+		onReleased: button.released()
 	}
 
 	states: [
