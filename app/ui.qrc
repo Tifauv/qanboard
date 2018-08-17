@@ -17,5 +17,6 @@
         <file>qml/task/TaskHeader.qml</file>
         <file>qml/task/TaskView.qml</file>
         <file>qml/tools/IconLabel.qml</file>
+        <file>qml/tools/DropPlaceholder.qml</file>
     </qresource>
 </RCC>

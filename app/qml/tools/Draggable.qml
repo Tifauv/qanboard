@@ -46,26 +46,14 @@ Item {
 	onContentItemChanged: contentItem.parent = contentWrapper;
 
 	/* The top placeholder, only used to move an item at the top of the list. */
-    Rectangle {
+	DropPlaceholder {
         id: topPlaceholder
         anchors {
             top: parent.top
             left: parent.left
             right: parent.right
         }
-        height: 0
-
-
-		Rectangle {
-			id: fakeTopPlaceholderItem
-			anchors {
-				fill: parent
-				bottomMargin: _listView.spacing
-			}
-
-			color: "#ffe082"
-			border.color: "#caae53"
-		}
+		spacing: _listView.spacing
     }
 
 	/* The item placeholder inside the ListView */
@@ -148,7 +136,7 @@ Item {
 	}
 
 	/* The main placeholder is _after_ the wrapped item. */
-    Rectangle {
+	DropPlaceholder {
         id: bottomPlaceholder
         anchors {
 			top: itemPlaceholder.bottom
@@ -156,18 +144,7 @@ Item {
             right: parent.right
 			topMargin: _listView.spacing
         }
-        height: 0
-
-		Rectangle {
-			id: fakeBottomPlaceholderItem
-			anchors {
-				fill: parent
-				bottomMargin: _listView.spacing
-			}
-
-			color: "#ffe082"
-			border.color: "#caae53"
-		}
+		spacing: _listView.spacing
 	}
 
 	/* The top drop area is loaded only for the listview's top item. */
