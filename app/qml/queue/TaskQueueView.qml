@@ -9,6 +9,7 @@ Rectangle {
 	height: 320
 
 	property string title: "Title"
+	property string taskDragKey: "task"
 	property variant tasks
 	property Item draggedTaskParent
 
@@ -56,7 +57,7 @@ Rectangle {
 				width: taskList.width - taskList.leftMargin - taskList.rightMargin
 				draggedItemParent: queue.draggedTaskParent
 				dropTargetItem: queue
-				dragKey: "task"
+				dragKey: taskDragKey
 
 				TaskView {
 					taskId: model.taskId
@@ -87,9 +88,50 @@ Rectangle {
 					queue.itemDragEnded(model.index);
 				}
 			}
+
+			DropPlaceholder {
+				id: emptyPlaceholder
+				anchors {
+					top: taskList.top
+					left: taskList.left
+					right: taskList.right
+				}
+			}
+		}
+
+		Loader {
+			id: emptyDropAreaLoader
+			active: taskList.model.count === 0
+			anchors.fill: taskList
+
+			sourceComponent: Component {
+				DropArea {
+					keys: [ taskDragKey ]
+
+					onDropped: {
+						var sourceList  = drop.source.dropTargetItem;
+						var sourceIndex = drop.source.modelIndex;
+
+						var movedTask = sourceList.at(sourceIndex);
+						if (sourceList.remove(sourceIndex)) {
+							queue.add(movedTask, 0);
+						}
+						drop.accept(Qt.MoveAction);
+					}
+				}
+			}
 		}
 	}
 
+	states: State {
+		when: emptyDropAreaLoader.item.containsDrag
+		name: "DroppingEmpty"
+
+		PropertyChanges {
+			target: emptyPlaceholder
+			height: 80 + taskList.spacing
+		}
+	}
 
 	Component.onCompleted: {
 		console.log("(i) [TaskQueueView] Created for queue '" + title + "' with " + tasks.count + " tasks.");
