@@ -78,7 +78,7 @@ Item {
 			Drag.active: dragHandle.active
 			Drag.source: root
             Drag.hotSpot {
-                x: contentItem.width / 2
+				x: dragHandle.width / 2
                 y: contentItem.height / 2
             }
 			Drag.keys: [ dragKey ]
