@@ -31,11 +31,8 @@ Rectangle {
 		state: "secondary"
 	}
 
-	TextEdit {
-		id: descriptionTxt
-		text: qsTr(description)
-		wrapMode: Text.WordWrap
-		font.pointSize: 9
+	Rectangle {
+		id: descriptionFrame
 		anchors.top: header.bottom
 		anchors.topMargin: spacing
 		anchors.left: parent.left
@@ -43,7 +40,16 @@ Rectangle {
 		anchors.right: parent.right
 		anchors.rightMargin: margin
 		anchors.bottom: actionLayout.top
-		color: Qt.rgba(0, 0, 0, 0.87)
+		border.color: "#eeeeee"
+
+		TextEdit {
+			id: descriptionTxt
+			text: qsTr(description)
+			wrapMode: Text.WordWrap
+			font.pointSize: 9
+			anchors.fill: parent
+			color: Qt.rgba(0, 0, 0, 0.87)
+		}
 	}
 
 	Row {
