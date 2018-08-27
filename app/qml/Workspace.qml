@@ -50,12 +50,9 @@ Rectangle {
 		}
 	}
 
-	Rectangle {
+	ShadowWall {
 		id: shadow
 		anchors.fill: parent
-		color: "#333333"
-		opacity: 0
-
 	}
 
 	NewTask {
@@ -71,6 +68,7 @@ Rectangle {
 		onClicked: workspace.state = "addingTask"
 
 		onAddTask: {
+			console.log("(i) [NewTask] onAddTask()");
 			workflow.createTask(description);
 			workspace.state = ""
 		}
@@ -99,7 +97,7 @@ Rectangle {
 			name: "addingTask"
 			PropertyChanges {
 				target: shadow
-				opacity: 0.5
+				state: "blocking"
 			}
 			PropertyChanges {
 				target: newTask

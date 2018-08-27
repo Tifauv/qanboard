@@ -18,5 +18,6 @@
         <file>qml/task/TaskView.qml</file>
         <file>qml/tools/IconLabel.qml</file>
         <file>qml/tools/DropPlaceholder.qml</file>
+        <file>qml/tools/ShadowWall.qml</file>
     </qresource>
 </RCC>
