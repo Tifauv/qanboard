@@ -85,7 +85,7 @@ Rectangle {
 		onClicked: task.clicked()
 
 		Text {
-			color: "black"
+			color: "white"
 			text: "+"
 			font.pointSize: parent.height * 0.75
 			anchors.horizontalCenter: parent.horizontalCenter
