@@ -4,7 +4,7 @@ import FontAwesome 1.0
 Rectangle {
 	id: button
 	height: 32
-	width: labelWithIcon.width
+	width: labelWithIcon.width + 16 // 8 pix margin on each side
 
 	property string label: "Label"
 	property string icon: FontAwesome.fontAwesome
@@ -12,7 +12,7 @@ Rectangle {
 	property color bgColor: "#00ffffff"
 	property string dropKey
 
-	signal activated()
+	signal activated(var queue, int taskIndex)
 
 	color: bgColor
 
@@ -37,7 +37,11 @@ Rectangle {
 
 		onDropped: {
 			console.log("Dropped");
-			button.activated();
+			var sourceList  = drop.source.dropTargetItem;
+			var sourceIndex = drop.source.modelIndex;
+
+			button.activated(sourceList, sourceIndex);
+			drop.accept(Qt.MoveAction);
 		}
 	}
 

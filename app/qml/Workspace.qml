@@ -44,6 +44,7 @@ Rectangle {
 
 		onRemoveTask: {
 			console.log("Asked to delete task");
+			queue.remove(taskIndex);
 
 			//Cleanup
 			workspace.state = ""

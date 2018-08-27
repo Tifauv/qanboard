@@ -4,18 +4,19 @@ import FontAwesome 1.0
 Rectangle {
 	id: toolbar
 	color: "#ffe082"
+	border.color: "#caae53"
 	width: 800
 	height: 0
 
-	signal removeTask()
+	signal removeTask(var queue, int taskIndex)
 
 	DropButton {
 		id: delTask
 		anchors {
-			verticalCenter: toolbar.verticalCenter
+			top: toolbar.top
+			bottom: toolbar.bottom
 			horizontalCenter: toolbar.horizontalCenter
 		}
-		height: toolbar.height
 
 		visible: toolbar.height > 0
 
@@ -23,7 +24,7 @@ Rectangle {
 		label: qsTr("Delete task")
 		dropKey: "task"
 
-		onActivated: toolbar.removeTask()
+		onActivated: toolbar.removeTask(queue, taskIndex)
 	}
 
 	states: [
