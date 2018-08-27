@@ -100,8 +100,8 @@ void XmlSerializer::readWorkflow(QXmlStreamReader& p_xml, Workflow& p_workflow) 
 	}
 	p_workflow.setTaskId(nextId);
 
-	// Get the default queue
-	p_workflow.setDefaultQueue(p_xml.attributes().value(QWF_ATTR_DEFAULTQUEUE).toString());
+	// Save the default queue name
+	const QString& defaultQueueName = p_xml.attributes().value(QWF_ATTR_DEFAULTQUEUE).toString();
 
 	// Load the task queues
 	while (p_xml.readNextStartElement()) {
@@ -110,6 +110,9 @@ void XmlSerializer::readWorkflow(QXmlStreamReader& p_xml, Workflow& p_workflow) 
 		else
 			p_xml.skipCurrentElement();
 	}
+
+	// Let the workflow select the default queue
+	p_workflow.selectDefaultQueue(defaultQueueName);
 }
 
 

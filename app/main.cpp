@@ -46,10 +46,10 @@ int main(int p_argc, char *p_argv[]) {
 	// If no workflow was loaded, create an empty structure
 	if (wf.count() == 0) {
 		wf.createQueue("Backlog");
-		wf.createQueue("Ready");
-		wf.createQueue("Work in progress");
+		wf.createQueue("Selected");
+		wf.createQueue("In progress");
 		wf.createQueue("Done");
-		wf.setDefaultQueue("Backlog");
+		wf.selectDefaultQueue("Backlog");
 	}
 
 	// Create the QML view & show it !

@@ -68,8 +68,16 @@ void Workflow::setTaskId(uint p_taskId) {
  * @brief Workflow::setDefaultQueue
  * @param p_queueName
  */
-void Workflow::setDefaultQueue(const QString& p_queueName) {
-	m_defaultQueue = p_queueName;
+void Workflow::selectDefaultQueue(const QString& p_queueName) {
+	// If the requested default queue exists, select it as default
+	if (!p_queueName.isEmpty() && find(p_queueName) != nullptr)
+		m_defaultQueue = p_queueName;
+	// If there is at least one queue loaded, select the first queue
+	else if (!m_queues.isEmpty())
+		m_defaultQueue = m_queues.first()->name();
+	// Otherwise, no default
+	else
+		m_defaultQueue = "";
 }
 
 

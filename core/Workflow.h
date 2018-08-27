@@ -10,7 +10,7 @@ class Workflow : public QAbstractListModel {
 	Q_OBJECT
 
 	Q_PROPERTY(uint    taskId        READ taskId        WRITE setTaskId        NOTIFY taskIdChanged  DESIGNABLE false)
-	Q_PROPERTY(QString defaultQueue  READ defaultQueue  WRITE setDefaultQueue)
+	Q_PROPERTY(QString defaultQueue  READ defaultQueue)
 	Q_PROPERTY(int     count         READ count                                NOTIFY countChanged)
 
 public:
@@ -27,7 +27,7 @@ public:
 	int count() const;
 
 	void setTaskId(uint);
-	void setDefaultQueue(const QString&);
+	void selectDefaultQueue(const QString&);
 
 	int rowCount(const QModelIndex& parent) const override;
 	QHash<int, QByteArray> roleNames() const override;
