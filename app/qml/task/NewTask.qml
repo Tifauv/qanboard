@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.6
 import "../tools"
 
 Rectangle {
@@ -27,7 +27,7 @@ Rectangle {
 		anchors.leftMargin: margin
 		anchors.right: parent.right
 		anchors.rightMargin: margin
-		text: qsTr("Enter task description")
+		text: qsTr("What do you have to do?")
 		state: "secondary"
 	}
 

@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.6
 import qanboard.app 1.0
 import "task"
 import "queue"
