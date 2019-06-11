@@ -7,7 +7,7 @@ import "tools"
 Rectangle {
 	id: workspace
 	width: 800
-	height: 320
+	height: 460
 
 	Row {
 		id: layout
