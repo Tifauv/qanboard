@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = ../qanboard
+TARGET = qanboard
 CONFIG += c++11
 QT += qml quick
 
@@ -12,14 +12,19 @@ SOURCES += main.cpp
 
 RESOURCES += ui.qrc
 
+OTHER_FILES += eu.catwitch.qanboard.desktop
+
 include(fontawesome.pri/fontawesome.pri)
 
 isEmpty(target.path) {
-    target.path = /opt/$${TARGET}/bin
+    target.path = /usr/local/bin/
     export(target.path)
 }
-desktop.path = /usr/share/applications
-desktop.file = qanboard.desktop
-INSTALLS = target desktop
+INSTALLS += target
+
+DESKTOP_FILES = *.desktop
+desktop.files = $$DESKTOP_FILES
+desktop.path = /usr/local/share/applications
+INSTALLS += desktop
 
 export(INSTALLS)

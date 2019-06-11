@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=My Kanban
+Name[fr]=Mon kanban
+Comment=Personnal kanban-oriented task manager
+Comment[fr]=Gestionnaire de tâches personnel de style kanban
+Exec=qanboard
+Icon=planwork
+Type=Application
+Terminal=false
+X-KDE-StartupNotify=true
