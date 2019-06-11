@@ -129,7 +129,7 @@ Rectangle {
 
 		PropertyChanges {
 			target: emptyPlaceholder
-			height: 80 + taskList.spacing
+			height: 111 + taskList.spacing // 111 is a Draggable's height
 		}
 	}
 
