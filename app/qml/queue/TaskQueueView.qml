@@ -59,7 +59,7 @@ Rectangle {
 				dropTargetItem: queue
 				dragKey: taskDragKey
 
-				TaskView {
+				contentItem: TaskView {
 					taskId: model.taskId
 					assignee: model.assignee
 					description: model.description

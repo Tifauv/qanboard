@@ -43,7 +43,11 @@ Item {
 	property Item _listView: root.ListView.view
 
 	/* The content item is reparented to the contentWrapper. */
-	onContentItemChanged: contentItem.parent = contentWrapper;
+	onContentItemChanged: {
+		contentItem.parent         = contentWrapper;
+		contentItem.anchors.left   = contentWrapper.left;
+		contentItem.anchors.right  = contentWrapper.right;
+	}
 
 	/* The top placeholder, only used to move an item at the top of the list. */
 	DropPlaceholder {
