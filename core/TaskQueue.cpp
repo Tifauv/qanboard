@@ -77,10 +77,12 @@ int TaskQueue::rowCount(const QModelIndex& p_parent) const {
  */
 QHash<int, QByteArray> TaskQueue::roleNames() const {
 	QHash<int, QByteArray> names;
-	names[TaskIdRole] = "taskId";
+	names[TaskIdRole]      = "taskId";
+	names[TitleRole]       = "title";
 	names[DescriptionRole] = "description";
-	names[CategoryRole] = "category";
-	names[AssigneeRole] = "assignee";
+	names[ClientRole]      = "client";
+	names[ActivityRole]    = "activity";
+	names[TargetRole]      = "target";
 	return names;
 }
 
@@ -100,12 +102,16 @@ QVariant TaskQueue::data(const QModelIndex& p_index, int p_role) const {
 	switch (p_role) {
 	case TaskIdRole:
 		return task->taskId();
+	case TitleRole:
+		return task->title();
 	case DescriptionRole:
 		return task->description();
-	case CategoryRole:
-		return task->category();
-	case AssigneeRole:
-		return task->assignee();
+	case ClientRole:
+		return task->client();
+	case ActivityRole:
+		return task->activity();
+	case TargetRole:
+		return task->target();
 	default:
 		return QVariant();
 	}
@@ -124,14 +130,20 @@ bool TaskQueue::setData(const QModelIndex& p_index, const QVariant& p_value, int
  *		task->setTaskId(p_value.toUInt());
  *		break;
  */
+	case TitleRole:
+		task->setTitle(p_value.toString());
+		break;
 	case DescriptionRole:
 		task->setDescription(p_value.toString());
 		break;
-	case CategoryRole:
-		task->setCategory(p_value.toString());
+	case ClientRole:
+		task->setClient(p_value.toString());
 		break;
-	case AssigneeRole:
-		task->setAssignee(p_value.toString());
+	case ActivityRole:
+		task->setActivity(p_value.toString());
+		break;
+	case TargetRole:
+		task->setTarget(p_value.toString());
 		break;
 	default:
 		return false;
@@ -149,9 +161,11 @@ bool TaskQueue::setData(const QModelIndex& p_index, const QVariant& p_value, int
 void TaskQueue::insertRow(int p_row, Task* p_task) {
 	beginInsertRows(QModelIndex(), p_row, p_row);
 	connect(p_task, SIGNAL(taskIdChanged(uint)),         SLOT(handleDataChanged()));
+	connect(p_task, SIGNAL(titleChanged(QString)),       SLOT(handleDataChanged()));
 	connect(p_task, SIGNAL(descriptionChanged(QString)), SLOT(handleDataChanged()));
-	connect(p_task, SIGNAL(assigneeChanged(QString)),    SLOT(handleDataChanged()));
-	connect(p_task, SIGNAL(categoryChanged(QString)),    SLOT(handleDataChanged()));
+	connect(p_task, SIGNAL(clientChanged(QString)),      SLOT(handleDataChanged()));
+	connect(p_task, SIGNAL(activityChanged(QString)),    SLOT(handleDataChanged()));
+	connect(p_task, SIGNAL(targetChanged(QString)),      SLOT(handleDataChanged()));
 	m_tasks.insert(p_row, p_task);
 	p_task->setParent(this);
 	endInsertRows();
@@ -262,7 +276,7 @@ void TaskQueue::log() {
 		if (task == nullptr)
 			qDebug() << "{d} [TaskQueue]   #" << i << ": <null>";
 		else
-			qDebug() << "{d} [TaskQueue]   #" << i << ": id " << task->taskId() << "  -  desc. " << task->description() << "  -  cat. " << task->category() << "  -  assgn. " << task->assignee();
+			qDebug() << "{d} [TaskQueue]   #" << i << ": id " << task->taskId() << "  -  title " << task->title() << "  -  desc. " << task->description() << "  -  client " << task->client() << "  -  act. " << task->activity() << "  -  tgt. " << task->target();
 	}
 	qDebug() << "{d} [TaskQueue] ----------------------------------------";
 }

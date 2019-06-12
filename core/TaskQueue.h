@@ -14,9 +14,11 @@ class TaskQueue : public QAbstractListModel {
 public:
 	enum Roles {
 		TaskIdRole = Qt::UserRole+1,
+		TitleRole,
 		DescriptionRole,
-		CategoryRole,
-        AssigneeRole
+		ClientRole,
+		ActivityRole,
+		TargetRole
 	};
 
 	explicit TaskQueue(QObject* parent = 0);

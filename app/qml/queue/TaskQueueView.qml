@@ -61,8 +61,11 @@ Rectangle {
 
 				contentItem: TaskView {
 					taskId: model.taskId
-					assignee: model.assignee
+					title: model.title
 					description: model.description
+					client: model.client
+					activity: model.activity
+					target: model.target
 				}
 
 				onInternalMoveRequested: {
