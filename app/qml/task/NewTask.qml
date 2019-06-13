@@ -8,47 +8,179 @@ Rectangle {
 	color: "#ffffff"
 	clip: true
 
+	property string title: "Title"
 	property string description: "Description"
+	property string client: "Client"
+	property string activity: "Activity"
+	property string target: "Target"
 	property int margin: 5
 	property int spacing: 6
-	property int fullWidth: 240
-	property int fullHeight: 150
+	property int fullWidth: 320
+	property int fullHeight: 240
 
 	signal clicked()
-	signal addTask(int taskId, string description)
+	signal addTask(int taskId, string title, string description, string client, string activity, string target)
 	signal cancel()
 
-	Label {
-		id: header
-		height: 14
-		anchors.top: parent.top
-		anchors.topMargin: margin
-		anchors.left: parent.left
-		anchors.leftMargin: margin
-		anchors.right: parent.right
-		anchors.rightMargin: margin
-		text: qsTr("What do you have to do?")
-		state: "secondary"
-	}
+	Column {
+		id: formLayout
 
-	Rectangle {
-		id: descriptionFrame
-		anchors.top: header.bottom
-		anchors.topMargin: spacing
-		anchors.left: parent.left
-		anchors.leftMargin: margin
-		anchors.right: parent.right
-		anchors.rightMargin: margin
-		anchors.bottom: actionLayout.top
-		border.color: "#eeeeee"
+		anchors {
+			top: parent.top
+			topMargin: 4
+			left: parent.left
+			leftMargin: 8
+			right: parent.right
+			rightMargin: 8
+			bottom: actionLayout.top
+			bottomMargin: 8
+		}
 
-		TextEdit {
-			id: descriptionTxt
-			text: qsTr(description)
-			wrapMode: Text.WordWrap
-			font.pointSize: 9
-			anchors.fill: parent
-			color: Qt.rgba(0, 0, 0, 0.87)
+		Label {
+			id: titleLbl
+			anchors {
+				left: parent.left
+				right: parent.right
+			}
+			text: qsTr("Title")
+			verticalAlignment: Text.AlignBottom
+			state: "secondary"
+		}
+
+		Rectangle {
+			anchors {
+				left: parent.left
+				right: parent.right
+			}
+			height: 14
+			border.color: "#eeeeee"
+
+			TextEdit {
+				id: titleTxt
+				text: title
+				wrapMode: Text.WordWrap
+				font.pointSize: 9
+				anchors.fill: parent
+				color: Qt.rgba(0, 0, 0, 0.87)
+			}
+		}
+
+		Label {
+			id: descriptionLbl
+			anchors {
+				left: parent.left
+				right: parent.right
+			}
+			text: qsTr("What do you have to do?")
+			verticalAlignment: Text.AlignBottom
+			state: "secondary"
+		}
+
+		Rectangle {
+			anchors {
+				left: parent.left
+				right: parent.right
+			}
+			height: 5*14
+			border.color: "#eeeeee"
+
+			TextInput {
+				id: descriptionTxt
+				text: description
+				wrapMode: Text.WordWrap
+				font.pointSize: 9
+				anchors.fill: parent
+				color: Qt.rgba(0, 0, 0, 0.87)
+			}
+		}
+
+		Label {
+			id: clientLbl
+			anchors {
+				left: parent.left
+				right: parent.right
+			}
+			text: qsTr("Client")
+			verticalAlignment: Text.AlignBottom
+			state: "secondary"
+		}
+
+		Rectangle {
+			anchors {
+				left: parent.left
+				right: parent.right
+			}
+			height: 14
+			border.color: "#eeeeee"
+
+			TextEdit {
+				id: clientTxt
+				text: client
+				wrapMode: Text.WordWrap
+				font.pointSize: 9
+				anchors.fill: parent
+				color: Qt.rgba(0, 0, 0, 0.87)
+			}
+		}
+
+
+		Label {
+			id: activityLbl
+			anchors {
+				left: parent.left
+				right: parent.right
+			}
+			text: qsTr("Title")
+			verticalAlignment: Text.AlignBottom
+			state: "secondary"
+		}
+
+		Rectangle {
+			anchors {
+				left: parent.left
+				right: parent.right
+			}
+			height: 14
+			border.color: "#eeeeee"
+
+			TextEdit {
+				id: activityTxt
+				text: activity
+				wrapMode: Text.WordWrap
+				font.pointSize: 9
+				anchors.fill: parent
+				color: Qt.rgba(0, 0, 0, 0.87)
+			}
+		}
+
+
+		Label {
+			id: targetLbl
+			anchors {
+				left: parent.left
+				right: parent.right
+			}
+			text: qsTr("Target")
+			verticalAlignment: Text.AlignBottom
+			state: "secondary"
+		}
+
+		Rectangle {
+			anchors {
+				left: parent.left
+				right: parent.right
+			}
+			height: 14
+			border.color: "#eeeeee"
+
+			TextEdit {
+				id: targetTxt
+				text: target
+				wrapMode: Text.WordWrap
+				font.pointSize: 9
+				anchors.fill: parent
+				color: Qt.rgba(0, 0, 0, 0.87)
+			}
 		}
 	}
 
@@ -81,12 +213,12 @@ Rectangle {
 
 	MouseArea {
 		id: button
-        anchors {
-            top: parent.bottom
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.left
-        }
+		anchors {
+			top: parent.bottom
+			bottom: parent.bottom
+			left: parent.left
+			right: parent.left
+		}
 
 		onClicked: task.clicked()
 
@@ -114,20 +246,16 @@ Rectangle {
 				opacity: 0
 			}
 			PropertyChanges {
-				target: descriptionTxt
+				target: formLayout
 				opacity: 0
 			}
-			PropertyChanges {
-				target: header
-				opacity: 0
+			AnchorChanges {
+				target: button
+				anchors.top: parent.top
+				anchors.bottom: parent.bottom
+				anchors.left: parent.left
+				anchors.right: parent.right
 			}
-            AnchorChanges {
-                target: button
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                anchors.right: parent.right
-            }
 		}
 	]
 

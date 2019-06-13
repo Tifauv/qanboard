@@ -58,8 +58,8 @@ Rectangle {
 
 	NewTask {
 		id: newTask
-		fullWidth: 240
-		fullHeight: 150
+		fullWidth: Math.max(workspace.width/3, 400)
+		fullHeight: Math.max(workspace.height/3, 300)
 		state: "button"
 		anchors.left: parent.left
 		anchors.leftMargin: 8
@@ -70,7 +70,7 @@ Rectangle {
 
 		onAddTask: {
 			console.log("(i) [NewTask] onAddTask()");
-			workflow.createTask(description);
+			workflow.createTask(title, description, client, activity, target);
 			workspace.state = ""
 		}
 

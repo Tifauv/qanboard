@@ -199,22 +199,29 @@ uint Workflow::addTaskToQueue(Task* p_task, const QString& p_queue) {
 
 /**
  * @brief Workflow::createTaskInQueue
+ * @param p_title
  * @param p_description
+ * @param p_client
+ * @param p_activity
+ * @param p_target
  * @param p_queue
  * @return
  */
-uint Workflow::createTaskInQueue(const QString& p_description, const QString& p_queue) {
+uint Workflow::createTaskInQueue(const QString& p_title, const QString& p_description, const QString& p_client, const QString& p_activity, const QString& p_target, const QString& p_queue) {
 	qDebug() << "(i) [Workflow] Creating new task in queue " << p_queue << "...";
-	return addTaskToQueue(new Task(nextTaskId(), p_description), p_queue);
+	return addTaskToQueue(new Task(nextTaskId(), p_title, p_description, p_client, p_activity, p_target), p_queue);
 }
 
 
 /**
  * @brief Reimplementation of Workflow::createTaskInQueue() that uses the defaultQueue.
+ * @param p_title
  * @param p_description
- * @param p_queue
+ * @param p_client
+ * @param p_activity
+ * @param p_target
  * @return
  */
-uint Workflow::createTask(const QString& p_description) {
-	return createTaskInQueue(p_description, defaultQueue());
+uint Workflow::createTask(const QString& p_title, const QString& p_description, const QString& p_client, const QString& p_activity, const QString& p_target) {
+	return createTaskInQueue(p_title, p_description, p_client, p_activity, p_target, defaultQueue());
 }
