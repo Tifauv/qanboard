@@ -5,22 +5,20 @@
         <file>qml/Workspace.qml</file>
         <file>qml/queue/TaskQueueView.qml</file>
         <file>qml/queue/Title.qml</file>
-        <file>qml/tools/AddButton.qml</file>
         <file>qml/tools/Draggable.qml</file>
         <file>qml/tools/Handle.qml</file>
         <file>qml/tools/Label.qml</file>
-        <file>qml/tools/SelectButton.qml</file>
         <file>qml/tools/TextButton.qml</file>
         <file>qml/tools/DropButton.qml</file>
         <file>qml/tools/Toolbar.qml</file>
-        <file>qml/task/NewTask.qml</file>
         <file>qml/task/TaskHeader.qml</file>
         <file>qml/task/TaskView.qml</file>
         <file>qml/tools/IconLabel.qml</file>
         <file>qml/tools/DropPlaceholder.qml</file>
-        <file>qml/tools/ShadowWall.qml</file>
         <file>qml/task/TaskFooter.qml</file>
         <file>qml/task/TaskFooterForm.ui.qml</file>
         <file>qml/task/TaskHeaderForm.ui.qml</file>
+        <file>qml/WorkspacePage.qml</file>
+        <file>qml/task/CreateTaskDialog.qml</file>
     </qresource>
 </RCC>
