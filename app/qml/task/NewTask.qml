@@ -19,7 +19,7 @@ Rectangle {
 	property int fullHeight: 240
 
 	signal clicked()
-	signal addTask(int taskId, string title, string description, string client, string activity, string target)
+	signal addTask(string title, string description, string client, string activity, string target)
 	signal cancel()
 
 	Column {
@@ -130,7 +130,7 @@ Rectangle {
 				left: parent.left
 				right: parent.right
 			}
-			text: qsTr("Title")
+			text: qsTr("Activity")
 			verticalAlignment: Text.AlignBottom
 			state: "secondary"
 		}
@@ -198,7 +198,7 @@ Rectangle {
 			anchors.bottom: parent.bottom
 			label: qsTr("Create")
 
-			onClicked: addTask(header.taskId, descriptionTxt.text)
+			onClicked: addTask(titleTxt.text, descriptionTxt.text, clientTxt.text, activityTxt.text, targetTxt.text)
 		}
 
 		TextButton {
