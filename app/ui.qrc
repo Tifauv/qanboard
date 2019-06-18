@@ -20,5 +20,6 @@
         <file>qml/task/TaskHeaderForm.ui.qml</file>
         <file>qml/WorkspacePage.qml</file>
         <file>qml/task/CreateTaskDialog.qml</file>
+        <file>qml/task/CreateTaskDialogForm.ui.qml</file>
     </qresource>
 </RCC>
