@@ -11,12 +11,12 @@ Kirigami.ApplicationWindow {
 	
 	globalDrawer: Kirigami.GlobalDrawer {
 		title: qsTr("My Kanban")
-		titleIcon: "calendar"
+		titleIcon: "planwork"
 		
 		actions: [
 			Kirigami.Action {
 				text: qsTr("Settings")
-				iconName: "folder-sync"
+				iconName: "configure"
 			}
 		]
 	}
