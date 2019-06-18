@@ -1,4 +1,4 @@
-import QtQuick 2.6
+import QtQuick 2.9
 import "../tools"
 
 Rectangle {
@@ -7,12 +7,12 @@ Rectangle {
 	height: 111
 	color: "#ffffff"
 
-	property alias taskId: header.taskId
-	property alias title: header.title
-	property alias description: descriptionLbl.text
-	property alias client: footer.client
-	property alias activity: footer.activity
-	property alias target: footer.target
+	property string taskId: "0"
+	property string client: qsTr("Client")
+	property string activity: qsTr("Activity")
+	property string description: qsTr("Description")
+	property string dueDate: "12/05/2015"
+	property string target: qsTr("Target")
 
 	MouseArea {
 		id: mouseArea
@@ -27,11 +27,14 @@ Rectangle {
 			anchors.rightMargin: 8
 			anchors.left: parent.left
 			anchors.leftMargin: 8
+			
+			taskId: task.taskId
+			title: qsTr("%1 %2").arg(task.client).arg(task.activity)
 		}
 
 		Label {
 			id: descriptionLbl
-			text: "Description"
+			text: task.description
 			clip: true
 			elide: Text.ElideRight
 			wrapMode: Text.WordWrap
@@ -54,6 +57,9 @@ Rectangle {
 			anchors.rightMargin: 8
 			anchors.left: parent.left
 			anchors.leftMargin: 8
+			
+			target: task.target
+			dueDate: task.dueDate
 		}
 	}
 }

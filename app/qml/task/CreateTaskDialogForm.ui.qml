@@ -6,10 +6,10 @@ Controls.Dialog {
     id: dialog
     title: qsTr("New Task")
 
-    property alias titleTxt: titleTxt
-    property alias descriptionTxt: descriptionTxt
     property alias clientTxt: clientTxt
     property alias activityTxt: activityTxt
+    property alias descriptionTxt: descriptionTxt
+    property alias dueDateTxt: dueDateTxt
     property alias targetTxt: targetTxt
 
     implicitWidth: 300
@@ -23,10 +23,15 @@ Controls.Dialog {
         anchors.fill: parent
 
         Controls.TextField {
-            id: titleTxt
-            placeholderText: qsTr("Short title")
-            Kirigami.FormData.label: qsTr("Title")
-            focus: true
+            id: clientTxt
+            placeholderText: qsTr("Client name")
+            Kirigami.FormData.label: qsTr("Client")
+            maximumLength: 24
+        }
+        Controls.TextField {
+            id: activityTxt
+            placeholderText: qsTr("Run or Project name")
+            Kirigami.FormData.label: qsTr("Activity")
             maximumLength: 32
         }
         Controls.TextField {
@@ -39,15 +44,10 @@ Controls.Dialog {
             Kirigami.FormData.isSection: true
         }
         Controls.TextField {
-            id: clientTxt
-            placeholderText: qsTr("Client name")
-            Kirigami.FormData.label: qsTr("Client")
-            maximumLength: 24
-        }
-        Controls.TextField {
-            id: activityTxt
-            placeholderText: qsTr("Run or Project name")
-            Kirigami.FormData.label: qsTr("Activity")
+            id: dueDateTxt
+            placeholderText: qsTr("dd/mm/yyyy")
+            Kirigami.FormData.label: qsTr("Due date")
+            focus: true
             maximumLength: 32
         }
         Controls.TextField {

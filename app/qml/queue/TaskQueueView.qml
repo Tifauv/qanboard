@@ -61,10 +61,10 @@ Rectangle {
 
 				contentItem: TaskView {
 					taskId: model.taskId
-					title: model.title
-					description: model.description
 					client: model.client
 					activity: model.activity
+					description: model.description
+					dueDate: model.dueDate
 					target: model.target
 				}
 

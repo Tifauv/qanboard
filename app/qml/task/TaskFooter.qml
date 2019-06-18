@@ -1,12 +1,11 @@
-import QtQuick 2.6
+import QtQuick 2.9
 
 TaskFooterForm {
 
-	property string client: "Client"
-	property string activity: "Activity"
+	property string dueDate: "12/05/2015"
 	property string target: "Target"
 
-	clientTag.text: client
-	activityTag.text: activity
-	targetTag.text: target
+	dueDateLbl.text: qsTr("Due date: %1").arg(dueDate)
+	dueDateLbl.visible: dueDate.length > 0
+	targetLbl.text: qsTr("Targets: %1").arg(target)
 }

@@ -6,28 +6,28 @@
  *
  * @param p_taskId
  *            the (unique) task identifier
- * @param p_title
- *            the task's title
- * @param p_description
- *            the task's description
  * @param p_client
  *            the task's client
  * @param p_activity
  *            the task's activity
+ * @param p_description
+ *            the task's description
+ * @param p_due date
+ *            the task's expected completion date
  * @param p_target
  *            the task's target object (CI)
  * @param p_parent
  *            the parent QObject
  */
-Task::Task(uint p_taskId, const QString& p_title, const QString& p_description, const QString& p_client, const QString& p_activity, const QString& p_target, QObject* p_parent) :
+Task::Task(uint p_taskId, const QString& p_client, const QString& p_activity, const QString& p_description, const QString& p_dueDate, const QString& p_target, QObject* p_parent) :
 	QObject(p_parent),
 	m_taskId(p_taskId),
-    m_title(p_title),
-    m_description(p_description),
-    m_client(p_client),
+	m_client(p_client),
     m_activity(p_activity),
+    m_description(p_description),
+	m_dueDate(p_dueDate),
     m_target(p_target) {
-	qDebug() << "(i) [Task] Created " << m_title << " for client " << m_client;
+	qDebug() << "(i) [Task] Created " << m_dueDate << " for client " << m_client;
 }
 
 
@@ -40,12 +40,12 @@ Task::Task(uint p_taskId, const QString& p_title, const QString& p_description, 
 Task::Task(const Task& p_task) :
 	QObject(),
 	m_taskId(p_task.taskId()),
-    m_title(p_task.title()),
-	m_description(p_task.description()),
-    m_client(p_task.client()),
+	m_client(p_task.client()),
     m_activity(p_task.activity()),
+	m_description(p_task.description()),
+	m_dueDate(p_task.dueDate()),
     m_target(p_task.target()) {
-	qDebug() << "(i) [Task] Copied task " << m_taskId << " titled " << m_title << " for client " << m_client;
+	qDebug() << "(i) [Task] Copied task " << m_taskId << " for client " << m_client;
 }
 
 
@@ -65,24 +65,6 @@ uint Task::taskId() const {
 
 
 /**
- * @brief Task::title
- * @return
- */
-const QString& Task::title() const {
-	return m_title;
-}
-
-
-/**
- * @brief Task::description
- * @return
- */
-const QString& Task::description() const {
-	return m_description;
-}
-
-
-/**
  * @brief Task::client
  * @return
  */
@@ -97,6 +79,24 @@ const QString& Task::client() const {
  */
 const QString& Task::activity() const {
 	return m_activity;
+}
+
+
+/**
+ * @brief Task::description
+ * @return
+ */
+const QString& Task::description() const {
+	return m_description;
+}
+
+
+/**
+ * @brief Task::dueDate
+ * @return
+ */
+const QString& Task::dueDate() const {
+	return m_dueDate;
 }
 
 
@@ -120,26 +120,6 @@ void Task::setTaskId(uint p_taskId) {
 
 
 /**
- * @brief Task::setTitle
- * @param p_title
- */
-void Task::setTitle(const QString& p_title) {
-	m_title = p_title;
-	emit titleChanged(m_title);
-}
-
-
-/**
- * @brief Task::setDescription
- * @param p_description
- */
-void Task::setDescription(const QString& p_description) {
-	m_description = p_description;
-	emit descriptionChanged(m_description);
-}
-
-
-/**
  * @brief Task::setClient
  * @param p_client
  */
@@ -156,6 +136,26 @@ void Task::setClient(const QString& p_client) {
 void Task::setActivity(const QString& p_activity) {
 	m_activity = p_activity;
 	emit activityChanged(m_activity);
+}
+
+
+/**
+ * @brief Task::setDescription
+ * @param p_description
+ */
+void Task::setDescription(const QString& p_description) {
+	m_description = p_description;
+	emit descriptionChanged(m_description);
+}
+
+
+/**
+ * @brief Task::setDueDate
+ * @param p_title
+ */
+void Task::setDueDate(const QString& p_title) {
+	m_dueDate = p_title;
+	emit dueDateChanged(m_dueDate);
 }
 
 

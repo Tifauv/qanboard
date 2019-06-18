@@ -5,10 +5,10 @@
 #define QWF_TAG_WORKFLOW "Workflow"
 #define QWF_TAG_TASKQUEUE "TaskQueue"
 #define QWF_TAG_TASK "Task"
-#define QWF_TAG_TITLE "Title"
-#define QWF_TAG_DESCRIPTION "Description"
 #define QWF_TAG_CLIENT "Client"
 #define QWF_TAG_ACTIVITY "Activity"
+#define QWF_TAG_DESCRIPTION "Description"
+#define QWF_TAG_DUEDATE "DueDate"
 #define QWF_TAG_TARGET "Target"
 #define QWF_ATTR_NEXTID "nextId"
 #define QWF_ATTR_DEFAULTQUEUE "defaultQueue"
@@ -165,14 +165,14 @@ Task* XmlSerializer::readTask(QXmlStreamReader& p_xml) const {
 
 	// Load the task's content
 	while (p_xml.readNextStartElement()) {
-		if (p_xml.name() == QWF_TAG_TITLE && p_xml.namespaceUri() == QWF_NS)
-			task->setTitle(p_xml.readElementText());
-		else if (p_xml.name() == QWF_TAG_DESCRIPTION && p_xml.namespaceUri() == QWF_NS)
-			task->setDescription(p_xml.readElementText());
-		else if (p_xml.name() == QWF_TAG_CLIENT && p_xml.namespaceUri() == QWF_NS)
+		if (p_xml.name() == QWF_TAG_CLIENT && p_xml.namespaceUri() == QWF_NS)
 			task->setClient(p_xml.readElementText());
 		else if (p_xml.name() == QWF_TAG_ACTIVITY && p_xml.namespaceUri() == QWF_NS)
 			task->setActivity(p_xml.readElementText());
+		else if (p_xml.name() == QWF_TAG_DESCRIPTION && p_xml.namespaceUri() == QWF_NS)
+			task->setDescription(p_xml.readElementText());
+		else if (p_xml.name() == QWF_TAG_DUEDATE && p_xml.namespaceUri() == QWF_NS)
+			task->setDueDate(p_xml.readElementText());
 		else if (p_xml.name() == QWF_TAG_TARGET && p_xml.namespaceUri() == QWF_NS)
 			task->setTarget(p_xml.readElementText());
 		else
@@ -230,10 +230,10 @@ void XmlSerializer::writeTask(QXmlStreamWriter& p_xml, Task* p_task) const {
 
 	p_xml.writeStartElement(QWF_NS, QWF_TAG_TASK);
 	p_xml.writeAttribute(QWF_ATTR_TASKID, QString::number(p_task->taskId()));
-	p_xml.writeTextElement(QWF_NS, QWF_TAG_TITLE,       p_task->title());
-	p_xml.writeTextElement(QWF_NS, QWF_TAG_DESCRIPTION, p_task->description());
 	p_xml.writeTextElement(QWF_NS, QWF_TAG_CLIENT,      p_task->client());
 	p_xml.writeTextElement(QWF_NS, QWF_TAG_ACTIVITY,    p_task->activity());
+	p_xml.writeTextElement(QWF_NS, QWF_TAG_DESCRIPTION, p_task->description());
+	p_xml.writeTextElement(QWF_NS, QWF_TAG_DUEDATE,     p_task->dueDate());
 	p_xml.writeTextElement(QWF_NS, QWF_TAG_TARGET,      p_task->target());
 	p_xml.writeEndElement();
 }

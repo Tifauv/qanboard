@@ -14,16 +14,16 @@ class TaskQueue : public QAbstractListModel {
 public:
 	enum Roles {
 		TaskIdRole = Qt::UserRole+1,
-		TitleRole,
-		DescriptionRole,
 		ClientRole,
 		ActivityRole,
+		DescriptionRole,
+		DueDateRole,
 		TargetRole
 	};
 
-	explicit TaskQueue(QObject* parent = 0);
+	explicit TaskQueue(QObject* parent = nullptr);
 	explicit TaskQueue(const TaskQueue&);
-	~TaskQueue() {}
+	~TaskQueue() override {}
 
 	const QString& name() const;
 	int count() const;

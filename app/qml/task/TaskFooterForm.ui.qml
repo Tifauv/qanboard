@@ -1,42 +1,37 @@
-import QtQuick 2.6
+import QtQuick 2.9
+import QtQuick.Layouts 1.3
 import "../tools"
 
 Item {
-	id: taskFooter
+    id: taskFooter
 
-	property alias clientTag: clientLbl
-	property alias activityTag: activityLbl
-	property alias targetTag: targetLbl
+    property alias dueDateLbl: dueDateLbl
+    property alias targetLbl: targetLbl
 
-	implicitHeight: tagsLayout.implicitHeight
+    implicitHeight: tagsLayout.implicitHeight
 
-	Flow {
-		id: tagsLayout
-		clip: true
-		spacing: 4
-		anchors.fill: parent
+    Column {
+        id: tagsLayout
+        clip: true
+        anchors.fill: parent
 
-		Label {
-			id: clientLbl
-			state: "secondary"
-			text: "Client"
-		}
-
-		Label {
-			id: activityLbl
-			state: "secondary"
-			text: "Activity"
-		}
-
-		Label {
-			id: targetLbl
-			state: "secondary"
-			text: "Target"
-		}
-	}
+        Label {
+            id: dueDateLbl
+            state: "secondary"
+            text: qsTr("Due date: 12/05/2015")
+        }
+        Label {
+            id: targetLbl
+            state: "secondary"
+            text: qsTr("Servers: Target")
+        }
+    }
 }
 
+
+
+
 /*##^## Designer {
-	D{i:0;autoSize:true;height:480;width:640}
+    D{i:0;autoSize:true;height:480;width:640}
 }
  ##^##*/
