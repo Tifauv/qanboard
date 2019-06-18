@@ -8,10 +8,18 @@ Kirigami.Page {
 	
 	property variant createDlg
 	
+	//leftPadding: 0
+	topPadding: 0
+	rightPadding: 0
+	bottomPadding: 0
+	
 	mainAction: Kirigami.Action {
 		text: qsTr("Create task")
 		iconName: "task-new"
-		onTriggered: createDlg.open()
+		onTriggered: {
+			createDlg.reset();
+			createDlg.open()
+		}
 	}
 	
 	Workspace {
