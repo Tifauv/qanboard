@@ -47,7 +47,7 @@ Kirigami.ApplicationWindow {
 		
 		onAccepted: {
 			console.log("(i) [CreateTaskDialog] onAccepted()");
-			workflow.createTask(taskTitle, taskDescription, taskClient, taskActivity, taskTarget);
+			workflow.createTask(taskClient, taskActivity, taskDescription, taskDueDate, taskTarget);
 			reset();
 		}
 		
