@@ -1,11 +1,17 @@
 import QtQuick 2.9
 
 TaskFooterForm {
+	id: footer
 
 	property string dueDate: "12/05/2015"
 	property string target: "Target"
 
-	dueDateLbl.text: qsTr("Due date: %1").arg(dueDate)
-	dueDateLbl.visible: dueDate.length > 0
-	targetLbl.text: qsTr("Targets: %1").arg(target)
+	dueDateLbl.text: dueDate
+	dueDateLbl.visible: footer.width >= dueDateLbl.width
+	targetLbl.text: target
 }
+
+/*##^## Designer {
+	D{i:0;autoSize:true;height:20;width:300}
+}
+ ##^##*/
