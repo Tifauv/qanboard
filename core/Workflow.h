@@ -19,8 +19,8 @@ public:
 		TaskListRole
 	};
 
-	explicit Workflow(QObject* parent = 0);
-	~Workflow() {}
+	explicit Workflow(QObject* parent = nullptr);
+	~Workflow() override {}
 
 	uint taskId() const;
 	const QString& defaultQueue() const;
