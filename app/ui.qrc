@@ -8,7 +8,6 @@
         <file>ui/tools/Draggable.qml</file>
         <file>ui/tools/Handle.qml</file>
         <file>ui/tools/Label.qml</file>
-        <file>ui/tools/TextButton.qml</file>
         <file>ui/tools/DropButton.qml</file>
         <file>ui/tools/Toolbar.qml</file>
         <file>ui/task/TaskHeader.qml</file>
