@@ -8,7 +8,7 @@ Kirigami.Page {
 	
 	property variant createDlg
 	
-	//leftPadding: 0
+	leftPadding: 0
 	topPadding: 0
 	rightPadding: 0
 	bottomPadding: 0

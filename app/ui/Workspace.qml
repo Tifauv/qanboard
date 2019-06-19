@@ -1,4 +1,5 @@
 import QtQuick 2.6
+import org.kde.kirigami 2.5 as Kirigami
 import Qanboard 1.0
 import "task"
 import "queue"
@@ -9,12 +10,31 @@ Rectangle {
 	width: 800
 	height: 460
 
+	WorkspaceStatusBar {
+		id: statusBar
+
+		anchors {
+			top: parent.top
+			left: parent.left
+			bottom: toolbar.top
+		}
+
+		width: Kirigami.Units.gridUnit
+
+		backlogCount: 2
+		selectedCount: 5
+		workingCount: 3
+		finishedCount: 13
+	}
+
 	Row {
 		id: layout
-		anchors.top: parent.top
-		anchors.left: parent.left
-		anchors.right: parent.right
-		anchors.bottom: toolbar.top
+		anchors {
+			top: parent.top
+			left: statusBar.right
+			right: parent.right
+			bottom: toolbar.top
+		}
 
 		Repeater {
 			id: queueRepeater
