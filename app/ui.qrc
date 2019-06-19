@@ -1,25 +1,25 @@
 <RCC>
     <qresource prefix="/">
-        <file>qml/Colors.qml</file>
-        <file>qml/main.qml</file>
-        <file>qml/Workspace.qml</file>
-        <file>qml/queue/TaskQueueView.qml</file>
-        <file>qml/queue/Title.qml</file>
-        <file>qml/tools/Draggable.qml</file>
-        <file>qml/tools/Handle.qml</file>
-        <file>qml/tools/Label.qml</file>
-        <file>qml/tools/TextButton.qml</file>
-        <file>qml/tools/DropButton.qml</file>
-        <file>qml/tools/Toolbar.qml</file>
-        <file>qml/task/TaskHeader.qml</file>
-        <file>qml/task/TaskView.qml</file>
-        <file>qml/tools/IconLabel.qml</file>
-        <file>qml/tools/DropPlaceholder.qml</file>
-        <file>qml/task/TaskFooter.qml</file>
-        <file>qml/task/TaskFooterForm.ui.qml</file>
-        <file>qml/task/TaskHeaderForm.ui.qml</file>
-        <file>qml/WorkspacePage.qml</file>
-        <file>qml/task/CreateTaskDialog.qml</file>
-        <file>qml/task/CreateTaskDialogForm.ui.qml</file>
+        <file>ui/Colors.qml</file>
+        <file>ui/main.qml</file>
+        <file>ui/Workspace.qml</file>
+        <file>ui/queue/TaskQueueView.qml</file>
+        <file>ui/queue/Title.qml</file>
+        <file>ui/tools/Draggable.qml</file>
+        <file>ui/tools/Handle.qml</file>
+        <file>ui/tools/Label.qml</file>
+        <file>ui/tools/TextButton.qml</file>
+        <file>ui/tools/DropButton.qml</file>
+        <file>ui/tools/Toolbar.qml</file>
+        <file>ui/task/TaskHeader.qml</file>
+        <file>ui/task/TaskView.qml</file>
+        <file>ui/tools/IconLabel.qml</file>
+        <file>ui/tools/DropPlaceholder.qml</file>
+        <file>ui/task/TaskFooter.qml</file>
+        <file>ui/task/TaskFooterForm.ui.qml</file>
+        <file>ui/task/TaskHeaderForm.ui.qml</file>
+        <file>ui/WorkspacePage.qml</file>
+        <file>ui/task/CreateTaskDialog.qml</file>
+        <file>ui/task/CreateTaskDialogForm.ui.qml</file>
     </qresource>
 </RCC>

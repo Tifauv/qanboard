@@ -1,3 +1,4 @@
+#include <QCoreApplication>
 #include <QGuiApplication>
 #include <QQmlContext>
 #include <QQmlApplicationEngine>
@@ -52,7 +53,7 @@ int main(int p_argc, char *p_argv[]) {
 	//engine.addImportPath(QStringLiteral("modules"));
 	engine.addImportPath("qrc:///");
 	engine.rootContext()->setContextProperty("workflow", &wf);
-	engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
+	engine.load(QUrl(QStringLiteral("qrc:/ui/main.qml")));
 	if (engine.rootObjects().isEmpty())
 		return -1;
 
