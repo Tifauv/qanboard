@@ -20,11 +20,6 @@ Rectangle {
 		}
 
 		width: Kirigami.Units.gridUnit
-
-		backlogCount: 2
-		selectedCount: 5
-		workingCount: 3
-		finishedCount: 13
 	}
 
 	Row {
@@ -41,9 +36,8 @@ Rectangle {
 			model: workflow
 
 			TaskQueueView {
-				id: queue
-				width: workspace.width / queueRepeater.model.count
-				height: workspace.height
+				width: layout.width / queueRepeater.model.count
+				height: layout.height
 
 				title: model.name
 				tasks: model.tasks
@@ -52,6 +46,21 @@ Rectangle {
 
 				onItemDragStarted: workspace.state = "taskDragging"
 				onItemDragEnded:   workspace.state = ""
+				
+				Component.onCompleted: {
+					/* MOST UGLY !
+					 * TODO The WorkspaceStatusBar should be reworked to allow for dynamically created segments.
+					 * This means the color must come from the model as well.
+					 */
+					if (title === "Backlog")
+						statusBar.backlogCount = Qt.binding(function() {return tasks.count});
+					else if (title === "Selected")
+						statusBar.selectedCount = Qt.binding(function() {return tasks.count});
+					else if (title === "In progress")
+						statusBar.workingCount = Qt.binding(function() {return tasks.count});
+					else if (title === "Done")
+						statusBar.finishedCount = Qt.binding(function() {return tasks.count});
+				}
 			}
 		}
 	}
