@@ -225,3 +225,44 @@ uint Workflow::createTaskInQueue(const QString& p_client, const QString& p_activ
 uint Workflow::createTask(const QString& p_client, const QString& p_activity, const QString& p_description, const QString& p_dueDate, const QString& p_target) {
 	return createTaskInQueue(p_client, p_activity, p_description, p_dueDate, p_target, defaultQueue());
 }
+
+
+/**
+ * @brief Workflow::moveBetweenQueues
+ * @param p_sourceName
+ * @param p_sourceIndex
+ * @param p_destinationName
+ * @param p_destinationIndex
+ * 
+ * @return 0 : move done
+ *  1 : source queue does not exist
+ *  2 : destination queue does not exist
+ *  3 : source index invalid
+ */
+uint Workflow::moveBetweenQueues(const QString& p_sourceName, int p_sourceIndex, const QString& p_destinationName, int p_destinationIndex) {
+	auto source = find(p_sourceName);
+	if (!source) {
+		qWarning() << "/!\\ [Workflow] Source queue " << p_sourceName << " does not exist";
+		return 1;
+	}
+	auto destination = find(p_destinationName);
+	if (!destination) {
+		qWarning() << "/!\\ [Workflow] Destination queue " << p_destinationName << " does not exist";
+		return 2;
+	}
+	
+	auto task = source->at(p_sourceIndex);
+	if (source->removeRow(p_sourceIndex)) {
+		if (p_destinationIndex == -1)
+			destination->appendRow(task);
+		else
+			destination->insertRow(p_destinationIndex, task);
+		m_history.append(new TaskMove(*task, *source, *destination));
+	}
+	else {
+		qWarning() << "/!\\ [Workflow] Index " << p_sourceIndex << " for source queue " << p_sourceName << " is invalid";
+		return 3;
+	}
+	
+	return 0;
+}

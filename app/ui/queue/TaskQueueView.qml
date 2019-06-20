@@ -75,10 +75,7 @@ Rectangle {
 
 				onExternalMoveRequested: {
 					console.log("{d} [TaskQueueView] External move required of item " + from + " from list " + source + " to list " + target + " at position " + to);
-					var movedTask = source.at(from);
-					if (source.remove(from)) {
-						target.add(movedTask, to);
-					}
+					workflow.moveBetweenQueues(source.title, from, target.title, to);
 				}
 
 				onDragStarted: {
@@ -115,10 +112,7 @@ Rectangle {
 						var sourceList  = drop.source.dropTargetItem;
 						var sourceIndex = drop.source.modelIndex;
 
-						var movedTask = sourceList.at(sourceIndex);
-						if (sourceList.remove(sourceIndex)) {
-							queue.add(movedTask, 0);
-						}
+						workflow.moveBetweenQueues(sourceList.title, sourceIndex, title, 0);
 						drop.accept(Qt.MoveAction);
 					}
 				}

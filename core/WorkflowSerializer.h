@@ -13,7 +13,7 @@ class WorkflowSerializer : public QObject {
 	Q_OBJECT
 
 public:
-	explicit WorkflowSerializer(QObject *parent = 0);
+	explicit WorkflowSerializer(QObject *parent = nullptr);
 
 	/**
 	 * @brief Reads the given XML source to initialize a Workflow.

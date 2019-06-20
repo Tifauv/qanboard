@@ -13,7 +13,7 @@ class XmlSerializer : public WorkflowSerializer {
 	Q_OBJECT
 
 public:
-	explicit XmlSerializer(QObject* parent = 0);
+	explicit XmlSerializer(QObject* parent = nullptr);
 
 	void read(QIODevice&, Workflow&)        const override;
 	void write(QIODevice&, const Workflow&) const override;

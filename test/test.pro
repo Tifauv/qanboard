@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = qanboard-tests
-CONFIG += c++11 testcase no_testcase_installs
+CONFIG += c++14 testcase no_testcase_installs
 QT += testlib
 
 LIBS          += ../core/libqanboardcore.a

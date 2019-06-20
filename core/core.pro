@@ -1,6 +1,6 @@
 TEMPLATE = lib
 TARGET = qanboardcore
-CONFIG += c++11 staticlib
+CONFIG += c++14 staticlib
 DEFINES += QANBOARDCORE_LIBRARY
 
 SOURCES += Task.cpp \
@@ -10,7 +10,8 @@ SOURCES += Task.cpp \
     XmlSerializer.cpp \
     WorkflowStorage.cpp \
     MemoryStorage.cpp \
-    FileStorage.cpp
+    FileStorage.cpp \
+    TaskMove.cpp
 HEADERS += Task.h \
 	TaskQueue.h \
 	Workflow.h \
@@ -18,4 +19,5 @@ HEADERS += Task.h \
     XmlSerializer.h \
     WorkflowStorage.h \
     MemoryStorage.h \
-    FileStorage.h
+    FileStorage.h \
+    TaskMove.h

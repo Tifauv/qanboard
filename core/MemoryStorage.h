@@ -7,7 +7,7 @@ class MemoryStorage : public WorkflowStorage {
 	Q_OBJECT
 
 public:
-	explicit MemoryStorage(QObject* parent = 0);
+	explicit MemoryStorage(QObject* parent = nullptr);
 
 	void load(Workflow&)        const override;
 	void store(const Workflow&) const override;

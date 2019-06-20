@@ -27,7 +27,7 @@ Task::Task(uint p_taskId, const QString& p_client, const QString& p_activity, co
     m_description(p_description),
 	m_dueDate(p_dueDate),
     m_target(p_target) {
-	qDebug() << "(i) [Task] Created " << m_dueDate << " for client " << m_client;
+	qDebug() << "(i) [Task] Created " << m_taskId << " for client " << m_client;
 }
 
 

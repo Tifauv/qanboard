@@ -9,7 +9,7 @@ class FileStorage : public WorkflowStorage {
 	Q_OBJECT
 
 public:
-	explicit FileStorage(WorkflowSerializer& p_serializer, QObject* parent = 0);
+	explicit FileStorage(WorkflowSerializer& p_serializer, QObject* parent = nullptr);
 
 	void load(Workflow&)        const override;
 	void store(const Workflow&) const override;

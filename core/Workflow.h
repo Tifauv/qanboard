@@ -5,6 +5,7 @@
 #include <QAbstractListModel>
 #include <QListIterator>
 #include "TaskQueue.h"
+#include "TaskMove.h"
 
 class Workflow : public QAbstractListModel {
 	Q_OBJECT
@@ -44,6 +45,7 @@ public slots:
 	uint addTaskToQueue(Task* p_task, const QString& p_queue);
 	uint createTaskInQueue(const QString& p_client, const QString& p_activity, const QString& p_description, const QString& p_dueDate, const QString& p_target, const QString& p_queue);
 	uint createTask(const QString& p_client, const QString& p_activity, const QString& p_description, const QString& p_dueDate, const QString& p_target);
+	uint moveBetweenQueues(const QString& p_sourceName, int p_sourceIndex, const QString& p_destinationName, int p_destinationIndex);
 
 signals:
 	void taskIdChanged(uint);
@@ -53,6 +55,7 @@ private:
 	uint              m_taskId;
 	QString           m_defaultQueue;
 	QList<TaskQueue*> m_queues;
+	QList<TaskMove*> m_history;
 };
 
 #endif // Workflow_H

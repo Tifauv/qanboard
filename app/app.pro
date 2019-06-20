@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = qanboard
-CONFIG += c++11
+CONFIG += c++14
 QT += qml quick
 
 LIBS          += ../core/libqanboardcore.a
