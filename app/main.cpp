@@ -50,15 +50,15 @@ int main(int p_argc, char *p_argv[]) {
 
 	// Create the QML view & show it !
 	QQmlApplicationEngine engine;
-	//engine.addImportPath(QStringLiteral("modules"));
 	engine.addImportPath("qrc:///");
 	engine.rootContext()->setContextProperty("workflow", &wf);
 	engine.load(QUrl(QStringLiteral("qrc:/ui/main.qml")));
 	if (engine.rootObjects().isEmpty())
 		return -1;
-
-	int rc = app.exec();
+	
 	// Save the current workflow before leaving
-	storage.store(wf);
-	return rc;
+	QObject::connect(&app, &QCoreApplication::aboutToQuit,
+			[&storage,&wf]() { storage.store(wf); });
+
+	return app.exec();
 }
