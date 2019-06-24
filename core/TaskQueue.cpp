@@ -167,7 +167,6 @@ void TaskQueue::insertRow(int p_row, Task* p_task) {
 	connect(p_task, SIGNAL(dueDateChanged(QString)),     SLOT(handleDataChanged()));
 	connect(p_task, SIGNAL(targetChanged(QString)),      SLOT(handleDataChanged()));
 	m_tasks.insert(p_row, p_task);
-	p_task->setParent(this);
 	endInsertRows();
 	emit countChanged(count());
 	qDebug() << "(i) [TaskQueue] Task " << p_task->taskId() << " inserted into queue " << name() << " at position " << p_row;

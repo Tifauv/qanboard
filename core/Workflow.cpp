@@ -22,7 +22,7 @@ Workflow::Workflow(QObject* p_parent) :
  * @return
  */
 uint Workflow::taskId() const {
-	return m_taskId;
+	return m_tasks.getNextTaskId();
 }
 
 
@@ -45,12 +45,11 @@ int Workflow::count() const {
 
 
 /**
- * @brief Workflow::nextTaskId
- * @return
+ * @brief Workflow::history
+ * @return 
  */
-uint Workflow::nextTaskId() {
-	qDebug() << "(i) [Workflow] Current taskId is " << m_taskId ;
-	return m_taskId++;
+const QList<TaskMove*>& Workflow::history() const {
+	return m_history;
 }
 
 
@@ -60,7 +59,7 @@ uint Workflow::nextTaskId() {
  * @param p_taskId
  */
 void Workflow::setTaskId(uint p_taskId) {
-	m_taskId = p_taskId;
+	m_tasks.initNextTaskId(p_taskId);
 }
 
 
@@ -70,7 +69,7 @@ void Workflow::setTaskId(uint p_taskId) {
  */
 void Workflow::selectDefaultQueue(const QString& p_queueName) {
 	// If the requested default queue exists, select it as default
-	if (!p_queueName.isEmpty() && find(p_queueName) != nullptr)
+	if (!p_queueName.isEmpty() && findQueue(p_queueName) != nullptr)
 		m_defaultQueue = p_queueName;
 	// If there is at least one queue loaded, select the first queue
 	else if (!m_queues.isEmpty())
@@ -138,18 +137,38 @@ QListIterator<TaskQueue*> Workflow::iter() const {
 
 
 /**
- * @brief Workflow::find
+ * @brief Workflow::findQueue
  * @param p_name
  * @return
  */
-TaskQueue* Workflow::find(const QString& p_name) const {
+TaskQueue* Workflow::findQueue(const QString& p_name) const {
 	qDebug() << "(i) [Workflow] Searching queue " << p_name;
 	foreach (TaskQueue* queue, m_queues) {
 		if (queue->name() == p_name)
 			return queue;
 	}
 
-    return nullptr;
+	return nullptr;
+}
+
+
+/**
+ * @brief Workflow::findTask
+ * @param p_taskId
+ * @return 
+ */
+Task* Workflow::findTask(uint p_taskId) const {
+	qDebug() << "(i) [Workflow] Searching task " << p_taskId;
+	return m_tasks.find(p_taskId);
+}
+
+
+/**
+ * @brief Workflow::appendToHistory
+ * @param p_change
+ */
+void Workflow::appendToHistory(TaskMove* p_change) {
+	m_history.append(p_change);
 }
 
 
@@ -184,10 +203,13 @@ void Workflow::createQueue(const QString& p_name) {
  * @param p_queue
  * @return
  */
-uint Workflow::addTaskToQueue(Task* p_task, const QString& p_queue) {
-	TaskQueue* queue = find(p_queue);
+uint Workflow::loadTaskInQueue(Task* p_task, const QString& p_queue) {
+	Q_ASSERT(p_task);
+	
+	TaskQueue* queue = findQueue(p_queue);
 	if (queue) {
 		qDebug() << "(i) [Workflow] Queue " << p_queue << " found";
+		m_tasks.loadTask(p_task);
 		queue->appendRow(p_task);
 	}
 	else {
@@ -209,7 +231,9 @@ uint Workflow::addTaskToQueue(Task* p_task, const QString& p_queue) {
  */
 uint Workflow::createTaskInQueue(const QString& p_client, const QString& p_activity, const QString& p_description, const QString& p_dueDate, const QString& p_target, const QString& p_queue) {
 	qDebug() << "(i) [Workflow] Creating new task in queue " << p_queue << "...";
-	return addTaskToQueue(new Task(nextTaskId(), p_client, p_activity, p_description, p_dueDate, p_target), p_queue);
+	Task* task = new Task(0, p_client, p_activity, p_description, p_dueDate, p_target);
+	m_tasks.registerTask(task);
+	return loadTaskInQueue(task, p_queue);
 }
 
 
@@ -240,12 +264,12 @@ uint Workflow::createTask(const QString& p_client, const QString& p_activity, co
  *  3 : source index invalid
  */
 uint Workflow::moveBetweenQueues(const QString& p_sourceName, int p_sourceIndex, const QString& p_destinationName, int p_destinationIndex) {
-	auto source = find(p_sourceName);
+	auto source = findQueue(p_sourceName);
 	if (!source) {
 		qWarning() << "/!\\ [Workflow] Source queue " << p_sourceName << " does not exist";
 		return 1;
 	}
-	auto destination = find(p_destinationName);
+	auto destination = findQueue(p_destinationName);
 	if (!destination) {
 		qWarning() << "/!\\ [Workflow] Destination queue " << p_destinationName << " does not exist";
 		return 2;
@@ -257,7 +281,7 @@ uint Workflow::moveBetweenQueues(const QString& p_sourceName, int p_sourceIndex,
 			destination->appendRow(task);
 		else
 			destination->insertRow(p_destinationIndex, task);
-		m_history.append(new TaskMove(*task, *source, *destination));
+		appendToHistory(new TaskMove(*task, *source, *destination));
 	}
 	else {
 		qWarning() << "/!\\ [Workflow] Index " << p_sourceIndex << " for source queue " << p_sourceName << " is invalid";

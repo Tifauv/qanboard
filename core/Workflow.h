@@ -4,6 +4,7 @@
 #include <QMetaType>
 #include <QAbstractListModel>
 #include <QListIterator>
+#include "TaskRegistry.h"
 #include "TaskQueue.h"
 #include "TaskMove.h"
 
@@ -26,6 +27,7 @@ public:
 	uint taskId() const;
 	const QString& defaultQueue() const;
 	int count() const;
+	const QList<TaskMove*>& history() const;
 
 	void setTaskId(uint);
 	void selectDefaultQueue(const QString&);
@@ -33,16 +35,18 @@ public:
 	int rowCount(const QModelIndex& parent) const override;
 	QHash<int, QByteArray> roleNames() const override;
 	QVariant data(const QModelIndex& index, int role) const override;
-	TaskQueue* find(const QString& name) const;
+	TaskQueue* findQueue(const QString& name) const;
+	Task* findTask(uint taskId) const;
 
 	void insertRow(int row, TaskQueue* queue);
 
 	QListIterator<TaskQueue*> iter() const;
+	
+	uint loadTaskInQueue(Task* p_task, const QString& p_queue);
+	void appendToHistory(TaskMove* taskMove);
 
 public slots:
-	uint nextTaskId();
 	void createQueue(const QString&);
-	uint addTaskToQueue(Task* p_task, const QString& p_queue);
 	uint createTaskInQueue(const QString& p_client, const QString& p_activity, const QString& p_description, const QString& p_dueDate, const QString& p_target, const QString& p_queue);
 	uint createTask(const QString& p_client, const QString& p_activity, const QString& p_description, const QString& p_dueDate, const QString& p_target);
 	uint moveBetweenQueues(const QString& p_sourceName, int p_sourceIndex, const QString& p_destinationName, int p_destinationIndex);
@@ -55,7 +59,8 @@ private:
 	uint              m_taskId;
 	QString           m_defaultQueue;
 	QList<TaskQueue*> m_queues;
-	QList<TaskMove*> m_history;
+	TaskRegistry      m_tasks;
+	QList<TaskMove*>  m_history;
 };
 
 #endif // Workflow_H

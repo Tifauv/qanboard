@@ -21,7 +21,7 @@ TaskMove::TaskMove(const Task& p_task, const TaskQueue& p_origin, const TaskQueu
 	m_origin(p_origin),
 	m_destination(p_destination),
 	m_timestamp(p_timestamp) {
-	qDebug() << "(i) [TaskMove] Created for task " << m_task.taskId() << " moved from queue " << m_origin.name() << " to " << m_destination.name();
+	qDebug() << "(i) [TaskMove] Created for task " << m_task.taskId() << " moved from queue " << m_origin.name() << " to " << m_destination.name() << " at " << m_timestamp.toString("yyyy-MM-dd'T'hh:mm:sst");
 }
 
 
@@ -37,7 +37,7 @@ TaskMove::TaskMove(const TaskMove& p_taskMove) :
 	m_origin(p_taskMove.origin()),
 	m_destination(p_taskMove.destination()),
 	m_timestamp(p_taskMove.timestamp()) {
-	qDebug() << "(i) [TaskMove] Copied task " << m_task.taskId() << " moved from queue " << m_origin.name() << " to " << m_destination.name();
+	qDebug() << "(i) [TaskMove] Copied task " << m_task.taskId() << " moved from queue " << m_origin.name() << " to " << m_destination.name() << " at " << m_timestamp.toString("yyyy-MM-dd'T'hh:mm:sst");
 }
 
 
@@ -46,7 +46,7 @@ TaskMove::TaskMove(const TaskMove& p_taskMove) :
  * @brief TaskMove::~TaskMove
  */
 TaskMove::~TaskMove() {
-	qDebug() << "(i) [TaskMove] Destroying move of task " << m_task.taskId() << " from queue " << m_origin.name() << " to " << m_destination.name();
+	qDebug() << "(i) [TaskMove] Destroying move of task " << m_task.taskId() << " from queue " << m_origin.name() << " to " << m_destination.name() << " at " << m_timestamp.toString("yyyy-MM-dd'T'hh:mm:sst");
 }
 
 

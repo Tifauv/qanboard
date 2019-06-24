@@ -22,10 +22,14 @@ private:
 	void readWorkflow(QXmlStreamReader&, Workflow&) const;
 	void readTaskQueue(QXmlStreamReader&, Workflow&) const;
 	Task* readTask(QXmlStreamReader&) const;
+	void readHistory(QXmlStreamReader&, Workflow&) const;
+	TaskMove* readTaskMove(QXmlStreamReader&, const Workflow&) const;
 
 	void writeWorkflow(QXmlStreamWriter&, const Workflow&) const;
-	void writeTaskQueue(QXmlStreamWriter&, TaskQueue*) const;
-	void writeTask(QXmlStreamWriter&, Task*) const;
+	void writeTaskQueue(QXmlStreamWriter&, const TaskQueue&) const;
+	void writeTask(QXmlStreamWriter&, const Task&) const;
+	void writeHistory(QXmlStreamWriter&, const QList<TaskMove*>&) const;
+	void writeTaskMove(QXmlStreamWriter&, const TaskMove&) const;
 };
 
 #endif // XmlSerializer_H

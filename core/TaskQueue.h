@@ -8,8 +8,8 @@
 class TaskQueue : public QAbstractListModel {
 	Q_OBJECT
 
-	Q_PROPERTY(QString name  READ name  WRITE setName  NOTIFY nameChanged  DESIGNABLE false)
-    Q_PROPERTY(int     count READ count                NOTIFY countChanged)
+	Q_PROPERTY(QString name   READ name   WRITE setName  NOTIFY nameChanged   DESIGNABLE false)
+    Q_PROPERTY(int     count  READ count                 NOTIFY countChanged)
 
 public:
 	enum Roles {
@@ -59,7 +59,6 @@ private:
 };
 
 Q_DECLARE_METATYPE(TaskQueue)
-Q_DECLARE_METATYPE(TaskQueue*)
 Q_DECLARE_METATYPE(QList<TaskQueue*>)
 
 #endif // TaskQueue_H
