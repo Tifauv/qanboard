@@ -12,11 +12,13 @@ Kirigami.ApplicationWindow {
 	globalDrawer: Kirigami.GlobalDrawer {
 		title: qsTr("My Kanban")
 		titleIcon: "planwork"
+		bannerImageSource: "qrc:/images/banner.png"
 		
 		actions: [
 			Kirigami.Action {
-				text: qsTr("Settings")
-				iconName: "configure"
+				text: qsTr("Quit")
+				iconName: "application-exit"
+				onTriggered: Qt.quit()
 			}
 		]
 	}

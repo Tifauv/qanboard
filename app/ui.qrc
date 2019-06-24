@@ -21,5 +21,6 @@
         <file>ui/task/CreateTaskDialog.qml</file>
         <file>ui/task/CreateTaskDialogForm.ui.qml</file>
         <file>ui/WorkspaceStatusBar.qml</file>
+        <file>images/banner.png</file>
     </qresource>
 </RCC>
