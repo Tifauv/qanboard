@@ -21,12 +21,6 @@ class Task : public QObject {
 	Q_PROPERTY(QString target      READ target      WRITE setTarget      NOTIFY targetChanged      DESIGNABLE false)
 
 public:
-	enum Type {
-		Incident,
-		Change,
-		Documentation
-	};
-
 	explicit Task(uint p_taskId = 0, const QString& p_client = QString::null, const QString& p_activity = QString::null, const QString& p_description = QString::null, const QString& p_dueDate = QString::null, const QString& p_target = QString::null, QObject* p_parent = nullptr);
 	explicit Task(const Task&);
 	virtual ~Task();
