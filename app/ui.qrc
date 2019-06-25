@@ -22,5 +22,8 @@
         <file>ui/task/CreateTaskDialogForm.ui.qml</file>
         <file>ui/WorkspaceStatusBar.qml</file>
         <file>images/banner.png</file>
+        <file>ui/TaskMove.qml</file>
+        <file>ui/TaskMoveForm.ui.qml</file>
+        <file>ui/HistoryPage.qml</file>
     </qresource>
 </RCC>

@@ -27,14 +27,30 @@ Kirigami.ApplicationWindow {
 		id: contextDrawer
 	}
 
-	pageStack.initialPage: workspacePage
+	pageStack.initialPage: workspacePageComponent
 	
-	WorkspacePage {
-		id: workspacePage
-		
-		createDlg: createTaskDlg
-		
-		onShowHistory: window.showPassiveNotification(qsTr("History page is not yet implemented"))
+	Component {
+		id: workspacePageComponent
+
+		WorkspacePage {
+			id: workspacePage
+
+			onShowCreateDialog: {
+				createDlg.reset();
+				createDlg.open()
+			}
+			onShowHistory: pageStack.push(historyPageComponent)
+		}
+	}
+
+	Component {
+		id: historyPageComponent
+
+		HistoryPage {
+			id: historyPage
+
+			onHideHistory: pageStack.pop()
+		}
 	}
 	
 	CreateTaskDialog {

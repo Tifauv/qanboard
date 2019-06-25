@@ -12,10 +12,10 @@
 class Workflow : public QAbstractListModel {
 	Q_OBJECT
 
-	Q_PROPERTY(uint    taskId        READ taskId        WRITE setTaskId        NOTIFY taskIdChanged  DESIGNABLE false)
+	Q_PROPERTY(uint    taskId        READ taskId        WRITE setTaskId  NOTIFY taskIdChanged  DESIGNABLE false)
 	Q_PROPERTY(QString defaultQueue  READ defaultQueue)
-	Q_PROPERTY(int     count         READ count                                NOTIFY countChanged)
-	Q_PROPERTY(History history       READ historyPtr)
+	Q_PROPERTY(int     count         READ count                          NOTIFY countChanged)
+	Q_PROPERTY(History history       READ history                        NOTIFY historyChanged)
 
 public:
 	enum Roles {
@@ -29,8 +29,7 @@ public:
 	uint taskId() const;
 	const QString& defaultQueue() const;
 	int count() const;
-	const History& history() const;
-	const History* historyPtr() const;
+	const History* history() const;
 
 	void setTaskId(uint);
 	void selectDefaultQueue(const QString&);
@@ -57,13 +56,14 @@ public slots:
 signals:
 	void taskIdChanged(uint);
 	void countChanged(int);
+	void historyChanged();
 
 private:
 	uint              m_taskId;
 	QString           m_defaultQueue;
 	QList<TaskQueue*> m_queues;
 	TaskRegistry      m_tasks;
-	History           m_history;
+	History*          m_history;
 };
 
 #endif // Workflow_H

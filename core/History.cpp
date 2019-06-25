@@ -103,5 +103,6 @@ void History::appendRow(TaskMove* p_move) {
 	beginInsertRows(QModelIndex(), lastRow, lastRow);
 	m_moves.append(p_move);
 	endInsertRows();
+	p_move->setParent(this);
 	qDebug() << "(i) [History] Task move appended for task #" << p_move->task().taskId() << " on " << p_move->timestamp();
 }
