@@ -203,7 +203,7 @@ void XmlSerializer::readHistory(QXmlStreamReader& p_xml, Workflow& p_workflow) c
 	Q_ASSERT(p_xml.isStartElement() && p_xml.name() == QWF_TAG_HISTORY && p_xml.namespaceUri() == QWF_NS);
 	qDebug() << "(i) [XmlSerializer]  Reading history...";
 	
-	// Load the Tasks
+	// Load the TaskMoves
 	while (p_xml.readNextStartElement()) {
 		if (p_xml.name() == QWF_TAG_TASKMOVE) {
 			TaskMove* taskMove = readTaskMove(p_xml, p_workflow);
@@ -266,6 +266,9 @@ TaskMove* XmlSerializer::readTaskMove(QXmlStreamReader& p_xml, const Workflow& p
 	QString isoDateTime = p_xml.attributes().value(QWF_ATTR_TIMESTAMP).toString();
 	QDateTime dateTime = QDateTime::fromString(isoDateTime, DATE_FORMAT);
 	
+	// Skip the end of the element
+	p_xml.skipCurrentElement();
+
 	qDebug() << "(i) [XmlSerializer]   Move for task #" << task->taskId() << " from queue " << fromQueueName << " to queue " << toQueueName << " on " << isoDateTime << " read.";
 	return new TaskMove(*task, *fromQueue, *toQueue, dateTime);
 }
@@ -290,7 +293,7 @@ void XmlSerializer::writeWorkflow(QXmlStreamWriter& p_xml, const Workflow& p_wor
 		writeTaskQueue(p_xml, *i.next());
 
 	// The history
-	writeHistory(p_xml, p_workflow.history());
+	writeHistory(p_xml, *p_workflow.history());
 	
 	p_xml.writeEndElement();
 	qDebug() << "(i) [XmlSerializer] Workflow written.";
