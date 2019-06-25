@@ -344,12 +344,12 @@ void XmlSerializer::writeTask(QXmlStreamWriter& p_xml, const Task& p_task) const
  * @param p_xml
  * @param p_history
  */
-void XmlSerializer::writeHistory(QXmlStreamWriter& p_xml, const QList<TaskMove*>& p_history) const {
+void XmlSerializer::writeHistory(QXmlStreamWriter& p_xml, const History& p_history) const {
 	qDebug() << "(i) [XmlSerializer]  Writing history...";
 	p_xml.writeStartElement(QWF_NS, QWF_TAG_HISTORY);
 
-	for (TaskMove* taskMove : p_history)
-		writeTaskMove(p_xml, *taskMove);
+	for (int i=0; i<p_history.rowCount(); ++i)
+		writeTaskMove(p_xml, *p_history.at(i));
 
 	p_xml.writeEndElement();
 	qDebug() << "(i) [XmlSerializer]  History written.";

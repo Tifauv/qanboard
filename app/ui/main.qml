@@ -33,6 +33,8 @@ Kirigami.ApplicationWindow {
 		id: workspacePage
 		
 		createDlg: createTaskDlg
+		
+		onShowHistory: window.showPassiveNotification(qsTr("History page is not yet implemented"))
 	}
 	
 	CreateTaskDialog {

@@ -8,6 +8,8 @@ Kirigami.Page {
 	
 	property variant createDlg
 	
+	signal showHistory()
+	
 	leftPadding: 0
 	topPadding: 0
 	rightPadding: 0
@@ -20,6 +22,11 @@ Kirigami.Page {
 			createDlg.reset();
 			createDlg.open()
 		}
+	}
+	contextualActions: Kirigami.Action {
+		text: qsTr("View activity")
+		iconName: ""
+		onTriggered: showHistory()
 	}
 	
 	Workspace {

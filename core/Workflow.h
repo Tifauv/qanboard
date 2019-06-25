@@ -6,6 +6,7 @@
 #include <QListIterator>
 #include "TaskRegistry.h"
 #include "TaskQueue.h"
+#include "History.h"
 #include "TaskMove.h"
 
 class Workflow : public QAbstractListModel {
@@ -14,6 +15,7 @@ class Workflow : public QAbstractListModel {
 	Q_PROPERTY(uint    taskId        READ taskId        WRITE setTaskId        NOTIFY taskIdChanged  DESIGNABLE false)
 	Q_PROPERTY(QString defaultQueue  READ defaultQueue)
 	Q_PROPERTY(int     count         READ count                                NOTIFY countChanged)
+	Q_PROPERTY(History history       READ historyPtr)
 
 public:
 	enum Roles {
@@ -27,7 +29,8 @@ public:
 	uint taskId() const;
 	const QString& defaultQueue() const;
 	int count() const;
-	const QList<TaskMove*>& history() const;
+	const History& history() const;
+	const History* historyPtr() const;
 
 	void setTaskId(uint);
 	void selectDefaultQueue(const QString&);
@@ -60,7 +63,7 @@ private:
 	QString           m_defaultQueue;
 	QList<TaskQueue*> m_queues;
 	TaskRegistry      m_tasks;
-	QList<TaskMove*>  m_history;
+	History           m_history;
 };
 
 #endif // Workflow_H

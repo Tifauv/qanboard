@@ -56,4 +56,6 @@ private:
 	QString m_target;
 };
 
+Q_DECLARE_METATYPE(Task)
+
 #endif // Task_H

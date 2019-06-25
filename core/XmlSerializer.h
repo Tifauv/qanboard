@@ -28,7 +28,7 @@ private:
 	void writeWorkflow(QXmlStreamWriter&, const Workflow&) const;
 	void writeTaskQueue(QXmlStreamWriter&, const TaskQueue&) const;
 	void writeTask(QXmlStreamWriter&, const Task&) const;
-	void writeHistory(QXmlStreamWriter&, const QList<TaskMove*>&) const;
+	void writeHistory(QXmlStreamWriter&, const History&) const;
 	void writeTaskMove(QXmlStreamWriter&, const TaskMove&) const;
 };
 

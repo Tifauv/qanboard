@@ -12,7 +12,8 @@ SOURCES += Task.cpp \
     MemoryStorage.cpp \
     FileStorage.cpp \
     TaskMove.cpp \
-    TaskRegistry.cpp
+    TaskRegistry.cpp \
+    History.cpp
 HEADERS += Task.h \
 	TaskQueue.h \
 	Workflow.h \
@@ -22,4 +23,5 @@ HEADERS += Task.h \
     MemoryStorage.h \
     FileStorage.h \
     TaskMove.h \
-    TaskRegistry.h
+    TaskRegistry.h \
+    History.h
