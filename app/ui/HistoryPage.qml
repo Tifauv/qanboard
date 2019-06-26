@@ -5,6 +5,8 @@ import org.kde.kirigami 2.4 as Kirigami
 Kirigami.ScrollablePage {
 	id: page
 	title: qsTr("Activity")
+	
+	implicitWidth: Kirigami.Units.gridUnit * 20
 
 	signal hideHistory()
 
