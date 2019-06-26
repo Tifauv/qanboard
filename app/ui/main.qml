@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import QtQuick.Layouts 1.3
+import QtQuick.Layouts 1.12
 import org.kde.kirigami 2.4 as Kirigami
 import "task"
 
@@ -28,10 +28,11 @@ Kirigami.ApplicationWindow {
 		id: contextDrawer
 	}
 
-	pageStack.initialPage: workspacePageComponent
+	pageStack.defaultColumnWidth: Kirigami.Units.gridUnit * 36
+	pageStack.initialPage: workspacePage
 	
 	Component {
-		id: workspacePageComponent
+		id: workspacePage
 
 		WorkspacePage {
 			onShowCreateDialog: {
@@ -39,14 +40,12 @@ Kirigami.ApplicationWindow {
 				createTaskDlg.open()
 			}
 
-			onShowHistory: {
-				pageStack.push(historyPageComponent);
-			}
+			onShowHistory: pageStack.push(historyPage);
 		}
 	}
 
 	Component {
-		id: historyPageComponent
+		id: historyPage
 
 		HistoryPage {
 			onHideHistory: pageStack.pop()
