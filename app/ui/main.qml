@@ -8,10 +8,10 @@ Kirigami.ApplicationWindow {
 	visible: true
 	width: 800
 	height: 460
-	title: qsTr("My Kanban")
+	title: qsTr("Qanboard")
 	
 	globalDrawer: Kirigami.GlobalDrawer {
-		title: qsTr("My Kanban")
+		title: qsTr("Qanboard")
 		titleIcon: "planwork"
 		bannerImageSource: "qrc:/images/banner.png"
 		
@@ -34,20 +34,12 @@ Kirigami.ApplicationWindow {
 		id: workspacePageComponent
 
 		WorkspacePage {
-			id: workspacePage
-
-			// TODO Does not seem to work
-			Layout.minimumWidth: Kirigami.Units.gridUnit * 36
-			implicitWidth: Kirigami.Units.gridUnit * 36
-
 			onShowCreateDialog: {
 				createTaskDlg.reset();
 				createTaskDlg.open()
 			}
 
 			onShowHistory: {
-				// TODO Does not seem to work fully
-				pageStack.defaultColumnWidth = Math.max(window.width*0.5, Kirigami.Units.gridUnit * 24);
 				pageStack.push(historyPageComponent);
 			}
 		}
@@ -57,11 +49,6 @@ Kirigami.ApplicationWindow {
 		id: historyPageComponent
 
 		HistoryPage {
-			id: historyPage
-
-			// TODO Does not seem to work
-			Layout.maximumWidth: Kirigami.Units.gridUnit * 16
-
 			onHideHistory: pageStack.pop()
 		}
 	}
