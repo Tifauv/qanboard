@@ -1,4 +1,5 @@
 import QtQuick 2.9
+import QtQuick.Layouts 1.3
 import org.kde.kirigami 2.4 as Kirigami
 import "task"
 
@@ -35,11 +36,20 @@ Kirigami.ApplicationWindow {
 		WorkspacePage {
 			id: workspacePage
 
+			// TODO Does not seem to work
+			Layout.minimumWidth: Kirigami.Units.gridUnit * 36
+			implicitWidth: Kirigami.Units.gridUnit * 36
+
 			onShowCreateDialog: {
 				createTaskDlg.reset();
 				createTaskDlg.open()
 			}
-			onShowHistory: pageStack.push(historyPageComponent)
+
+			onShowHistory: {
+				// TODO Does not seem to work fully
+				pageStack.defaultColumnWidth = Math.max(window.width*0.5, Kirigami.Units.gridUnit * 24);
+				pageStack.push(historyPageComponent);
+			}
 		}
 	}
 
@@ -48,6 +58,9 @@ Kirigami.ApplicationWindow {
 
 		HistoryPage {
 			id: historyPage
+
+			// TODO Does not seem to work
+			Layout.maximumWidth: Kirigami.Units.gridUnit * 16
 
 			onHideHistory: pageStack.pop()
 		}
