@@ -13,7 +13,7 @@ Workflow::Workflow(QObject* p_parent) :
 	m_defaultQueue(),
 	m_queues(),
 	m_tasks(),
-    m_history(new History(this)) {
+	m_history(new History(this)) {
 	qDebug() << "(i) [Workflow] Created";
 }
 
@@ -50,7 +50,7 @@ int Workflow::count() const {
  * @brief Workflow::history
  * @return 
  */
-const History* Workflow::history() const {
+History* Workflow::history() const {
 	return m_history;
 }
 
@@ -172,7 +172,7 @@ Task* Workflow::findTask(uint p_taskId) const {
 void Workflow::appendToHistory(TaskMove* p_change) {
 	Q_ASSERT(p_change);
 
-	m_history->appendRow(p_change);
+	m_history->append(p_change);
 	emit historyChanged();
 }
 

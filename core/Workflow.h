@@ -12,10 +12,10 @@
 class Workflow : public QAbstractListModel {
 	Q_OBJECT
 
-	Q_PROPERTY(uint    taskId        READ taskId        WRITE setTaskId  NOTIFY taskIdChanged  DESIGNABLE false)
-	Q_PROPERTY(QString defaultQueue  READ defaultQueue)
-	Q_PROPERTY(int     count         READ count                          NOTIFY countChanged)
-	Q_PROPERTY(History history       READ history                        NOTIFY historyChanged)
+	Q_PROPERTY(uint           taskId        READ taskId        WRITE setTaskId  NOTIFY taskIdChanged  DESIGNABLE false)
+	Q_PROPERTY(QString        defaultQueue  READ defaultQueue)
+	Q_PROPERTY(int            count         READ count                          NOTIFY countChanged)
+	Q_PROPERTY(History* history       READ history                        NOTIFY historyChanged)
 
 public:
 	enum Roles {
@@ -29,7 +29,7 @@ public:
 	uint taskId() const;
 	const QString& defaultQueue() const;
 	int count() const;
-	const History* history() const;
+	History* history() const;
 
 	void setTaskId(uint);
 	void selectDefaultQueue(const QString&);

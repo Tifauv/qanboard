@@ -30,6 +30,8 @@ int main(int p_argc, char *p_argv[]) {
 	// Register model types with the QML engine
 	qmlRegisterType<Task>(     "Qanboard", 1, 0, "Task"     );
 	qmlRegisterType<TaskQueue>("Qanboard", 1, 0, "TaskQueue");
+	//qmlRegisterType<TaskMove>( "Qanboard", 1, 0, "TaskMove" );
+	qmlRegisterType<History>(  "Qanboard", 1, 0, "History"  );
 	qmlRegisterType<Workflow>( "Qanboard", 1, 0, "Workflow" );
 
 	// Create the workflow and initialize the storage layer

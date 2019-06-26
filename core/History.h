@@ -8,19 +8,26 @@
 
 class History : public QAbstractListModel {
 	Q_OBJECT
-	
+
+	Q_PROPERTY(int count  READ count  NOTIFY countChanged)
 	
 public:
 	enum Roles {
 		TaskRole = Qt::UserRole+1,
+		TaskIdRole,
+		TaskClientRole,
+		TaskActivityRole,
+		TaskDescriptionRole,
 		OriginRole,
 		DestinationRole,
 		TimestampRole
 	};
 	
 	explicit History(QObject* parent = nullptr);
-	explicit History(const History& p_toCopy);
+	explicit History(const History&);
 	~History() override {}
+	
+	int count() const;
 	
 	int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 	QHash<int, QByteArray> roleNames() const override;
@@ -28,12 +35,15 @@ public:
 	
 public slots:
 	const TaskMove* at(int row) const;
-	void appendRow(TaskMove*);
+	void append(TaskMove*);
+
+signals:
+	void countChanged(int);
 
 private:
 	QVector<TaskMove*> m_moves;
 };
 
-Q_DECLARE_METATYPE(History)
+Q_DECLARE_METATYPE(History*)
 
 #endif // History_H

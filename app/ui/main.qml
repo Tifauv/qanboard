@@ -1,4 +1,4 @@
-import QtQuick 2.6
+import QtQuick 2.9
 import org.kde.kirigami 2.4 as Kirigami
 import "task"
 

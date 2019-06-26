@@ -4,7 +4,7 @@ import org.kde.kirigami 2.4 as Kirigami
 
 Kirigami.ScrollablePage {
 	id: page
-	title: qsTr("Activity history")
+	title: qsTr("Activity")
 
 	signal hideHistory()
 
@@ -18,16 +18,24 @@ Kirigami.ScrollablePage {
 		id: list
 
 		anchors.fill: parent
+		spacing: 6
 
 		model: workflow.history
 
 		delegate: TaskMove {
 			datetime: model.timestamp
-			taskId: model.task.taskId
-			taskTitle: qsTr("%1 %2").arg(model.task.client).arg(model.task.activity)
-			taskDescription: model.task.description
-			originQueueName: model.originQueue.name
-			destinationQueueName: model.destinationQueue.name
+			taskId: model.taskId
+			taskTitle: qsTr("%1 %2").arg(model.taskClient).arg(model.taskActivity)
+			taskDescription: model.taskDescription
+			originQueueName: model.origin
+			destinationQueueName: model.destination
+			
+			anchors {
+				left: parent.left
+				right: parent.right
+			}
 		}
+
+		Component.onCompleted: positionViewAtIndex(count - 1, ListView.End)
 	}
 }

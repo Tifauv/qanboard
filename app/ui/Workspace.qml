@@ -1,5 +1,5 @@
-import QtQuick 2.6
-import org.kde.kirigami 2.5 as Kirigami
+import QtQuick 2.9
+import org.kde.kirigami 2.4 as Kirigami
 import Qanboard 1.0
 import "task"
 import "queue"

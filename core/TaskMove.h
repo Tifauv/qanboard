@@ -31,4 +31,6 @@ private:
 	const QDateTime  m_timestamp;
 };
 
+//Q_DECLARE_METATYPE(TaskMove)
+
 #endif // TaskMove_H

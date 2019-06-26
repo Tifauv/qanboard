@@ -1,6 +1,12 @@
 #include "History.h"
 #include <QtDebug>
 
+#include <sys/types.h>
+#include <unistd.h>
+#include <string>
+#include <sstream>
+#include <cstdlib>
+
 // CONSTRUCTORS
 /**
  * @brief History::History
@@ -24,6 +30,16 @@ History::History(const History& p_toCopy) :
 }
 
 
+// GETTERS
+/**
+ * @brief History::count
+ * @return 
+ */
+int History::count() const {
+	return m_moves.count();
+}
+
+
 // MODEL/VIEW API
 /**
  * @brief History::rowCount
@@ -32,6 +48,7 @@ History::History(const History& p_toCopy) :
  */
 int History::rowCount(const QModelIndex& p_parent) const {
 	Q_UNUSED(p_parent);
+	qDebug() << "(i) [History] " << m_moves.count() << " rows.";
 	return m_moves.count();
 }
 
@@ -42,10 +59,14 @@ int History::rowCount(const QModelIndex& p_parent) const {
  */
 QHash<int, QByteArray> History::roleNames() const {
 	QHash<int, QByteArray> names;
-	names[TaskRole]        = "task";
-	names[OriginRole]      = "origin";
-	names[DestinationRole] = "destination";
-	names[TimestampRole]   = "timestamp";
+	names[TaskRole]            = "task";
+	names[TaskIdRole]          = "taskId";
+	names[TaskClientRole]      = "taskClient";
+	names[TaskActivityRole]    = "taskActivity";
+	names[TaskDescriptionRole] = "taskDescription";
+	names[OriginRole]          = "origin";
+	names[DestinationRole]     = "destination";
+	names[TimestampRole]       = "timestamp";
 	return names;
 }
 
@@ -65,12 +86,20 @@ QVariant History::data(const QModelIndex& p_index, int p_role) const {
 	switch (p_role) {
 	case TaskRole:
 		return QVariant::fromValue(move->task());
+	case TaskIdRole:
+		return move->task().taskId();
+	case TaskClientRole:
+		return move->task().client();
+	case TaskActivityRole:
+		return move->task().activity();
+	case TaskDescriptionRole:
+		return move->task().description();
 	case OriginRole:
-		return QVariant::fromValue(move->origin().name());
+		return move->origin().name();
 	case DestinationRole:
-		return QVariant::fromValue(move->destination());
+		return move->destination().name();
 	case TimestampRole:
-		return move->timestamp();
+		return move->timestamp().toString("dd/MM/yyyy hh:mm"); // TODO I18N
 	default:
 		return QVariant();
 	}
@@ -95,14 +124,15 @@ const TaskMove* History::at(int p_index) const {
  * @brief History::appendRow
  * @param p_move
  */
-void History::appendRow(TaskMove* p_move) {
+void History::append(TaskMove* p_move) {
 	Q_ASSERT(p_move);
 	
 	int lastRow = rowCount();
 	
 	beginInsertRows(QModelIndex(), lastRow, lastRow);
 	m_moves.append(p_move);
-	endInsertRows();
 	p_move->setParent(this);
+	endInsertRows();
+	emit countChanged(count());
 	qDebug() << "(i) [History] Task move appended for task #" << p_move->task().taskId() << " on " << p_move->timestamp();
 }
