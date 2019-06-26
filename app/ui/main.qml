@@ -36,8 +36,8 @@ Kirigami.ApplicationWindow {
 			id: workspacePage
 
 			onShowCreateDialog: {
-				createDlg.reset();
-				createDlg.open()
+				createTaskDlg.reset();
+				createTaskDlg.open()
 			}
 			onShowHistory: pageStack.push(historyPageComponent)
 		}
