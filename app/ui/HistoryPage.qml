@@ -36,6 +36,6 @@ Kirigami.ScrollablePage {
 			}
 		}
 
-		Component.onCompleted: positionViewAtIndex(count - 1, ListView.End)
+		Component.onCompleted: positionViewAtIndex(count-1, ListView.End)
 	}
 }
