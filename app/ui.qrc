@@ -18,12 +18,12 @@
         <file>ui/task/TaskFooterForm.ui.qml</file>
         <file>ui/task/TaskHeaderForm.ui.qml</file>
         <file>ui/WorkspacePage.qml</file>
-        <file>ui/task/CreateTaskDialog.qml</file>
-        <file>ui/task/CreateTaskDialogForm.ui.qml</file>
         <file>ui/WorkspaceStatusBar.qml</file>
         <file>images/banner.png</file>
         <file>ui/TaskMove.qml</file>
         <file>ui/TaskMoveForm.ui.qml</file>
         <file>ui/HistoryPage.qml</file>
+        <file>ui/task/CreateTask.qml</file>
+        <file>ui/task/CreateTaskForm.ui.qml</file>
     </qresource>
 </RCC>

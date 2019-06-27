@@ -1,22 +1,16 @@
 import QtQuick 2.9
-import QtQuick.Controls 2.2 as Controls
+import QtQuick.Controls 2.4 as Controls
 import org.kde.kirigami 2.4 as Kirigami
 
-Controls.Dialog {
-    id: dialog
-    title: qsTr("New Task")
+Item {
+    implicitWidth: 300
+    implicitHeight: 400
 
     property alias clientTxt: clientTxt
     property alias activityTxt: activityTxt
     property alias descriptionTxt: descriptionTxt
     property alias dueDateTxt: dueDateTxt
     property alias targetTxt: targetTxt
-
-    implicitWidth: 300
-    implicitHeight: 400
-
-    standardButtons: Controls.Dialog.Save | Controls.Dialog.Cancel
-    closePolicy: Controls.Dialog.CloseOnEscape | Controls.Dialog.CloseOnPressOutside
 
     Kirigami.FormLayout {
         clip: true
@@ -27,6 +21,7 @@ Controls.Dialog {
             placeholderText: qsTr("Client name")
             Kirigami.FormData.label: qsTr("Client")
             maximumLength: 24
+            focus: true
         }
         Controls.TextField {
             id: activityTxt
@@ -46,8 +41,9 @@ Controls.Dialog {
         Controls.TextField {
             id: dueDateTxt
             placeholderText: qsTr("dd/mm/yyyy")
+            // TODO find a way to accept the input mask or an empty string
+            //inputMask: qsTr("00/00/0000;_")
             Kirigami.FormData.label: qsTr("Due date")
-            focus: true
             maximumLength: 32
         }
         Controls.TextField {
