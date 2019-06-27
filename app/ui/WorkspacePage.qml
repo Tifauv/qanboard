@@ -9,7 +9,7 @@ Kirigami.Page {
 	signal showCreateDialog()
 	signal showHistory()
 	
-	implicitWidth: Kirigami.Units.gridUnit * 44
+	Layout.preferredWidth: Kirigami.Units.gridUnit * 44
 	
 	leftPadding: 0
 	topPadding: 0
