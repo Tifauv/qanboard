@@ -37,15 +37,15 @@ Kirigami.ApplicationWindow {
 
 		WorkspacePage {
 			onShowCreateDialog: createTaskSheet.open()
-			onShowHistory: pageStack.push(historyPage);
+			onShowActivity: pageStack.push(activityPage);
 		}
 	}
 
 	Component {
-		id: historyPage
+		id: activityPage
 
-		HistoryPage {
-			onHideHistory: pageStack.pop()
+		ActivityPage {
+			onClosePage: pageStack.pop()
 		}
 	}
 	

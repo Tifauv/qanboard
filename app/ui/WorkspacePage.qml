@@ -7,7 +7,7 @@ Kirigami.Page {
 	title: qsTr("Workspace")
 	
 	signal showCreateDialog()
-	signal showHistory()
+	signal showActivity()
 	
 	Layout.preferredWidth: Kirigami.Units.gridUnit * 44
 	
@@ -26,7 +26,7 @@ Kirigami.Page {
 		Kirigami.Action {
 			text: qsTr("View activity")
 			iconName: "view-history"
-			onTriggered: showHistory()
+			onTriggered: showActivity()
 		}
 	]
 	

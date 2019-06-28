@@ -22,7 +22,7 @@
         <file>images/banner.png</file>
         <file>ui/TaskMove.qml</file>
         <file>ui/TaskMoveForm.ui.qml</file>
-        <file>ui/HistoryPage.qml</file>
+        <file>ui/ActivityPage.qml</file>
         <file>ui/task/TaskEdit.qml</file>
         <file>ui/task/TaskEditForm.ui.qml</file>
     </qresource>
