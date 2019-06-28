@@ -20,7 +20,9 @@ public:
 		TaskDescriptionRole,
 		OriginRole,
 		DestinationRole,
-		TimestampRole
+		TimestampRole,
+		DateRole,
+		TimeRole
 	};
 	
 	explicit History(QObject* parent = nullptr);

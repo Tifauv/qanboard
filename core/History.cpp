@@ -67,6 +67,8 @@ QHash<int, QByteArray> History::roleNames() const {
 	names[OriginRole]          = "origin";
 	names[DestinationRole]     = "destination";
 	names[TimestampRole]       = "timestamp";
+	names[DateRole]            = "date";
+	names[TimeRole]            = "time";
 	return names;
 }
 
@@ -100,6 +102,10 @@ QVariant History::data(const QModelIndex& p_index, int p_role) const {
 		return move->destination().name();
 	case TimestampRole:
 		return move->timestamp().toString("dd/MM/yyyy hh:mm"); // TODO I18N
+	case DateRole:
+		return move->timestamp().toString("dddd dd MMMM yyyy"); // TODO I18N
+	case TimeRole:
+		return move->timestamp().toString("hh'h'mm"); // TODO I18N
 	default:
 		return QVariant();
 	}
