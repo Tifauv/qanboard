@@ -48,7 +48,6 @@ int History::count() const {
  */
 int History::rowCount(const QModelIndex& p_parent) const {
 	Q_UNUSED(p_parent);
-	qDebug() << "(i) [History] " << m_moves.count() << " rows.";
 	return m_moves.count();
 }
 
