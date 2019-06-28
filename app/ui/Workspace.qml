@@ -36,7 +36,7 @@ Rectangle {
 			model: workflow
 
 			TaskQueueView {
-				width: layout.width / queueRepeater.model.count
+				width: Math.floor(layout.width / queueRepeater.model.count)
 				height: layout.height
 
 				title: model.name
