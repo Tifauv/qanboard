@@ -54,6 +54,7 @@ int main(int p_argc, char *p_argv[]) {
 	QQmlApplicationEngine engine;
 	engine.addImportPath("qrc:///");
 	engine.rootContext()->setContextProperty("workflow", &wf);
+	engine.rootContext()->setContextProperty("storage", &storage);
 	engine.load(QUrl(QStringLiteral("qrc:/ui/main.qml")));
 	if (engine.rootObjects().isEmpty())
 		return -1;
