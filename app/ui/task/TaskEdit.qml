@@ -1,6 +1,6 @@
 import QtQuick 2.9
 
-CreateTaskForm {
+TaskEditForm {
 	property string taskClient: clientTxt.text
 	property string taskActivity: activityTxt.text
 	property string taskDescription: descriptionTxt.text

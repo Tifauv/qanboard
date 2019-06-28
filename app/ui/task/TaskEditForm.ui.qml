@@ -32,7 +32,7 @@ Item {
         Controls.TextField {
             id: descriptionTxt
             placeholderText: qsTr("What is it about?")
-            Kirigami.FormData.label: qsTr("Description")
+            Kirigami.FormData.label: qsTr("* Description")
             maximumLength: 250
         }
         Kirigami.Separator {

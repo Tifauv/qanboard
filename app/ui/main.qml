@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.2 as Controls
 import org.kde.kirigami 2.4 as Kirigami
+import Qanboard 1.0
 import "task"
 
 Kirigami.ApplicationWindow {
@@ -69,9 +70,7 @@ Kirigami.ApplicationWindow {
 			}
 		}
 		
-		Keys.onReturnPressed: if (createTaskForm.isValid) createTaskSheet.createTask()
-		
-		CreateTask {
+		TaskEdit {
 			id: createTaskForm
 			Layout.preferredWidth:  Kirigami.Units.gridUnit * 20
 			focus: true
@@ -86,6 +85,56 @@ Kirigami.ApplicationWindow {
 		function createTask() {
 			workflow.createTask(createTaskForm.taskClient, createTaskForm.taskActivity, createTaskForm.taskDescription, createTaskForm.taskDueDate, createTaskForm.taskTarget);
 			createTaskSheet.close()
+		}
+	}
+	
+	Kirigami.OverlaySheet {
+		id: editTaskSheet
+		
+		header: Kirigami.Heading {
+			text: qsTr("Edit Task #%1").arg(editTaskSheet.taskId)
+		}
+		
+		property var model: Task {
+			
+		}
+		
+		footer: RowLayout {
+			Controls.Button {
+				id: modifyBtn
+				
+				Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+
+				text: qsTr("Modify")
+				focus: true
+				enabled: editTaskForm.isValid
+
+				onClicked: editTaskSheet.modifyTask()
+			}
+		}
+		
+		TaskEdit {
+			id: editTaskForm
+			Layout.preferredWidth:  Kirigami.Units.gridUnit * 20
+			focus: true
+			
+			taskClient: editTaskSheet.model.client
+			taskActivity: editTaskSheet.model.activity
+			taskDescription: editTaskSheet.model.description
+			taskDueDate: editTaskSheet.model.dueDate
+			taskTarget: editTaskSheet.model.target
+			
+			onAccepted: editTaskSheet.modifyTask()
+		}
+		
+		onSheetOpenChanged: {
+			editTaskForm.reset();
+		}
+
+		function modifyTask() {
+			//workflow.createTask(createTaskForm.taskClient, createTaskForm.taskActivity, createTaskForm.taskDescription, createTaskForm.taskDueDate, createTaskForm.taskTarget);
+			
+			editTaskSheet.close()
 		}
 	}
 }
