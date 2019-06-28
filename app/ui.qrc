@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>images/banner.png</file>
         <file>ui/Colors.qml</file>
         <file>ui/main.qml</file>
         <file>ui/Workspace.qml</file>
@@ -19,11 +20,12 @@
         <file>ui/task/TaskHeaderForm.ui.qml</file>
         <file>ui/WorkspacePage.qml</file>
         <file>ui/WorkspaceStatusBar.qml</file>
-        <file>images/banner.png</file>
-        <file>ui/TaskMove.qml</file>
-        <file>ui/TaskMoveForm.ui.qml</file>
+        <file>ui/activity/TaskMove.qml</file>
+        <file>ui/activity/TaskMoveForm.ui.qml</file>
         <file>ui/ActivityPage.qml</file>
         <file>ui/task/TaskEdit.qml</file>
         <file>ui/task/TaskEditForm.ui.qml</file>
+        <file>ui/activity/DateHeader.qml</file>
+        <file>ui/activity/DateHeaderForm.ui.qml</file>
     </qresource>
 </RCC>

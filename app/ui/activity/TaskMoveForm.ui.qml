@@ -1,8 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2 as Controls
-import "task"
-import "tools"
+import "../task"
 
 Item {
     id: element
@@ -139,11 +138,3 @@ Item {
         }
     }
 }
-
-
-
-
-/*##^## Designer {
-    D{i:0;width:300}
-}
- ##^##*/

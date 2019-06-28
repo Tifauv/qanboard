@@ -2,6 +2,7 @@ import QtQuick 2.9
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.2 as Controls
 import org.kde.kirigami 2.4 as Kirigami
+import "activity"
 
 Kirigami.ScrollablePage {
 	id: page
@@ -49,28 +50,9 @@ Kirigami.ScrollablePage {
 	Component {
 		id: dateSectionHeader
 	
-		ColumnLayout {
+		DateHeader {
 			width: parent.width
-			height: childrenRect.height
-			spacing: Kirigami.Units.smallSpacing
-			Layout.topMargin: Kirigami.Units.largeSpacing
-			Layout.bottomMargin: Kirigami.Units.largeSpacing
-			
-			Rectangle {
-				id: separator
-				height: 1
-				Layout.fillWidth: true
-				color: Kirigami.Theme.disabledTextColor
-			}
-			
-			Kirigami.Heading {
-				text: section
-				
-				horizontalAlignment: Text.AlignHCenter
-				Layout.fillWidth: true
-			}
-			
-			
+			text: section
 		}
 	}
 }
