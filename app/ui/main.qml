@@ -26,10 +26,6 @@ Kirigami.ApplicationWindow {
 		]
 	}
 
-	contextDrawer: Kirigami.ContextDrawer {
-		id: contextDrawer
-	}
-
 	pageStack.initialPage: workspacePage
 	
 	Component {
