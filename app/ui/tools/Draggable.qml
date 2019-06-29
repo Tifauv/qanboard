@@ -1,5 +1,6 @@
 import QtQuick 2.6
 import QtGraphicalEffects 1.0
+import org.kde.kirigami 2.4 as Kirigami
 import "../task"
 
 Item {
@@ -124,18 +125,16 @@ Item {
                         bottom: parent.bottom
                     }
                 }
-            }
 
-            DropShadow {
-                id: shadow
-                anchors.fill: shadowWrapper
-                cached: true
-				verticalOffset: 1
-				radius: 8.0
-                samples: 16
-                color: "#80000000"
-                source: shadowWrapper
-            }
+				layer.enabled: true
+				layer.effect:             DropShadow {
+					cached: true
+					verticalOffset: 1
+					radius: 8.0
+					samples: 16
+					color: Kirigami.Theme.disabledTextColor
+				}
+			}
         }
 	}
 

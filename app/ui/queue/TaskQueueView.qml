@@ -1,4 +1,6 @@
 import QtQuick 2.9
+import QtQuick.Layouts 1.12
+import org.kde.kirigami 2.4 as Kirigami
 import Qanboard 1.0
 import "../tools"
 import "../task"
@@ -19,37 +21,34 @@ Rectangle {
 	/* Signals the item at the given index has been dropped. */
 	signal itemDragEnded(int index)
 
-	Title {
-		id: titleBox
-		height: 40
-		name: title
-		count: tasks.count
-		anchors.right: parent.right
-		anchors.left: parent.left
-		anchors.top: parent.top
-		z: 1
-	}
+	Kirigami.Theme.colorSet: Kirigami.Theme.Window
+	color: Kirigami.Theme.backgroundColor
 
-	Rectangle {
-		height: 280
-		anchors.right: parent.right
-		anchors.left: parent.left
-		anchors.top: titleBox.bottom
-		anchors.bottom: parent.bottom
-		color: "#fafafa"
-		z:0
+	ColumnLayout {
+		id: layout
+		
+		anchors.fill: parent
+		spacing: 0
 
+		Title {
+			id: titleBox
+			height: 40
+			name: title
+			count: tasks.count
+
+			Layout.fillWidth: true
+			
+			z: 1
+		}
+		
 		ListView {
 			id: taskList
-			anchors {
-				fill: parent
-				topMargin: 8
-				leftMargin: 4
-				rightMargin: 4
-				bottomMargin: 8
-			}
-			spacing: 8
-
+			
+			Layout.fillWidth: true
+			Layout.fillHeight: true
+			Layout.margins: Kirigami.Units.smallSpacing
+			spacing: Kirigami.Units.largeSpacing
+			
 			model: tasks
 
 			delegate: Draggable {
@@ -97,23 +96,23 @@ Rectangle {
 					right: taskList.right
 				}
 			}
-		}
-
-		Loader {
-			id: emptyDropAreaLoader
-			active: taskList.model.count === 0
-			anchors.fill: taskList
-
-			sourceComponent: Component {
-				DropArea {
-					keys: [ taskDragKey ]
-
-					onDropped: {
-						var sourceList  = drop.source.dropTargetItem;
-						var sourceIndex = drop.source.modelIndex;
-
-						workflow.moveBetweenQueues(sourceList.title, sourceIndex, title, 0);
-						drop.accept(Qt.MoveAction);
+			
+			Loader {
+				id: emptyDropAreaLoader
+				active: taskList.model.count === 0
+				anchors.fill: taskList
+	
+				sourceComponent: Component {
+					DropArea {
+						keys: [ taskDragKey ]
+	
+						onDropped: {
+							var sourceList  = drop.source.dropTargetItem;
+							var sourceIndex = drop.source.modelIndex;
+	
+							workflow.moveBetweenQueues(sourceList.title, sourceIndex, title, 0);
+							drop.accept(Qt.MoveAction);
+						}
 					}
 				}
 			}
