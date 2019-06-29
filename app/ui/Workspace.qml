@@ -5,7 +5,7 @@ import "task"
 import "queue"
 import "tools"
 
-Rectangle {
+Item {
 	id: workspace
 	width: 800
 	height: 460
@@ -36,7 +36,7 @@ Rectangle {
 			model: workflow
 
 			TaskQueueView {
-				width: Math.floor(layout.width / queueRepeater.model.count)
+				width: Math.floor(layout.width / queueRepeater.model.count) + (index > 0 && index <= layout.width % queueRepeater.model.count ? 1 : 0)
 				height: layout.height
 
 				title: model.name
