@@ -14,7 +14,7 @@ Kirigami.ScrollablePage {
 	
 	mainAction: Kirigami.Action {
 		text: qsTr("Close")
-		iconName: "close"
+		iconName: "tab-close"
 		onTriggered: closePage()
 	}
 	
