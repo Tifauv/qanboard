@@ -15,7 +15,7 @@ Item {
 	property Item dropTargetItem
 
 	/* This item will become the contentItem's parent while it is dragged. */
-    property Item draggedItemParent
+	property Item draggedItemParent
 
 	/* This is the type of object that this Draggable will drag */
 	property string dragKey
@@ -62,50 +62,50 @@ Item {
     }
 
 	/* The item placeholder inside the ListView */
-    Item {
+	Item {
 		id: itemPlaceholder
-        anchors {
-            top: topPlaceholder.bottom
-            left: parent.left
-            right: parent.right
-        }
+		anchors {
+			top: topPlaceholder.bottom
+			left: parent.left
+			right: parent.right
+		}
 		height: contentItem.height
 
-        Rectangle {
+		Rectangle {
 			id: movableItem
-            anchors {
-                top: parent.top
-                left: parent.left
-                right: parent.right
-                bottom: parent.bottom
-            }
+			anchors {
+				top: parent.top
+				left: parent.left
+				right: parent.right
+				bottom: parent.bottom
+			}
 
 			Drag.active: dragHandle.active
 			Drag.source: root
-            Drag.hotSpot {
+			Drag.hotSpot {
 				x: dragHandle.width / 2
-                y: contentItem.height / 2
-            }
+				y: contentItem.height / 2
+			}
 			Drag.keys: [ dragKey ]
 			Drag.proposedAction: Qt.MoveAction
 
-            Rectangle {
-                id: shadowWrapper
-                anchors {
-                    top: parent.top
-                    left: parent.left
-                    right: parent.right
-                    bottom: parent.bottom
-                }
+			Rectangle {
+				id: shadowWrapper
+				anchors {
+					top: parent.top
+					left: parent.left
+					right: parent.right
+					bottom: parent.bottom
+				}
 
-                Handle {
-                    id: dragHandle
-                    width: handleWidth
-                    anchors {
-                        top: parent.top
-                        left: parent.left
-                        bottom: parent.bottom
-                    }
+				Handle {
+					id: dragHandle
+					width: handleWidth
+					anchors {
+						top: parent.top
+						left: parent.left
+						bottom: parent.bottom
+					}
 
 					dragTarget: movableItem
 
@@ -116,18 +116,18 @@ Item {
 					}
 				}
 
-                Rectangle {
+				Rectangle {
 					id: contentWrapper
-                    anchors {
-                        top: parent.top
-                        left: dragHandle.right
-                        right: parent.right
-                        bottom: parent.bottom
-                    }
-                }
+					anchors {
+						top: parent.top
+						left: dragHandle.right
+						right: parent.right
+						bottom: parent.bottom
+					}
+				}
 
 				layer.enabled: true
-				layer.effect:             DropShadow {
+				layer.effect: DropShadow {
 					cached: true
 					verticalOffset: 1
 					radius: 8.0
@@ -135,18 +135,18 @@ Item {
 					color: Kirigami.Theme.disabledTextColor
 				}
 			}
-        }
+		}
 	}
 
 	/* The main placeholder is _after_ the wrapped item. */
 	DropPlaceholder {
-        id: bottomPlaceholder
-        anchors {
+		id: bottomPlaceholder
+		anchors {
 			top: itemPlaceholder.bottom
-            left: parent.left
-            right: parent.right
+			left: parent.left
+			right: parent.right
 			topMargin: _listView.spacing
-        }
+		}
 		spacing: _listView.spacing
 	}
 
@@ -261,7 +261,7 @@ Item {
 				height: contentItem.height
 			}
 
-            PropertyChanges {
+			PropertyChanges {
 				target: itemPlaceholder
 				height: - _listView.spacing // Cancel the view's spacing
 			}
@@ -295,14 +295,4 @@ Item {
 			}
 		}
 	]
-
-/*
-	Timer {
-		id: makeDroppedItemVisibleTimer
-		interval: 0
-		onTriggered: {
-			_listView.positionViewAtIndex(model.index, ListView.Contain);
-		}
-	}
-*/
 }
