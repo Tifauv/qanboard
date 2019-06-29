@@ -18,6 +18,8 @@ Kirigami.ScrollablePage {
 		onTriggered: closePage()
 	}
 	
+	Kirigami.Theme.colorSet: Kirigami.Theme.Window
+	
 	ListView {
 		id: list
 		
@@ -27,7 +29,7 @@ Kirigami.ScrollablePage {
 		model: workflow.history
 		
 		delegate: TaskMove {
-			datetime: model.time
+			time: model.time
 			taskId: model.taskId
 			taskTitle: qsTr("%1 %2").arg(model.taskClient).arg(model.taskActivity)
 			taskDescription: model.taskDescription

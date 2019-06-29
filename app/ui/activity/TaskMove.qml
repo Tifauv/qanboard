@@ -2,14 +2,14 @@ import QtQuick 2.9
 
 TaskMoveForm {
 
-	property string datetime: "24/06/2019 11:25"
+	property string time: "11:25"
 	property int taskId: 0
 	property string taskTitle: "Plop"
 	property string taskDescription: "Description"
 	property string originQueueName: "Backlog"
 	property string destinationQueueName: "Selected"
 
-	dateTimeLbl.text: datetime
+	timeLbl.text: time
 	taskHeader.taskId: taskId
 	taskHeader.title: taskTitle
 	taskDescriptionLbl.text: taskDescription
