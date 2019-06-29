@@ -126,6 +126,7 @@ Item {
                 Controls.Label {
                     id: taskDescriptionLbl
                     text: qsTr("Description")
+                    wrapMode: Text.WordWrap
                     elide: Text.ElideRight
 
                     Layout.fillWidth: true
