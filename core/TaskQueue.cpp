@@ -158,7 +158,7 @@ bool TaskQueue::setData(const QModelIndex& p_index, const QVariant& p_value, int
  * @param p_row
  * @param p_item
  */
-void TaskQueue::insertRow(int p_row, Task* p_task) {
+void TaskQueue::insert(int p_row, Task* p_task) {
 	beginInsertRows(QModelIndex(), p_row, p_row);
 	connect(p_task, SIGNAL(taskIdChanged(uint)),         SLOT(handleDataChanged()));
 	connect(p_task, SIGNAL(clientChanged(QString)),      SLOT(handleDataChanged()));
@@ -179,7 +179,7 @@ void TaskQueue::insertRow(int p_row, Task* p_task) {
  * @param p_parent
  * @return
  */
-bool TaskQueue::removeRow(int p_row, const QModelIndex& p_parent) {
+bool TaskQueue::remove(int p_row, const QModelIndex& p_parent) {
 	Q_UNUSED(p_parent);
 	if (p_row < 0 || p_row >= rowCount())
 		return false;
@@ -225,9 +225,9 @@ Task* TaskQueue::find(uint p_taskId) const {
  * @brief TaskQueue::add
  * @param p_task
  */
-void TaskQueue::appendRow(Task* p_task) {
+void TaskQueue::append(Task* p_task) {
 	Q_ASSERT(p_task);
-	insertRow(rowCount(), p_task);
+	insert(rowCount(), p_task);
 }
 
 
@@ -236,7 +236,7 @@ void TaskQueue::appendRow(Task* p_task) {
  * @param p_row
  * @param p_destRow
  */
-void TaskQueue::moveRow(int p_row, int p_destRow) {
+void TaskQueue::move(int p_row, int p_destRow) {
 	if (p_row < 0 || p_row >= rowCount()) {
 		qDebug() << "(i) [TaskQueue] Moved skipped because there is no index " << p_row;
 		return;

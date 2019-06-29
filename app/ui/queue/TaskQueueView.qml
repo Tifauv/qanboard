@@ -147,10 +147,10 @@ Rectangle {
 	 */
 	function add(p_model, p_position) {
 		if (p_position === -1) {
-			tasks.appendRow(p_model);
+			tasks.append(p_model);
 		}
 		else {
-			tasks.insertRow(p_position, p_model);
+			tasks.insert(p_position, p_model);
 		}
 	}
 
@@ -162,7 +162,7 @@ Rectangle {
 	 *         false otherwise
 	 */
 	function remove(p_position) {
-		return tasks.removeRow(p_position);
+		return tasks.remove(p_position);
 	}
 
 
@@ -177,6 +177,6 @@ Rectangle {
 	 * Moves the item at position p_from to position p_to.
 	 */
 	function move(p_from, p_to) {
-		tasks.moveRow(p_from, p_to);
+		tasks.move(p_from, p_to);
 	}
 }

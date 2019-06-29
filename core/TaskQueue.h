@@ -36,13 +36,13 @@ public:
 	bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
 
 public slots:
-	void insertRow(int row, Task* item);
-	bool removeRow(int row, const QModelIndex &parent = QModelIndex());
+	void append(Task* task);
+	void insert(int row, Task* item);
+	bool remove(int row, const QModelIndex &parent = QModelIndex());
+	void move(int origin, int destination);
 
 	Task* at(int row) const;
 	Task* find(uint taskId) const;
-	void appendRow(Task* task);
-	void moveRow(int origin, int destination);
 
 	void log();
 

@@ -215,7 +215,7 @@ uint Workflow::loadTaskInQueue(Task* p_task, const QString& p_queue) {
 	if (queue) {
 		qDebug() << "(i) [Workflow] Queue " << p_queue << " found";
 		m_tasks.loadTask(p_task);
-		queue->appendRow(p_task);
+		queue->append(p_task);
 	}
 	else {
 		qWarning() << "/!\\ [Workflow] Queue " << p_queue << " does not exist";
@@ -281,11 +281,11 @@ uint Workflow::moveBetweenQueues(const QString& p_sourceName, int p_sourceIndex,
 	}
 	
 	auto task = source->at(p_sourceIndex);
-	if (source->removeRow(p_sourceIndex)) {
+	if (source->remove(p_sourceIndex)) {
 		if (p_destinationIndex == -1)
-			destination->appendRow(task);
+			destination->append(task);
 		else
-			destination->insertRow(p_destinationIndex, task);
+			destination->insert(p_destinationIndex, task);
 		appendToHistory(new TaskMove(*task, *source, *destination));
 	}
 	else {
