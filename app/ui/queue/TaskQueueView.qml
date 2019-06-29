@@ -65,6 +65,10 @@ Rectangle {
 					description: model.description
 					dueDate: model.dueDate
 					target: model.target
+					
+					onEdit: {
+						console.log("(i) [TaskQueueView] Requested edition of task #" + model.taskId)
+					}
 				}
 
 				onInternalMoveRequested: {
