@@ -38,7 +38,6 @@ public:
 	QHash<int, QByteArray> roleNames() const override;
 	QVariant data(const QModelIndex& index, int role) const override;
 	TaskQueue* findQueue(const QString& name) const;
-	Task* findTask(uint taskId) const;
 
 	void insertRow(int row, TaskQueue* queue);
 
@@ -52,6 +51,7 @@ public slots:
 	uint createTaskInQueue(const QString& p_client, const QString& p_activity, const QString& p_description, const QString& p_dueDate, const QString& p_target, const QString& p_queue);
 	uint createTask(const QString& p_client, const QString& p_activity, const QString& p_description, const QString& p_dueDate, const QString& p_target);
 	uint moveBetweenQueues(const QString& p_sourceName, int p_sourceIndex, const QString& p_destinationName, int p_destinationIndex);
+	Task* findTask(uint taskId) const;
 
 signals:
 	void taskIdChanged(uint);

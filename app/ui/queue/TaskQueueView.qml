@@ -20,6 +20,9 @@ Rectangle {
 
 	/* Signals the item at the given index has been dropped. */
 	signal itemDragEnded(int index)
+	
+	/* Signals a task has requested to be edited. */
+	signal taskEdit(int taskId)
 
 	Kirigami.Theme.colorSet: Kirigami.Theme.Window
 	color: Kirigami.Theme.backgroundColor
@@ -67,7 +70,8 @@ Rectangle {
 					target: model.target
 					
 					onEdit: {
-						console.log("(i) [TaskQueueView] Requested edition of task #" + model.taskId)
+						console.log("(i) [TaskQueueView] Requested edition of task #" + taskId);
+						queue.taskEdit(taskId)
 					}
 				}
 

@@ -17,7 +17,7 @@ Rectangle {
 	property string dueDate: "12/05/2015"
 	property string target: qsTr("Target")
 	
-	signal edit()
+	signal edit(int taskId)
 
 	ColumnLayout {
 		id: taskLayout
@@ -94,7 +94,7 @@ Rectangle {
 				
 				display: Controls.AbstractButton.IconOnly
 				
-				onClicked: edit()
+				onClicked: edit(taskId)
 			}
 		}
 	}

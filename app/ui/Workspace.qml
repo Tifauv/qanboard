@@ -9,6 +9,9 @@ Item {
 	id: workspace
 	width: 800
 	height: 460
+	
+	/* Signals a task has requested to be edited. */
+	signal taskEdit(int taskId)
 
 	WorkspaceStatusBar {
 		id: statusBar
@@ -46,6 +49,7 @@ Item {
 
 				onItemDragStarted: workspace.state = "taskDragging"
 				onItemDragEnded:   workspace.state = ""
+				onTaskEdit:        workspace.taskEdit(taskId)
 				
 				Component.onCompleted: {
 					/* MOST UGLY !

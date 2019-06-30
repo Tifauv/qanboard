@@ -27,5 +27,6 @@
         <file>ui/task/TaskEditForm.ui.qml</file>
         <file>ui/activity/DateHeader.qml</file>
         <file>ui/activity/DateHeaderForm.ui.qml</file>
+        <file>ui/task/TaskEditSheet.qml</file>
     </qresource>
 </RCC>
