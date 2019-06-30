@@ -18,6 +18,8 @@ Rectangle {
 	property string target: qsTr("Target")
 	
 	signal edit(int taskId)
+	
+	property bool _showActions: false
 
 	ColumnLayout {
 		id: taskLayout
@@ -27,13 +29,40 @@ Rectangle {
 		
 		spacing: Kirigami.Units.smallSpacing
 		
-		TaskHeader {
-			id: header
-			
-			taskId: task.taskId
-			title: qsTr("%1 %2").arg(task.client).arg(task.activity)
+		RowLayout {
+			id: headerLayout
 			
 			Layout.fillWidth: true
+			
+			TaskHeader {
+				id: header
+				
+				taskId: task.taskId
+				title: qsTr("%1 %2").arg(task.client).arg(task.activity)
+				
+				Layout.fillWidth: true
+			}
+			
+			Controls.Button {
+				id: menuBtn
+				
+				text: qsTr("Show task actions")
+				icon.name: "overflow-menu"
+				display: Controls.AbstractButton.IconOnly
+				flat: true
+				
+				topPadding: 1
+				bottomPadding: 1
+				leftPadding: 1
+				rightPadding: 1
+				
+				enabled: ! _showActions
+				
+				Layout.preferredHeight: Kirigami.Units.gridUnit
+				Layout.preferredWidth: Kirigami.Units.gridUnit
+				
+				onClicked: _showActions = true
+			}
 		}
 
 		Label {
@@ -59,12 +88,6 @@ Rectangle {
 		}
 	}
 	
-	MouseArea {
-		id: mouseArea
-		anchors.fill: parent
-		hoverEnabled: true
-	}
-
 	Rectangle {
 		id: actionsPanel
 		
@@ -78,6 +101,18 @@ Rectangle {
 		width: 0
 		color: "#664d4d4d"
 		
+		
+		MouseArea {
+			id: mouseArea
+			
+			anchors.fill: parent
+			hoverEnabled: true
+			
+			propagateComposedEvents: true
+			
+			onContainsMouseChanged: if (!containsMouse) _showActions = false
+		}
+
 		RowLayout {
 			id: actionsLayout
 			
@@ -91,7 +126,6 @@ Rectangle {
 				
 				text: qsTr("Edit")
 				icon.name: "document-edit"
-				
 				display: Controls.AbstractButton.IconOnly
 				
 				onClicked: edit(taskId)
@@ -101,8 +135,8 @@ Rectangle {
 	
 	states: [
 		State {
-			name: "Actions"
-			when: mouseArea.containsMouse
+			name: "ShowActions"
+			when: _showActions
 			
 			PropertyChanges {
 				target: actionsPanel
