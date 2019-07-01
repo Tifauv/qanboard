@@ -61,6 +61,8 @@ Rectangle {
 				Layout.preferredHeight: Kirigami.Units.gridUnit
 				Layout.preferredWidth: Kirigami.Units.gridUnit
 				
+				hoverEnabled: true
+				onHoveredChanged: menuBtn.icon.color = (hovered ? Kirigami.Theme.highlightColor : Kirigami.Theme.textColor)
 				onClicked: _showActions = true
 			}
 		}
@@ -88,19 +90,25 @@ Rectangle {
 		}
 	}
 	
-	Rectangle {
+	Item {
 		id: actionsPanel
 		
 		visible: false
 		
 		anchors {
 			top: parent.top
-			bottom: parent.bottom
+			left: parent.left
 			right: parent.right
 		}
-		width: 0
-		color: "#664d4d4d"
+		height: 0
 		
+		Rectangle {
+			id: actionsBackground
+			
+			anchors.fill: actionsPanel
+			color: Kirigami.Theme.highlightColor
+			opacity: 0.6
+		}
 		
 		MouseArea {
 			id: mouseArea
@@ -118,7 +126,6 @@ Rectangle {
 			
 			anchors.fill: parent
 			anchors.margins: Kirigami.Units.largeSpacing
-			
 			layoutDirection: Qt.RightToLeft
 			
 			Controls.ToolButton {
@@ -140,7 +147,7 @@ Rectangle {
 			
 			PropertyChanges {
 				target: actionsPanel
-				width: task.width
+				height: task.height
 				visible: true
 			}
 		}
@@ -149,8 +156,8 @@ Rectangle {
 	transitions: Transition {
 		NumberAnimation {
 			target: actionsPanel
-			property: "width"
-			duration: Kirigami.Units.longDuration
+			property: "height"
+			duration: Kirigami.Units.shortDuration
 			easing.type: Easing.InOutQuad
 		}
 	}
