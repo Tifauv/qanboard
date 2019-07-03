@@ -16,6 +16,8 @@ public:
 	
 	uint getNextTaskId() const;
 	
+	QListIterator<Task*> iter() const;
+	
 signals:
 	void taskRegistered(const Task& task);
 	void taskUnregistered(const Task& task);

@@ -22,8 +22,11 @@ public:
 	 *            the data source to read from
 	 * @param workflow
 	 *            the workflow to initialize
+	 * 
+	 * @return true if the workflow was read without error;
+	 *         false if some error occured
 	 */
-	virtual void read(QIODevice& source, Workflow& workflow) const = 0;
+	virtual bool read(QIODevice& source, Workflow& workflow) const = 0;
 
 	/**
 	 * @brief Write a Workflow to an XML destination.
@@ -32,8 +35,11 @@ public:
 	 *            the data destination to write to
 	 * @param workflow
 	 *            the workflow to save
+	 * 
+	 * @return true if the workflow was written without error;
+	 *         false if some error occured
 	 */
-	virtual void write(QIODevice& dest, const Workflow& workflow) const = 0;
+	virtual bool write(QIODevice& dest, const Workflow& workflow) const = 0;
 };
 
 #endif // WorkflowSerializer_H

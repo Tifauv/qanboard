@@ -6,7 +6,9 @@
 #include "Task.h"
 #include "TaskQueue.h"
 #include "Workflow.h"
-#include "XmlSerializer.h"
+#include "ConvertingSerializer.h"
+#include "XmlSerializer10.h"
+#include "XmlSerializer20.h"
 #include "FileStorage.h"
 
 
@@ -36,7 +38,9 @@ int main(int p_argc, char *p_argv[]) {
 
 	// Create the workflow and initialize the storage layer
 	Workflow wf;
-	XmlSerializer serializer;
+	ConvertingSerializer serializer;
+	serializer.setCurrentSerializer(new XmlSerializer20());
+	serializer.setLegacySerializer(new XmlSerializer10());
 	FileStorage storage(serializer);
 
 	// Load the workflow

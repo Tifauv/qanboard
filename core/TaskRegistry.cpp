@@ -28,6 +28,16 @@ uint TaskRegistry::nextTaskId() {
 }
 
 
+// PUBLIC FUNCTIONS
+/**
+ * @brief TaskRegistry::iter
+ * @return 
+ */
+QListIterator<Task*> TaskRegistry::iter() const {
+	return QListIterator<Task*>(m_tasks.values());
+}
+
+
 // PUBLIC SLOTS
 void TaskRegistry::initNextTaskId(uint p_nextId) {
 	m_nextTaskId = p_nextId;

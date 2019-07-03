@@ -130,6 +130,14 @@ QVariant Workflow::data(const QModelIndex& p_index, int p_role) const {
 
 
 /**
+ * @brief Workflow::tasksIter
+ * @return 
+ */
+QListIterator<Task*> Workflow::tasksIter() const {
+	return m_tasks.iter();
+}
+
+/**
  * @brief Workflow::iter
  * @return
  */
@@ -203,6 +211,17 @@ void Workflow::createQueue(const QString& p_name) {
 
 
 /**
+ * @brief Workflow::registerTask
+ * @param p_task
+ */
+void Workflow::registerTask(Task* p_task) {
+	Q_ASSERT(p_task);
+	
+	m_tasks.loadTask(p_task);
+}
+
+
+/**
  * @brief Workflow::addTaskToQueue
  * @param p_task
  * @param p_queue
@@ -253,6 +272,34 @@ uint Workflow::createTaskInQueue(const QString& p_client, const QString& p_activ
  */
 uint Workflow::createTask(const QString& p_client, const QString& p_activity, const QString& p_description, const QString& p_dueDate, const QString& p_target) {
 	return createTaskInQueue(p_client, p_activity, p_description, p_dueDate, p_target, defaultQueue());
+}
+
+
+/**
+ * @brief Workflow::addTaskToQueue
+ * @param p_taskId
+ * @param p_queueName
+ * @return 
+ */
+bool Workflow::appendTaskToQueue(uint p_taskId, const QString& p_queueName) {
+	// Retrieve the task
+	Task* task = findTask(p_taskId);
+	if (task == nullptr) {
+		qWarning() << "/!\\ [Workflow::addTaskToQueue] There is no task #" << p_taskId << " to append to queue " << p_queueName;
+		return false;
+	}
+	
+	// Retrieve the queue
+	TaskQueue* queue = findQueue(p_queueName);
+	if (queue == nullptr) {
+		qWarning() << "/!\\ [Workflow::addTaskToQueue] There is no queue " << p_queueName << " in which to append task #" << p_taskId;
+		return false;
+	}
+	
+	// Append the task to the queue
+	queue->append(task);
+	qDebug() << "(i) [Workflow::addTaskToQueue] Task #" << p_taskId << " appended to queue " << p_queueName;
+	return true;
 }
 
 
