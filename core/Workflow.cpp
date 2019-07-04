@@ -143,7 +143,8 @@ int Workflow::rowCount(const QModelIndex& p_parent) const {
 QHash<int, QByteArray> Workflow::roleNames() const {
 	QHash<int, QByteArray> names;
 	names[QueueNameRole] = "name";
-	names[TaskListRole] = "tasks";
+	names[ColorRole]     = "color";
+	names[TaskListRole]  = "tasks";
 	return names;
 }
 
@@ -163,6 +164,8 @@ QVariant Workflow::data(const QModelIndex& p_index, int p_role) const {
 	switch (p_role) {
 	case QueueNameRole:
 		return queue->name();
+	case ColorRole:
+		return queue->color();
 	case TaskListRole:
 		return QVariant::fromValue(queue);
 	default:
@@ -244,10 +247,12 @@ void Workflow::insertRow(int p_row, TaskQueue* p_queue) {
 /**
  * @brief Workflow::createQueue
  * @param p_name
+ * @param p_color
  */
-void Workflow::createQueue(const QString& p_name) {
+void Workflow::createQueue(const QString& p_name, const QString& p_color) {
 	TaskQueue* queue = new TaskQueue(this);
 	queue->setName(p_name);
+	queue->setColor(p_color);
 	insertRow(m_queues.size(), queue);
 }
 

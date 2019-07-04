@@ -7,7 +7,9 @@ TaskMoveForm {
 	property string taskTitle: "Plop"
 	property string taskDescription: "Description"
 	property string originQueueName: "Backlog"
+	property color  originQueueColor: "#666666"
 	property string destinationQueueName: "Selected"
+	property color  destinationQueueColor: "#cccccc"
 
 	timeLbl.text: time
 	taskHeader.taskId: taskId
@@ -16,17 +18,6 @@ TaskMoveForm {
 	originQueueLbl.text: originQueueName
 	destinationQueueLbl.text: destinationQueueName
 	
-	originQueueRect.border.color: selectColor(originQueueName)
-	destinationQueueRect.border.color: selectColor(destinationQueueName)
-	
-	function selectColor(p_queueName) {
-		if (p_queueName === "Backlog")
-			return "#4d4d4d";
-		if (p_queueName === "Selected")
-			return "#1d99f3";
-		if (p_queueName === "In progress")
-			return "#da4453";
-		if (p_queueName === "Done")
-			return "#2ecc71";
-	}
+	originQueueRect.border.color: originQueueColor
+	destinationQueueRect.border.color: destinationQueueColor
 }

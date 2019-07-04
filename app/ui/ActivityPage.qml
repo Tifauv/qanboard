@@ -33,8 +33,10 @@ Kirigami.ScrollablePage {
 			taskId: model.taskId
 			taskTitle: qsTr("%1 %2").arg(model.taskClient).arg(model.taskActivity)
 			taskDescription: model.taskDescription
-			originQueueName: model.origin
-			destinationQueueName: model.destination
+			originQueueName: model.originName
+			originQueueColor: model.originColor
+			destinationQueueName: model.destinationName
+			destinationQueueColor: model.destinationColor
 			
 			anchors {
 				left: parent.left

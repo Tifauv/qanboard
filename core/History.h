@@ -18,8 +18,10 @@ public:
 		TaskClientRole,
 		TaskActivityRole,
 		TaskDescriptionRole,
-		OriginRole,
-		DestinationRole,
+		OriginNameRole,
+		OriginColorRole,
+		DestinationNameRole,
+		DestinationColorRole,
 		TimestampRole,
 		DateRole,
 		TimeRole

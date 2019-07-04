@@ -38,6 +38,15 @@ const QString& TaskQueue::name() const {
 
 
 /**
+ * @brief TaskQueue::color
+ * @return
+ */
+const QString& TaskQueue::color() const {
+	return m_color;
+}
+
+
+/**
  * @brief TaskQueue::count
  * @return
  */
@@ -51,10 +60,25 @@ int TaskQueue::count() const {
  * @brief TaskQueue::setName
  * @param p_name
  */
-void TaskQueue::setName(const QString &p_name) {
-	m_name = p_name;
-	qDebug() << "(i) [TaskQueue] Changed name to " << p_name;
-	emit nameChanged(p_name);
+void TaskQueue::setName(const QString& p_name) {
+	if (m_name != p_name) {
+		m_name = p_name;
+		qDebug() << "(i) [TaskQueue] Changed name to " << p_name;
+		emit nameChanged(p_name);
+	}
+}
+
+
+/**
+ * @brief TaskQueue::setColor
+ * @param p_name
+ */
+void TaskQueue::setColor(const QString& p_color) {
+	if (m_color != p_color) {
+		m_color = p_color;
+		qDebug() << "(i) [TaskQueue] Changed color to " << p_color;
+		emit colorChanged();
+	}
 }
 
 

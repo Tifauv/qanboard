@@ -23,6 +23,7 @@ class Workflow : public QAbstractListModel {
 public:
 	enum Roles {
 		QueueNameRole = Qt::UserRole+1,
+		ColorRole,
 		TaskListRole
 	};
 
@@ -56,7 +57,7 @@ public:
 	void appendToHistory(TaskMove* taskMove);
 
 public slots:
-	void createQueue(const QString&);
+	void createQueue(const QString& name, const QString& color = QString("#cccccc"));
 	uint createTaskInQueue(const QString& p_client, const QString& p_activity, const QString& p_description, const QString& p_dueDate, const QString& p_target, const QString& p_queue);
 	uint createTask(const QString& p_client, const QString& p_activity, const QString& p_description, const QString& p_dueDate, const QString& p_target);
 	bool appendTaskToQueue(uint taskId, const QString& queueName);

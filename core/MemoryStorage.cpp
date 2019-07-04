@@ -30,10 +30,10 @@ void MemoryStorage::load(Workflow& p_workflow) const {
 	            new Task(25, "Client", "Development", "Implement a new algorithm", "15/02/2015"));
 
 	qDebug() << "(i) [MemoryStorage] Initializing queues...";
-	p_workflow.createQueue("Backlog");
-	p_workflow.createQueue("Selected");
-	p_workflow.createQueue("In progress");
-	p_workflow.createQueue("Done");
+	p_workflow.createQueue("Backlog",     "#4d4d4d");
+	p_workflow.createQueue("Selected",    "#1d99f3");
+	p_workflow.createQueue("In progress", "#da4453");
+	p_workflow.createQueue("Done",        "#2ecc71");
 	p_workflow.selectDefaultQueue("Backlog");
 
 	qDebug() << "(i) [MemoryStorage] Loading tasks...";

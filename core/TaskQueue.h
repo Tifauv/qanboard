@@ -8,8 +8,9 @@
 class TaskQueue : public QAbstractListModel {
 	Q_OBJECT
 
-	Q_PROPERTY(QString name   READ name   WRITE setName  NOTIFY nameChanged   DESIGNABLE false)
-	Q_PROPERTY(int     count  READ count                 NOTIFY countChanged)
+	Q_PROPERTY(QString name   READ name   WRITE setName   NOTIFY nameChanged   DESIGNABLE false)
+	Q_PROPERTY(QString color  READ color  WRITE setColor  NOTIFY colorChanged)
+	Q_PROPERTY(int     count  READ count                  NOTIFY countChanged)
 
 public:
 	enum Roles {
@@ -26,8 +27,11 @@ public:
 	~TaskQueue() override {}
 
 	const QString& name() const;
+	const QString& color() const;
 	int count() const;
+
 	void setName(const QString& p_name);
+	void setColor(const QString& p_color);
 
 	int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 	QHash<int, QByteArray> roleNames() const override;
@@ -48,6 +52,7 @@ public slots:
 
 signals:
 	void nameChanged(const QString&);
+	void colorChanged();
 	void countChanged(int);
 
 private slots:
@@ -55,6 +60,7 @@ private slots:
 
 private:
 	QString      m_name;
+	QString      m_color;
 	QList<Task*> m_tasks;
 };
 

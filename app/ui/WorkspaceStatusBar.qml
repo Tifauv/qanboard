@@ -3,6 +3,11 @@ import QtQuick 2.9
 Item {
 	id: bar
 
+	property color backlogColor:  "#4d4d4d"
+	property color selectedColor: "#1d99f3"
+	property color workingColor:  "#da4453"
+	property color finishedColor: "#2ecc71"
+
 	property int backlogCount: 1
 	property int selectedCount: 1
 	property int workingCount: 1
@@ -25,7 +30,7 @@ Item {
 			bottom: workingBar.top
 		}
 
-		color: "#2ecc71"
+		color: finishedColor
 	}
 
 	Rectangle {
@@ -39,7 +44,7 @@ Item {
 
 		height: workingPercent * bar.height
 
-		color: "#da4453"
+		color: workingColor
 	}
 
 	Rectangle {
@@ -52,7 +57,7 @@ Item {
 		}
 
 		height: selectedPercent * bar.height
-		color: "#1d99f3"
+		color: selectedColor
 	}
 
 	Rectangle {
@@ -65,6 +70,6 @@ Item {
 		}
 
 		height: backlogPercent * bar.height
-		color: "#4d4d4d"
+		color: backlogColor
 	}
 }

@@ -58,16 +58,18 @@ int History::rowCount(const QModelIndex& p_parent) const {
  */
 QHash<int, QByteArray> History::roleNames() const {
 	QHash<int, QByteArray> names;
-	names[TaskRole]            = "task";
-	names[TaskIdRole]          = "taskId";
-	names[TaskClientRole]      = "taskClient";
-	names[TaskActivityRole]    = "taskActivity";
-	names[TaskDescriptionRole] = "taskDescription";
-	names[OriginRole]          = "origin";
-	names[DestinationRole]     = "destination";
-	names[TimestampRole]       = "timestamp";
-	names[DateRole]            = "date";
-	names[TimeRole]            = "time";
+	names[TaskRole]             = "task";
+	names[TaskIdRole]           = "taskId";
+	names[TaskClientRole]       = "taskClient";
+	names[TaskActivityRole]     = "taskActivity";
+	names[TaskDescriptionRole]  = "taskDescription";
+	names[OriginNameRole]       = "originName";
+	names[OriginColorRole]      = "originColor";
+	names[DestinationNameRole]  = "destinationName";
+	names[DestinationColorRole] = "destinationColor";
+	names[TimestampRole]        = "timestamp";
+	names[DateRole]             = "date";
+	names[TimeRole]             = "time";
 	return names;
 }
 
@@ -95,10 +97,14 @@ QVariant History::data(const QModelIndex& p_index, int p_role) const {
 		return move->task().activity();
 	case TaskDescriptionRole:
 		return move->task().description();
-	case OriginRole:
+	case OriginNameRole:
 		return move->origin().name();
-	case DestinationRole:
+	case OriginColorRole:
+		return move->origin().color();
+	case DestinationNameRole:
 		return move->destination().name();
+	case DestinationColorRole:
+		return move->destination().color();
 	case TimestampRole:
 		return move->timestamp().toString("dd/MM/yyyy hh:mm"); // TODO I18N
 	case DateRole:

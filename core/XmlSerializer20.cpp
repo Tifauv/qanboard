@@ -264,11 +264,9 @@ void XmlSerializer20::readQueue(QXmlStreamReader& p_xml, Workflow& p_workflow) c
 	qDebug() << "(i) [XmlSerializer20::readQueue] Reading queue " << queueName << "...";
 
 	// Read the color
-	/* TODO Enable when the task queue supports this property.
 	QString color = p_xml.attributes().value(QWF_ATTR_COLOR).toString();
 	p_workflow.createQueue(queueName, color);
-	*/
-	p_workflow.createQueue(queueName);
+	//p_workflow.createQueue(queueName);
 
 	// Load the TaskRefs
 	while (p_xml.readNextStartElement() && p_xml.name() == QWF_TAG_TASKREF && p_xml.namespaceUri() == QWF_NS_20) {
@@ -482,10 +480,8 @@ void XmlSerializer20::writeQueue(QXmlStreamWriter& p_xml, const TaskQueue& p_que
 	qDebug() << "(i) [XmlSerializer20::writeQueue] Writing element <" << QWF_TAG_QUEUE << "> for queue " << p_queue.name() << "...";
 	p_xml.writeStartElement(QWF_NS_20, QWF_TAG_QUEUE);
 	
-	p_xml.writeAttribute(QWF_ATTR_NAME, p_queue.name());
-	/* TODO Enable once the color property is added to the TaskQueue.
+	p_xml.writeAttribute(QWF_ATTR_NAME,  p_queue.name());
 	p_xml.writeAttribute(QWF_ATTR_COLOR, p_queue.color());
-	*/
 
 	// Write the tasks references
 	for (int i=0; i<p_queue.count(); ++i)
