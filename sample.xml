@@ -1,71 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<n1:Workflow xmlns:n1="urn:qanboard:workflow:1.0" nextId="31" defaultQueue="Backlog">
-    <n1:TaskQueue name="Backlog">
-        <n1:Task id="3">
-            <n1:Description>Write documentation for the new API</n1:Description>
-            <n1:Category>Documentation</n1:Category>
-            <n1:Assignee></n1:Assignee>
-        </n1:Task>
-        <n1:Task id="4">
-            <n1:Description>Install Redis on the server</n1:Description>
-            <n1:Category>Sysadmins</n1:Category>
-            <n1:Assignee></n1:Assignee>
-        </n1:Task>
-        <n1:Task id="24">
-            <n1:Description>Write documentation about this new feature</n1:Description>
-            <n1:Category>Documentation</n1:Category>
-            <n1:Assignee></n1:Assignee>
-        </n1:Task>
-        <n1:Task id="25">
-            <n1:Description>Implement a new algorithm</n1:Description>
-            <n1:Category>Improvement</n1:Category>
-            <n1:Assignee></n1:Assignee>
-        </n1:Task>
-    </n1:TaskQueue>
-	<n1:TaskQueue name="Selected">
-        <n1:Task id="2">
-            <n1:Description>Fix that bug [TB: 4h]</n1:Description>
-            <n1:Category>Bug</n1:Category>
-            <n1:Assignee>demo</n1:Assignee>
-        </n1:Task>
-        <n1:Task id="29">
-            <n1:Description>Description</n1:Description>
-            <n1:Category></n1:Category>
-            <n1:Assignee></n1:Assignee>
-        </n1:Task>
-    </n1:TaskQueue>
-	<n1:TaskQueue name="In progress">
-        <n1:Task id="1">
-            <n1:Description>Add this awesome feature</n1:Description>
-            <n1:Category>Feature request</n1:Category>
-            <n1:Assignee>demo1</n1:Assignee>
-        </n1:Task>
-        <n1:Task id="22">
-            <n1:Description>Fix that bug in prod</n1:Description>
-            <n1:Category>Bug</n1:Category>
-            <n1:Assignee>demo2</n1:Assignee>
-        </n1:Task>
-        <n1:Task id="28">
-            <n1:Description>Bonjour</n1:Description>
-            <n1:Category></n1:Category>
-            <n1:Assignee></n1:Assignee>
-        </n1:Task>
-        <n1:Task id="27">
-            <n1:Description>Description</n1:Description>
-            <n1:Category></n1:Category>
-            <n1:Assignee></n1:Assignee>
-        </n1:Task>
-    </n1:TaskQueue>
-    <n1:TaskQueue name="Done">
-        <n1:Task id="23">
-            <n1:Description>Code refactoring</n1:Description>
-            <n1:Category>Improvement</n1:Category>
-            <n1:Assignee></n1:Assignee>
-        </n1:Task>
-        <n1:Task id="30">
-            <n1:Description>Description</n1:Description>
-            <n1:Category></n1:Category>
-            <n1:Assignee></n1:Assignee>
-        </n1:Task>
-    </n1:TaskQueue>
-</n1:Workflow>
+<Workflow xmlns="urn:qanboard:workflow:2.0" name="Sample" nextId="31" defaultQueue="Backlog">
+	<Tasks>
+        <Task id="1">
+			<Client>Client</Client>
+            <Activity>Feature request</Activity>
+            <Description>Add this awesome feature</Description>
+			<DueDate>15/02/2015</DueDate>
+            <Target>demo1</Target>
+        </Task>
+        <Task id="2">
+			<Client>Client</Client>
+            <Activity>Bug</Activity>
+            <Description>Fix that bug [TB: 4h]</Description>
+			<DueDate>15/02/2015</DueDate>
+            <Target>demo</Target>
+        </Task>
+        <Task id="3">
+			<Client>Client</Client>
+            <Activity>Documentation</Activity>
+            <Description>Write documentation for the new API</Description>
+			<DueDate>15/02/2015</DueDate>
+            <Target></Target>
+        </Task>
+        <Task id="4">
+			<Client>Client</Client>
+            <Activity>Sysadmins</Activity>
+            <Description>Install Redis on the server</Description>
+			<DueDate>15/02/2015</DueDate>
+            <Target></Target>
+        </Task>
+        <Task id="22">
+			<Client>Client</Client>
+            <Activity>Bug</Activity>
+            <Description>Fix that bug in prod</Description>
+			<DueDate>15/02/2015</DueDate>
+            <Target>demo2</Target>
+        </Task>
+        <Task id="23">
+			<Client>Client</Client>
+            <Activity>Improvement</Activity>
+            <Description>Code refactoring</Description>
+			<DueDate>15/02/2015</DueDate>
+            <Target></Target>
+        </Task>
+        <Task id="24">
+			<Client>Client</Client>
+            <Activity>Documentation</Activity>
+            <Description>Write documentation about this new feature</Description>
+			<DueDate>15/02/2015</DueDate>
+            <Target></Target>
+        </Task>
+        <Task id="25">
+			<Client>Client</Client>
+            <Activity>Improvement</Activity>
+            <Description>Implement a new algorithm</Description>
+			<DueDate>15/02/2015</DueDate>
+            <Target></Target>
+        </Task>
+        <Task id="27">
+			<Client>Client</Client>
+            <Activity></Activity>
+            <Description>Description</Description>
+			<DueDate>15/02/2015</DueDate>
+            <Target></Target>
+        </Task>
+        <Task id="28">
+			<Client>Client</Client>
+            <Activity></Activity>
+            <Description>Bonjour</Description>
+			<DueDate>15/02/2015</DueDate>
+            <Target></Target>
+        </Task>
+        <Task id="29">
+			<Client>Client</Client>
+            <Activity></Activity>
+            <Description>Description</Description>
+			<DueDate>15/02/2015</DueDate>
+            <Target></Target>
+        </Task>
+        <Task id="30">
+			<Client>Client</Client>
+            <Activity></Activity>
+            <Description>Description</Description>
+			<DueDate>15/02/2015</DueDate>
+            <Target></Target>
+        </Task>
+	</Tasks>
+	<Board>
+	    <Queue name="Backlog" color="#4d4d4d">
+			<TaskRef taskId="3"/>
+			<TaskRef taskId="4"/>
+			<TaskRef taskId="24"/>
+			<TaskRef taskId="25"/>
+    	</Queue>
+		<Queue name="Selected" color="#1d99f3">
+			<TaskRef taskId="2"/>
+			<TaskRef taskId="29"/>
+    	</Queue>
+		<Queue name="In progress" color="#da4453">
+			<TaskRef taskId="1"/>
+			<TaskRef taskId="22"/>
+			<TaskRef taskId="28"/>
+			<TaskRef taskId="27"/>
+    	</Queue>
+    	<Queue name="Done">
+			<TaskRef taskId="23"/>
+			<TaskRef taskId="30"/>
+    	</Queue>
+	</Board>
+	<History>
+	</History>
+</Workflow>
