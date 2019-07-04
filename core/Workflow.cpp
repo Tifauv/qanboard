@@ -109,6 +109,8 @@ void Workflow::selectDefaultQueue(const QString& p_queueName) {
 	// Otherwise, no default
 	else
 		m_defaultQueue = "";
+	
+	emit defaultQueueChanged();
 }
 
 
