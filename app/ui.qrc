@@ -5,6 +5,7 @@
         <file>ui/BreezeColorPalette.qml</file>
         <file>ui/ActivityPage.qml</file>
         <file>ui/BoardPage.qml</file>
+		<file>ui/BoardEditPage.qml</file>
         <file>ui/main.qml</file>
         <file>ui/activity/DateHeader.qml</file>
         <file>ui/activity/DateHeaderForm.ui.qml</file>

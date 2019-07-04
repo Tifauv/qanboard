@@ -9,6 +9,7 @@ Kirigami.Page {
 	title: workflow.name.length > 0 ? workflow.name : qsTr("Board")
 	
 	signal showActivity()
+	signal showBoardEdit()
 	
 	Layout.preferredWidth: Kirigami.Units.gridUnit * 44
 	
@@ -31,7 +32,13 @@ Kirigami.Page {
 			text: qsTr("View activity")
 			iconName: "view-history"
 			onTriggered: showActivity()
+		},
+		Kirigami.Action {
+			text: qsTr("Edit board")
+			iconName: "document-edit"
+			onTriggered: showBoardEdit()
 		}
+		
 	]
 	
 	Board {

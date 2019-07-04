@@ -30,7 +30,8 @@ Kirigami.ApplicationWindow {
 		id: boardPage
 
 		BoardPage {
-			onShowActivity: pageStack.push(activityPage);
+			onShowActivity:  pageStack.push(activityPage);
+			onShowBoardEdit: pageStack.push(boardEditionPage);
 		}
 	}
 
@@ -38,6 +39,14 @@ Kirigami.ApplicationWindow {
 		id: activityPage
 
 		ActivityPage {
+			onClosePage: pageStack.pop()
+		}
+	}
+	
+	Component {
+		id: boardEditionPage
+
+		BoardEditPage {
 			onClosePage: pageStack.pop()
 		}
 	}
