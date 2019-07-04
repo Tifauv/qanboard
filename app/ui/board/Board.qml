@@ -1,19 +1,18 @@
 import QtQuick 2.9
 import org.kde.kirigami 2.4 as Kirigami
 import Qanboard 1.0
-import "task"
-import "queue"
-import "tools"
+import "../task"
+import "../tools"
 
 Item {
-	id: workspace
+	id: board
 	width: 800
 	height: 460
 	
 	/* Signals a task has requested to be edited. */
 	signal taskEdit(int taskId)
 
-	WorkspaceStatusBar {
+	MoodBar {
 		id: statusBar
 
 		anchors {
@@ -45,11 +44,11 @@ Item {
 				title: model.name
 				tasks: model.tasks
 
-				draggedTaskParent: workspace
+				draggedTaskParent: board
 
-				onItemDragStarted: workspace.state = "taskDragging"
-				onItemDragEnded:   workspace.state = ""
-				onTaskEdit:        workspace.taskEdit(taskId)
+				onItemDragStarted: board.state = "taskDragging"
+				onItemDragEnded:   board.state = ""
+				onTaskEdit:        board.taskEdit(taskId)
 				
 				Component.onCompleted: {
 					/* MOST UGLY !
@@ -88,7 +87,7 @@ Item {
 			queue.remove(taskIndex);
 
 			//Cleanup
-			workspace.state = ""
+			board.state = ""
 		}
 	}
 

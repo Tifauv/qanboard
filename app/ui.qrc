@@ -2,31 +2,32 @@
     <qresource prefix="/">
         <file>images/banner.png</file>
         <file>ui/Colors.qml</file>
-        <file>ui/main.qml</file>
-        <file>ui/Workspace.qml</file>
-        <file>ui/queue/TaskQueueView.qml</file>
-        <file>ui/queue/Title.qml</file>
-        <file>ui/tools/Draggable.qml</file>
-        <file>ui/tools/Handle.qml</file>
-        <file>ui/tools/Label.qml</file>
-        <file>ui/tools/DropButton.qml</file>
-        <file>ui/tools/Toolbar.qml</file>
-        <file>ui/task/TaskHeader.qml</file>
-        <file>ui/task/TaskView.qml</file>
-        <file>ui/tools/IconLabel.qml</file>
-        <file>ui/tools/DropPlaceholder.qml</file>
-        <file>ui/task/TaskFooter.qml</file>
-        <file>ui/task/TaskFooterForm.ui.qml</file>
-        <file>ui/task/TaskHeaderForm.ui.qml</file>
-        <file>ui/WorkspacePage.qml</file>
-        <file>ui/WorkspaceStatusBar.qml</file>
-        <file>ui/activity/TaskMove.qml</file>
-        <file>ui/activity/TaskMoveForm.ui.qml</file>
+        <file>ui/BreezeColorPalette.qml</file>
         <file>ui/ActivityPage.qml</file>
-        <file>ui/task/TaskEdit.qml</file>
-        <file>ui/task/TaskEditForm.ui.qml</file>
+        <file>ui/BoardPage.qml</file>
+        <file>ui/main.qml</file>
         <file>ui/activity/DateHeader.qml</file>
         <file>ui/activity/DateHeaderForm.ui.qml</file>
+        <file>ui/activity/TaskMove.qml</file>
+        <file>ui/activity/TaskMoveForm.ui.qml</file>
+        <file>ui/board/Board.qml</file>
+        <file>ui/board/MoodBar.qml</file>
+        <file>ui/board/TaskQueueView.qml</file>
+        <file>ui/board/Title.qml</file>
+        <file>ui/task/TaskEdit.qml</file>
+        <file>ui/task/TaskEditForm.ui.qml</file>
         <file>ui/task/TaskEditSheet.qml</file>
+        <file>ui/task/TaskFooter.qml</file>
+        <file>ui/task/TaskFooterForm.ui.qml</file>
+        <file>ui/task/TaskHeader.qml</file>
+        <file>ui/task/TaskHeaderForm.ui.qml</file>
+        <file>ui/task/TaskView.qml</file>
+        <file>ui/tools/Draggable.qml</file>
+        <file>ui/tools/DropPlaceholder.qml</file>
+        <file>ui/tools/DropButton.qml</file>
+        <file>ui/tools/Handle.qml</file>
+        <file>ui/tools/IconLabel.qml</file>
+        <file>ui/tools/Label.qml</file>
+        <file>ui/tools/Toolbar.qml</file>
     </qresource>
 </RCC>

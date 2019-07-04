@@ -1,9 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.2 as Controls
 import org.kde.kirigami 2.4 as Kirigami
 import Qanboard 1.0
-import "task"
 
 Kirigami.ApplicationWindow {
 	id: window
@@ -26,12 +24,12 @@ Kirigami.ApplicationWindow {
 		]
 	}
 
-	pageStack.initialPage: workspacePage
+	pageStack.initialPage: boardPage
 	
 	Component {
-		id: workspacePage
+		id: boardPage
 
-		WorkspacePage {
+		BoardPage {
 			onShowActivity: pageStack.push(activityPage);
 		}
 	}

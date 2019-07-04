@@ -1,11 +1,12 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import org.kde.kirigami 2.4 as Kirigami
+import "board"
 import "task"
 
 Kirigami.Page {
 	id: page
-	title: workflow.name.length > 0 ? workflow.name : qsTr("Workspace")
+	title: workflow.name.length > 0 ? workflow.name : qsTr("Board")
 	
 	signal showActivity()
 	
@@ -33,9 +34,7 @@ Kirigami.Page {
 		}
 	]
 	
-	Workspace {
-		id: workspace
-		
+	Board {
 		anchors.fill: parent
 		
 		onTaskEdit: {

@@ -16,7 +16,7 @@ Item {
 	readonly property int total: backlogCount + selectedCount + workingCount + finishedCount
 
 	readonly property double backlogPercent:   backlogCount / total
-	readonly property double selectedPercent:  selectedCount / total
+	readonly property double selectedPercent: selectedCount / total
 	readonly property double workingPercent:   workingCount / total
 	readonly property double finishedPercent: finishedCount / total
 
