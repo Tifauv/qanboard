@@ -20,6 +20,15 @@ Workflow::Workflow(QObject* p_parent) :
 
 // GETTERS
 /**
+ * @brief Workflow::name
+ * @return 
+ */
+const QString& Workflow::name() const {
+	return m_name;
+}
+
+
+/**
  * @brief Workflow::taskId
  * @return
  */
@@ -56,6 +65,18 @@ History* Workflow::history() const {
 
 
 // SETTERS
+/**
+ * @brief Workflow::setName
+ * @param p_name
+ */
+void Workflow::setName(const QString& p_name) {
+	if (m_name != p_name) {
+		m_name = p_name;
+		emit nameChanged();
+	}
+}
+
+
 /**
  * @brief Workflow::setTaskId
  * @param p_taskId

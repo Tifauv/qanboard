@@ -12,6 +12,7 @@
 class Workflow : public QAbstractListModel {
 	Q_OBJECT
 
+	Q_PROPERTY(QString  name          READ name          WRITE setName    NOTIFY nameChanged)
 	Q_PROPERTY(uint     taskId        READ taskId        WRITE setTaskId  NOTIFY taskIdChanged  DESIGNABLE false)
 	Q_PROPERTY(QString  defaultQueue  READ defaultQueue)
 	Q_PROPERTY(int      count         READ count                          NOTIFY countChanged)
@@ -26,11 +27,13 @@ public:
 	explicit Workflow(QObject* parent = nullptr);
 	~Workflow() override {}
 
+	const QString& name() const;
 	uint taskId() const;
 	const QString& defaultQueue() const;
 	int count() const;
 	History* history() const;
 
+	void setName(const QString&);
 	void setTaskId(uint);
 	void selectDefaultQueue(const QString&);
 
@@ -57,11 +60,13 @@ public slots:
 	Task* findTask(uint taskId) const;
 
 signals:
+	void nameChanged();
 	void taskIdChanged(uint);
 	void countChanged(int);
 	void historyChanged();
 
 private:
+	QString           m_name;
 	uint              m_taskId;
 	QString           m_defaultQueue;
 	QList<TaskQueue*> m_queues;

@@ -124,9 +124,7 @@ void XmlSerializer20::readWorkflow(QXmlStreamReader& p_xml, Workflow& p_workflow
 	p_workflow.setTaskId(nextId);
 
 	// Read the name
-	/* TODO Enable when the workflow supports this property.
 	p_workflow.setName(p_xml.attributes().value(QWF_ATTR_NAME).toString());
-	*/
 
 	// Read the timestamp of the last save
 	/* TODO Enable when the workflow supports this property.
@@ -379,9 +377,7 @@ void XmlSerializer20::writeWorkflow(QXmlStreamWriter& p_xml, const Workflow& p_w
 	qDebug() << "(i) [XmlSerializer20::writeWorkflow] Writing element <" << QWF_TAG_WORKFLOW << ">...";
 	p_xml.writeStartElement(QWF_NS_20, QWF_TAG_WORKFLOW);
 	
-	/* TODO Enable once the attribute is supported.
 	p_xml.writeAttribute(QWF_ATTR_NAME,         p_workflow.name());
-	*/
 	p_xml.writeAttribute(QWF_ATTR_NEXTID,       QString::number(p_workflow.taskId()));
 	p_xml.writeAttribute(QWF_ATTR_DEFAULTQUEUE, p_workflow.defaultQueue());
 	p_xml.writeAttribute(QWF_ATTR_LASTSAVED,    QDateTime::currentDateTime().toString(DATE_FORMAT));
@@ -406,7 +402,7 @@ void XmlSerializer20::writeWorkflow(QXmlStreamWriter& p_xml, const Workflow& p_w
  * @param p_queue
  */
 void XmlSerializer20::writeTasks(QXmlStreamWriter& p_xml, const Workflow& p_workflow) const {
-	qDebug() << "(i) [XmlSerializer20::writeWorkflow] Writing element <" << QWF_TAG_TASKS << ">...";
+	qDebug() << "(i) [XmlSerializer20::writeTasks] Writing element <" << QWF_TAG_TASKS << ">...";
 	p_xml.writeStartElement(QWF_NS_20, QWF_TAG_TASKS);
 
 	// Write each task
@@ -415,7 +411,7 @@ void XmlSerializer20::writeTasks(QXmlStreamWriter& p_xml, const Workflow& p_work
 		writeTask(p_xml, *tasks.next());
 
 	p_xml.writeEndElement();
-	qDebug() << "(i) [XmlSerializer20::writeWorkflow] Element <" << QWF_TAG_TASKS << "> written.";
+	qDebug() << "(i) [XmlSerializer20::writeTasks] Element <" << QWF_TAG_TASKS << "> written.";
 }
 
 
