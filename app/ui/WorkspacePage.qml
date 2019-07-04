@@ -5,7 +5,7 @@ import "task"
 
 Kirigami.Page {
 	id: page
-	title: qsTr("Workspace")
+	title: workflow.name.length > 0 ? workflow.name : qsTr("Workspace")
 	
 	signal showActivity()
 	
