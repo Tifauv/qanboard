@@ -32,7 +32,7 @@ void FileStorage::load(Workflow& p_workflow) const {
  * @param p_workflow
  *            the workflow to save
  */
-void FileStorage::store(const Workflow& p_workflow) const {
+void FileStorage::store(Workflow& p_workflow) const {
 	QFile file(m_dataDir.filePath(WF_FILE));
 	m_serializer.write(file, p_workflow);
 }

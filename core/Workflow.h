@@ -3,6 +3,7 @@
 
 #include <QMetaType>
 #include <QAbstractListModel>
+#include <QDateTime>
 #include <QListIterator>
 #include "TaskRegistry.h"
 #include "TaskQueue.h"
@@ -12,11 +13,12 @@
 class Workflow : public QAbstractListModel {
 	Q_OBJECT
 
-	Q_PROPERTY(QString  name          READ name          WRITE setName    NOTIFY nameChanged)
-	Q_PROPERTY(uint     taskId        READ taskId        WRITE setTaskId  NOTIFY taskIdChanged  DESIGNABLE false)
-	Q_PROPERTY(QString  defaultQueue  READ defaultQueue)
-	Q_PROPERTY(int      count         READ count                          NOTIFY countChanged)
-	Q_PROPERTY(History* history       READ history                        NOTIFY historyChanged)
+	Q_PROPERTY(QString   name          READ name          WRITE setName       NOTIFY nameChanged)
+	Q_PROPERTY(uint      taskId        READ taskId        WRITE setTaskId     NOTIFY taskIdChanged  DESIGNABLE false)
+	Q_PROPERTY(QString   defaultQueue  READ defaultQueue)
+	Q_PROPERTY(QDateTime lastSaved     READ lastSaved     WRITE setLastSaved  NOTIFY lastSavedChanged)
+	Q_PROPERTY(int       count         READ count                             NOTIFY countChanged)
+	Q_PROPERTY(History*  history       READ history                           NOTIFY historyChanged)
 
 public:
 	enum Roles {
@@ -27,15 +29,17 @@ public:
 	explicit Workflow(QObject* parent = nullptr);
 	~Workflow() override {}
 
-	const QString& name() const;
-	uint taskId() const;
-	const QString& defaultQueue() const;
-	int count() const;
-	History* history() const;
+	const QString&   name()         const;
+	uint             taskId()       const;
+	const QString&   defaultQueue() const;
+	const QDateTime& lastSaved()    const;
+	int              count()        const;
+	History*         history()      const;
 
 	void setName(const QString&);
 	void setTaskId(uint);
 	void selectDefaultQueue(const QString&);
+	void setLastSaved(const QDateTime&);
 
 	int rowCount(const QModelIndex& parent) const override;
 	QHash<int, QByteArray> roleNames() const override;
@@ -61,16 +65,18 @@ public slots:
 
 signals:
 	void nameChanged();
-	void taskIdChanged(uint);
-	void countChanged(int);
+	void taskIdChanged();
+	void lastSavedChanged();
+	void countChanged();
 	void historyChanged();
 
 private:
 	QString           m_name;
 	uint              m_taskId;
 	QString           m_defaultQueue;
-	QList<TaskQueue*> m_queues;
+	QDateTime         m_lastSaved;
 	TaskRegistry      m_tasks;
+	QList<TaskQueue*> m_queues;
 	History*          m_history;
 };
 

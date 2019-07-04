@@ -12,7 +12,7 @@ public:
 	explicit FileStorage(WorkflowSerializer& p_serializer, QObject* parent = nullptr);
 
 	void load(Workflow&)        const override;
-	void store(const Workflow&) const override;
+	void store(Workflow&) const override;
 
 private:
 	void checkDataDir();

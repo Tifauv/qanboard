@@ -39,7 +39,7 @@ public:
 	 * @return true if the workflow was written without error;
 	 *         false if some error occured
 	 */
-	virtual bool write(QIODevice& dest, const Workflow& workflow) const = 0;
+	virtual bool write(QIODevice& dest, Workflow& workflow) const = 0;
 };
 
 #endif // WorkflowSerializer_H

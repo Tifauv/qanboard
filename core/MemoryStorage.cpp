@@ -8,45 +8,49 @@ MemoryStorage::MemoryStorage(QObject* p_parent) :
 
 
 void MemoryStorage::load(Workflow& p_workflow) const {
-	qDebug() << "(i) [MemoryStorage] Loading workflow...";
-	qDebug() << "(i) [MemoryStorage] Initializing structure...";
+	qDebug() << "(i) [MemoryStorage] Initializing workflow...";
+	p_workflow.setName("Sample");
+
+	qDebug() << "(i) [MemoryStorage] Initializing tasks...";
+	p_workflow.registerTask(
+	            new Task(1, "Client", "Development", "Add this awesome feature", "15/02/2015", "demo1"));
+	p_workflow.registerTask(
+	            new Task(2, "Client", "Development", "Fix that bug [TB: 4h]", "15/02/2015", "demo1"));
+	p_workflow.registerTask(
+	            new Task(3, "Client", "Documentation", "Write documentation for the new API", "15/02/2015"));
+	p_workflow.registerTask(
+	            new Task(4, "Client", "SysOps", "Install Redis on the server", "15/02/2015", "demosrv"));
+	p_workflow.registerTask(
+	            new Task(22, "Client", "Run", "Fix that bug in prod", "15/02/2015", "demo2"));
+	p_workflow.registerTask(
+	            new Task(23, "Client", "Development", "Code refactoring", "15/02/2015"));
+	p_workflow.registerTask(
+	            new Task(24, "Client", "Documentation", "Write documentation about this new feature", "15/02/2015"));
+	p_workflow.registerTask(
+	            new Task(25, "Client", "Development", "Implement a new algorithm", "15/02/2015"));
+
+	qDebug() << "(i) [MemoryStorage] Initializing queues...";
 	p_workflow.createQueue("Backlog");
 	p_workflow.createQueue("Selected");
 	p_workflow.createQueue("In progress");
 	p_workflow.createQueue("Done");
 	p_workflow.selectDefaultQueue("Backlog");
-	qDebug() << "(i) [MemoryStorage] Structure initialized...";
 
 	qDebug() << "(i) [MemoryStorage] Loading tasks...";
-	p_workflow.loadTaskInQueue(
-				new Task(1, "Add this awesome feature", "Feature request", "demo1"),
-				"Work in progress");
-	p_workflow.loadTaskInQueue(
-				new Task(2, "Fix that bug [TB: 4h]", "Bug", "demo"),
-				"Ready");
-	p_workflow.loadTaskInQueue(
-				new Task(3, "Write documentation for the new API", "Documentation", QString::null),
-				"Backlog");
-	p_workflow.loadTaskInQueue(
-				new Task(4, "Install Redis on the server", "Sysadmins", QString::null),
-				"Backlog");
-	p_workflow.loadTaskInQueue(
-				new Task(22, "Fix that bug in prod", "Bug", "demo2"),
-				"Work in progress");
-	p_workflow.loadTaskInQueue(
-				new Task(23, "Code refactoring", "Improvement", QString::null),
-				"Done");
-	p_workflow.loadTaskInQueue(
-				new Task(24, "Write documentation about this new feature", "Documentation", QString::null),
-				"Backlog");
-	p_workflow.loadTaskInQueue(
-				new Task(25, "Implement a new algorithm", "Improvement", QString::null),
-				"Backlog");
+	p_workflow.appendTaskToQueue( 1, "Work in progress");
+	p_workflow.appendTaskToQueue( 2, "Ready");
+	p_workflow.appendTaskToQueue( 3, "Backlog");
+	p_workflow.appendTaskToQueue( 4, "Backlog");
+	p_workflow.appendTaskToQueue(22, "Work in progress");
+	p_workflow.appendTaskToQueue(23, "Done");
+	p_workflow.appendTaskToQueue(24, "Backlog");
+	p_workflow.appendTaskToQueue(25, "Backlog");
 	p_workflow.setTaskId(26);
-	qDebug() << "(i) [MemoryStorage] Workflow is ready.";
+
+	qDebug() << "(i) [MemoryStorage] Workflow is ready...";
 }
 
 
-void MemoryStorage::store(const Workflow&) const {
+void MemoryStorage::store(Workflow&) const {
 	qDebug() << "(i) [MemoryStorage] Storing is not supported.";
 }

@@ -11,8 +11,8 @@ Workflow::Workflow(QObject* p_parent) :
 	QAbstractListModel(p_parent),
 	m_taskId(0),
 	m_defaultQueue(),
-	m_queues(),
-	m_tasks(),
+    m_tasks(),
+    m_queues(),
 	m_history(new History(this)) {
 	qDebug() << "(i) [Workflow] Created";
 }
@@ -43,6 +43,15 @@ uint Workflow::taskId() const {
  */
 const QString& Workflow::defaultQueue() const {
 	return m_defaultQueue;
+}
+
+
+/**
+ * @brief Workflow::lastSaved
+ * @return
+ */
+const QDateTime& Workflow::lastSaved() const {
+	return m_lastSaved;
 }
 
 
@@ -100,6 +109,18 @@ void Workflow::selectDefaultQueue(const QString& p_queueName) {
 	// Otherwise, no default
 	else
 		m_defaultQueue = "";
+}
+
+
+/**
+ * @brief Workflow::setLastSaved
+ * @param p_date
+ */
+void Workflow::setLastSaved(const QDateTime& p_date) {
+	if (m_lastSaved != p_date) {
+		m_lastSaved = p_date;
+		emit lastSavedChanged();
+	}
 }
 
 
@@ -215,7 +236,7 @@ void Workflow::insertRow(int p_row, TaskQueue* p_queue) {
 	beginInsertRows(QModelIndex(), p_row, p_row);
 	m_queues.insert(p_row, p_queue);
 	endInsertRows();
-	emit countChanged(count());
+	emit countChanged();
 	qDebug() << "(i) [Workflow] Queue " << p_queue->name() << " added";
 }
 

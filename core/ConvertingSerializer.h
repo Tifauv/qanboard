@@ -16,8 +16,8 @@ public:
 	void setCurrentSerializer(WorkflowSerializer*);
 	void setLegacySerializer(WorkflowSerializer*);
 
-	bool read(QIODevice&, Workflow&)        const override;
-	bool write(QIODevice&, const Workflow&) const override;
+	bool read(QIODevice&, Workflow&)  const override;
+	bool write(QIODevice&, Workflow&) const override;
 
 private:
 	/** The serializer for the last version of the format. */

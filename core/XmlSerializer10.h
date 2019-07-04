@@ -33,8 +33,8 @@ class XmlSerializer10 : public WorkflowSerializer {
 public:
 	explicit XmlSerializer10(QObject* parent = nullptr);
 
-	bool read(QIODevice&, Workflow&)        const override;
-	bool write(QIODevice&, const Workflow&) const override;
+	bool read(QIODevice&, Workflow&)  const override;
+	bool write(QIODevice&, Workflow&) const override;
 
 private:
 	void readWorkflow(QXmlStreamReader&, Workflow&) const;

@@ -74,7 +74,7 @@ bool XmlSerializer10::read(QIODevice& p_source, Workflow& p_workflow) const {
  * @param p_source
  * @param p_workflow
  */
-bool XmlSerializer10::write(QIODevice& p_source, const Workflow& p_workflow) const {
+bool XmlSerializer10::write(QIODevice& p_source, Workflow& p_workflow) const {
 	if (!p_source.open(QIODevice::WriteOnly | QIODevice::Text)) {
 		qWarning() << "/!\\ [XmlSerializer10] Source could not be opened.";
 		return false;

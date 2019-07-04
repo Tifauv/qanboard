@@ -65,7 +65,7 @@ bool ConvertingSerializer::read(QIODevice& p_source, Workflow& p_workflow) const
  * @param p_source
  * @param p_workflow
  */
-bool ConvertingSerializer::write(QIODevice& p_source, const Workflow& p_workflow) const {
+bool ConvertingSerializer::write(QIODevice& p_source, Workflow& p_workflow) const {
 	Q_ASSERT(m_currentSerializer);
 	
 	// Always write using the current format

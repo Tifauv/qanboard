@@ -81,7 +81,7 @@ bool XmlSerializer20::read(QIODevice& p_source, Workflow& p_workflow) const {
  * @param p_source
  * @param p_workflow
  */
-bool XmlSerializer20::write(QIODevice& p_source, const Workflow& p_workflow) const {
+bool XmlSerializer20::write(QIODevice& p_source, Workflow& p_workflow) const {
 	if (!p_source.open(QIODevice::WriteOnly | QIODevice::Text)) {
 		qWarning() << "/!\\ [XmlSerializer20::write] Source could not be opened.";
 		return false;
@@ -91,6 +91,9 @@ bool XmlSerializer20::write(QIODevice& p_source, const Workflow& p_workflow) con
 	QXmlStreamWriter xml;
 	xml.setDevice(&p_source);
 	xml.setAutoFormatting(true);
+
+	// Change the workflow's last saved date
+	p_workflow.setLastSaved(QDateTime::currentDateTime());
 
 	// Start the document
 	xml.writeStartDocument();
@@ -127,11 +130,8 @@ void XmlSerializer20::readWorkflow(QXmlStreamReader& p_xml, Workflow& p_workflow
 	p_workflow.setName(p_xml.attributes().value(QWF_ATTR_NAME).toString());
 
 	// Read the timestamp of the last save
-	/* TODO Enable when the workflow supports this property.
 	QString lastSaveStr = p_xml.attributes().value(QWF_ATTR_LASTSAVED).toString();
-	QDateTime lastSaved = QDateTime::fromString(lastSaveStr, DATE_FORMAT);
-	p_workflow.setLastSaved(lastSaved);
-	*/
+	p_workflow.setLastSaved(QDateTime::fromString(lastSaveStr, DATE_FORMAT));
 
 	// Read the default queue name
 	const QString& defaultQueueName = p_xml.attributes().value(QWF_ATTR_DEFAULTQUEUE).toString();
@@ -380,7 +380,7 @@ void XmlSerializer20::writeWorkflow(QXmlStreamWriter& p_xml, const Workflow& p_w
 	p_xml.writeAttribute(QWF_ATTR_NAME,         p_workflow.name());
 	p_xml.writeAttribute(QWF_ATTR_NEXTID,       QString::number(p_workflow.taskId()));
 	p_xml.writeAttribute(QWF_ATTR_DEFAULTQUEUE, p_workflow.defaultQueue());
-	p_xml.writeAttribute(QWF_ATTR_LASTSAVED,    QDateTime::currentDateTime().toString(DATE_FORMAT));
+	p_xml.writeAttribute(QWF_ATTR_LASTSAVED,    p_workflow.lastSaved().toString(DATE_FORMAT));
 
 	// The tasks
 	writeTasks(p_xml, p_workflow);
