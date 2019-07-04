@@ -62,7 +62,10 @@ Rectangle {
 				Layout.preferredWidth: Kirigami.Units.gridUnit
 				
 				hoverEnabled: true
-				onHoveredChanged: menuBtn.icon.color = (hovered ? Kirigami.Theme.highlightColor : Kirigami.Theme.textColor)
+				onHoveredChanged: {
+					menuBtn.icon.color = (hovered ? Kirigami.Theme.highlightColor : Kirigami.Theme.textColor);
+					_showActions = true
+				}
 				onClicked: _showActions = true
 			}
 		}
