@@ -35,7 +35,7 @@ Kirigami.ScrollablePage {
 		Controls.Label {
 			id: lastSavedLbl
 			Kirigami.FormData.label: qsTr("Last saved:")
-			text: workflow.lastSaved
+			text: Qt.formatDateTime(workflow.lastSaved, qsTr("dddd dd MMMM yyyy hh'h'mm"))
 		}
 		Controls.Label {
 			id: nextTaskIdLbl
