@@ -65,6 +65,19 @@ int Workflow::count() const {
 
 
 /**
+ * @brief Workflow::taskCount
+ * @return 
+ */
+int Workflow::taskCount() const {
+	int count = 0;
+	TaskQueue* queue;
+	foreach(queue, m_queues)
+		count += queue->count();
+	return count;
+}
+
+
+/**
  * @brief Workflow::history
  * @return 
  */
@@ -146,6 +159,7 @@ QHash<int, QByteArray> Workflow::roleNames() const {
 	QHash<int, QByteArray> names;
 	names[QueueNameRole] = "name";
 	names[ColorRole]     = "color";
+	names[TaskCountRole] = "taskCount";
 	names[TaskListRole]  = "tasks";
 	return names;
 }
@@ -168,6 +182,8 @@ QVariant Workflow::data(const QModelIndex& p_index, int p_role) const {
 		return queue->name();
 	case ColorRole:
 		return queue->color();
+	case TaskCountRole:
+		return queue->count();
 	case TaskListRole:
 		return QVariant::fromValue(queue);
 	default:
@@ -237,11 +253,12 @@ void Workflow::appendToHistory(TaskMove* p_change) {
  * @param p_row
  * @param p_queue
  */
-void Workflow::insertRow(int p_row, TaskQueue* p_queue) {
+void Workflow::insertQueue(int p_row, TaskQueue* p_queue) {
 	beginInsertRows(QModelIndex(), p_row, p_row);
 	m_queues.insert(p_row, p_queue);
 	endInsertRows();
 	emit countChanged();
+	connect(p_queue, &TaskQueue::countChanged, this, &Workflow::taskCountChanged);
 	qDebug() << "(i) [Workflow] Queue " << p_queue->name() << " added";
 }
 
@@ -255,7 +272,7 @@ void Workflow::createQueue(const QString& p_name, const QString& p_color) {
 	TaskQueue* queue = new TaskQueue(this);
 	queue->setName(p_name);
 	queue->setColor(p_color);
-	insertRow(m_queues.size(), queue);
+	insertQueue(m_queues.size(), queue);
 }
 
 

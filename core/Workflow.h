@@ -18,12 +18,14 @@ class Workflow : public QAbstractListModel {
 	Q_PROPERTY(QString   defaultQueue  READ defaultQueue  WRITE selectDefaultQueue  NOTIFY defaultQueueChanged)
 	Q_PROPERTY(QDateTime lastSaved     READ lastSaved     WRITE setLastSaved        NOTIFY lastSavedChanged)
 	Q_PROPERTY(int       count         READ count                                   NOTIFY countChanged)
+	Q_PROPERTY(int       taskCount     READ taskCount                               NOTIFY taskCountChanged)
 	Q_PROPERTY(History*  history       READ history                                 NOTIFY historyChanged)
 
 public:
 	enum Roles {
 		QueueNameRole = Qt::UserRole+1,
 		ColorRole,
+		TaskCountRole,
 		TaskListRole
 	};
 
@@ -35,6 +37,7 @@ public:
 	const QString&   defaultQueue() const;
 	const QDateTime& lastSaved()    const;
 	int              count()        const;
+	int              taskCount()    const;
 	History*         history()      const;
 
 	void setName(const QString&);
@@ -47,7 +50,7 @@ public:
 	QVariant data(const QModelIndex& index, int role) const override;
 	TaskQueue* findQueue(const QString& name) const;
 
-	void insertRow(int row, TaskQueue* queue);
+	void insertQueue(int row, TaskQueue* queue);
 
 	QListIterator<Task*> tasksIter() const;
 	QListIterator<TaskQueue*> iter() const;
@@ -70,6 +73,7 @@ signals:
 	void defaultQueueChanged();
 	void lastSavedChanged();
 	void countChanged();
+	void taskCountChanged();
 	void historyChanged();
 
 private:

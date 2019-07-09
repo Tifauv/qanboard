@@ -22,6 +22,8 @@ Item {
 		}
 
 		width: Kirigami.Units.gridUnit
+		
+		model: workflow
 	}
 
 	Row {
@@ -49,29 +51,6 @@ Item {
 				onItemDragStarted: board.state = "taskDragging"
 				onItemDragEnded:   board.state = ""
 				onTaskEdit:        board.taskEdit(taskId)
-				
-				Component.onCompleted: {
-					/* MOST UGLY !
-					 * TODO The WorkspaceStatusBar should be reworked to allow for dynamically created segments.
-					 * This means the color must come from the model as well.
-					 */
-					if (title === "Backlog") {
-						statusBar.backlogColor = Qt.binding(function() {return tasks.color});
-						statusBar.backlogCount = Qt.binding(function() {return tasks.count});
-					}
-					else if (title === "Selected") {
-						statusBar.selectedColor = Qt.binding(function() {return tasks.color});
-						statusBar.selectedCount = Qt.binding(function() {return tasks.count});
-					}
-					else if (title === "In progress") {
-						statusBar.workingColor = Qt.binding(function() {return tasks.color});
-						statusBar.workingCount = Qt.binding(function() {return tasks.count});
-					}
-					else if (title === "Done") {
-						statusBar.finishedColor = Qt.binding(function() {return tasks.color});
-						statusBar.finishedCount = Qt.binding(function() {return tasks.count});
-					}
-				}
 			}
 		}
 	}
