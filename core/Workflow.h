@@ -66,6 +66,7 @@ public slots:
 	bool appendTaskToQueue(uint taskId, const QString& queueName);
 	uint moveBetweenQueues(const QString& p_sourceName, int p_sourceIndex, const QString& p_destinationName, int p_destinationIndex);
 	Task* findTask(uint taskId) const;
+	void removeTask(uint taskId);
 
 signals:
 	void nameChanged();

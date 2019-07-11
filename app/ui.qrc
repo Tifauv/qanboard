@@ -5,7 +5,7 @@
         <file>ui/BreezeColorPalette.qml</file>
         <file>ui/ActivityPage.qml</file>
         <file>ui/BoardPage.qml</file>
-		<file>ui/BoardEditPage.qml</file>
+        <file>ui/BoardEditPage.qml</file>
         <file>ui/main.qml</file>
         <file>ui/activity/DateHeader.qml</file>
         <file>ui/activity/DateHeaderForm.ui.qml</file>
@@ -25,10 +25,7 @@
         <file>ui/task/TaskView.qml</file>
         <file>ui/tools/Draggable.qml</file>
         <file>ui/tools/DropPlaceholder.qml</file>
-        <file>ui/tools/DropButton.qml</file>
         <file>ui/tools/Handle.qml</file>
-        <file>ui/tools/IconLabel.qml</file>
         <file>ui/tools/Label.qml</file>
-        <file>ui/tools/Toolbar.qml</file>
     </qresource>
 </RCC>

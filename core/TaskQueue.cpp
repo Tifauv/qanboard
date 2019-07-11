@@ -198,12 +198,12 @@ void TaskQueue::insert(int p_row, Task* p_task) {
 
 
 /**
- * @brief TaskQueue::removeRow
+ * @brief TaskQueue::removeAt
  * @param p_row
  * @param p_parent
  * @return
  */
-bool TaskQueue::remove(int p_row, const QModelIndex& p_parent) {
+bool TaskQueue::removeAt(int p_row, const QModelIndex& p_parent) {
 	Q_UNUSED(p_parent);
 	if (p_row < 0 || p_row >= rowCount())
 		return false;
@@ -242,6 +242,30 @@ Task* TaskQueue::find(uint p_taskId) const {
 			return task;
 	}
     return nullptr;
+}
+
+
+/**
+ * @brief TaskQueue::remove
+ * @param p_taskId
+ * @return
+ */
+bool TaskQueue::remove(uint p_taskId) {
+	// Search for the row
+	int row = -1;
+	for (int i=0; i<count(); i++) {
+		auto task = at(i);
+		if (task != nullptr && task->taskId() == p_taskId) {
+			row = i;
+			break;
+		}
+	}
+	if (row < 0)
+		return false;
+	
+	
+	// Now delete
+	return removeAt(row);
 }
 
 

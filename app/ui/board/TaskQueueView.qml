@@ -23,6 +23,9 @@ Rectangle {
 	
 	/* Signals a task has requested to be edited. */
 	signal taskEdit(int taskId)
+	
+	/* Signals a task should be removed. */
+	signal taskRemove(int taskId)
 
 	Kirigami.Theme.colorSet: Kirigami.Theme.Window
 	color: Kirigami.Theme.backgroundColor
@@ -72,6 +75,11 @@ Rectangle {
 					onEdit: {
 						console.log("(i) [TaskQueueView] Requested edition of task #" + taskId);
 						queue.taskEdit(taskId)
+					}
+					
+					onRemove: {
+						console.log("(i) [TaskQueueView] Requested removal of task #" + taskId);
+						queue.taskRemove(taskId)
 					}
 				}
 
@@ -169,8 +177,8 @@ Rectangle {
 	 * @return true  if an item was removed,
 	 *         false otherwise
 	 */
-	function remove(p_position) {
-		return tasks.remove(p_position);
+	function removeAt(p_position) {
+		return tasks.removeAt(p_position);
 	}
 
 

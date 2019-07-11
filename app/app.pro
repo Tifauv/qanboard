@@ -14,8 +14,6 @@ RESOURCES += ui.qrc
 
 OTHER_FILES += eu.catwitch.qanboard.desktop
 
-include(fontawesome.pri/fontawesome.pri)
-
 isEmpty(target.path) {
     target.path = /usr/local/bin/
     export(target.path)

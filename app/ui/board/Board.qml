@@ -12,13 +12,16 @@ Item {
 	/* Signals a task has requested to be edited. */
 	signal taskEdit(int taskId)
 
+	/* Signals a task has requested to be removed. */
+	signal taskRemove(int taskId)
+
 	MoodBar {
 		id: statusBar
 
 		anchors {
 			top: parent.top
 			left: parent.left
-			bottom: toolbar.top
+			bottom: parent.bottom
 		}
 
 		width: Kirigami.Units.gridUnit
@@ -32,7 +35,7 @@ Item {
 			top: parent.top
 			left: statusBar.right
 			right: parent.right
-			bottom: toolbar.top
+			bottom: parent.bottom
 		}
 
 		Repeater {
@@ -51,32 +54,8 @@ Item {
 				onItemDragStarted: board.state = "taskDragging"
 				onItemDragEnded:   board.state = ""
 				onTaskEdit:        board.taskEdit(taskId)
+				onTaskRemove:      board.taskRemove(taskId)
 			}
 		}
 	}
-
-	Toolbar {
-		id: toolbar
-		anchors.bottom: parent.bottom
-		anchors.left: parent.left
-		anchors.right: parent.right
-
-		onRemoveTask: {
-			console.log("Asked to delete task");
-			queue.remove(taskIndex);
-
-			//Cleanup
-			board.state = ""
-		}
-	}
-
-	states: [
-		State {
-			name: "taskDragging"
-			PropertyChanges {
-				target: toolbar
-				state: "taskActions"
-			}
-		}
-	]
 }

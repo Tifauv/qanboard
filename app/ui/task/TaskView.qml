@@ -18,6 +18,7 @@ Rectangle {
 	property string target: qsTr("Target")
 	
 	signal edit(int taskId)
+	signal remove(int taskId)
 	
 	property bool _showActions: false
 
@@ -130,6 +131,7 @@ Rectangle {
 			anchors.fill: parent
 			anchors.margins: Kirigami.Units.largeSpacing
 			layoutDirection: Qt.RightToLeft
+			spacing: 0//Kirigami.Units.smallSpacing
 
 			opacity: 0
 			
@@ -141,6 +143,17 @@ Rectangle {
 				display: Controls.AbstractButton.IconOnly
 				
 				onClicked: edit(taskId)
+			}
+			
+			Controls.ToolButton {
+				id: removeBtn
+				
+				text: qsTr("Delete")
+				icon.name: "edit-delete"
+				icon.color: Kirigami.Theme.negativeTextColor
+				display: Controls.AbstractButton.IconOnly
+				
+				onClicked: remove(taskId)
 			}
 		}
 	}

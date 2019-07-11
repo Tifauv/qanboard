@@ -42,11 +42,12 @@ public:
 public slots:
 	void append(Task* task);
 	void insert(int row, Task* item);
-	bool remove(int row, const QModelIndex &parent = QModelIndex());
+	bool removeAt(int row, const QModelIndex &parent = QModelIndex());
 	void move(int origin, int destination);
 
 	Task* at(int row) const;
 	Task* find(uint taskId) const;
+	bool remove(uint taskId);
 
 	void log();
 

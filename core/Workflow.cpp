@@ -237,6 +237,30 @@ Task* Workflow::findTask(uint p_taskId) const {
 
 
 /**
+ * @brief Workflow::removeTask
+ * @param taskId
+ */
+void Workflow::removeTask(uint p_taskId) {
+	Task* task = findTask(p_taskId);
+	if (task == nullptr) {
+		qDebug() << "/!\\ [Workflow::removeTask] Task #" << p_taskId << " does not exist.";
+		return;
+	}
+	
+	// Remove from the queue the task is in
+	foreach (TaskQueue* queue, m_queues)
+		if (queue->remove(p_taskId))
+			break;
+	
+	// Remove the task from the history
+	//m_history->removeTask(p_taskId);
+	
+	// At last, remove it from registry
+	//m_tasks.unregisterTask(p_taskId);
+}
+
+
+/**
  * @brief Workflow::appendToHistory
  * @param p_change
  */
@@ -394,7 +418,7 @@ uint Workflow::moveBetweenQueues(const QString& p_sourceName, int p_sourceIndex,
 	}
 	
 	auto task = source->at(p_sourceIndex);
-	if (source->remove(p_sourceIndex)) {
+	if (source->removeAt(p_sourceIndex)) {
 		if (p_destinationIndex == -1)
 			destination->append(task);
 		else

@@ -42,12 +42,49 @@ Kirigami.Page {
 	]
 	
 	Board {
-		anchors.fill: parent
+		anchors {
+			top: parent.top
+			left: parent.left
+			right: parent.right
+			bottom: deleteMsg.top
+		}
 		
 		onTaskEdit: {
 			taskEditSheet.model = workflow.findTask(taskId);
 			taskEditSheet.open()
 		}
+		
+		onTaskRemove: {
+			deleteMsg.taskId = taskId;
+			deleteMsg.visible = true
+		}
+	}
+	
+	Kirigami.InlineMessage {
+		id: deleteMsg
+		
+		anchors {
+			bottom: parent.bottom
+			left: parent.left
+			right: parent.right
+		}
+		
+		property int taskId
+		
+		type: Kirigami.MessageType.Warning
+		text: qsTr("Do you really want to delete task #%1?").arg(taskId)
+		showCloseButton: true
+		
+		actions: [
+			Kirigami.Action {
+				text: qsTr("Delete")
+				iconName: "edit-delete"
+				onTriggered: {
+					workflow.removeTask(deleteMsg.taskId);
+					deleteMsg.visible = false
+				}
+			}
+		]
 	}
 	
 	TaskEditSheet {
