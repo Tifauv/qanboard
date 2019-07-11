@@ -130,6 +130,8 @@ Rectangle {
 			anchors.fill: parent
 			anchors.margins: Kirigami.Units.largeSpacing
 			layoutDirection: Qt.RightToLeft
+
+			opacity: 0
 			
 			Controls.ToolButton {
 				id: editBtn
@@ -153,15 +155,36 @@ Rectangle {
 				height: task.height
 				visible: true
 			}
+			PropertyChanges {
+				target: actionsLayout
+				opacity: 1
+			}
 		}
 	]
 	
 	transitions: Transition {
-		NumberAnimation {
-			target: actionsPanel
-			property: "height"
-			duration: Kirigami.Units.shortDuration
-			easing.type: Easing.InOutQuad
+		SequentialAnimation {
+			PropertyAction {
+				target: actionsPanel
+				property: "visible"
+				value: true
+			}
+
+			ParallelAnimation {
+				NumberAnimation {
+					target: actionsPanel
+					property: "height"
+					duration: Kirigami.Units.longDuration
+					easing.type: Easing.InOutQuad
+				}
+
+				NumberAnimation {
+					target: actionsLayout
+					property: "opacity"
+					duration: Kirigami.Units.shortDuration
+					easing.type: Easing.InOutQuad
+				}
+			}
 		}
 	}
 }
