@@ -17,8 +17,18 @@ Kirigami.ApplicationWindow {
 		
 		actions: [
 			Kirigami.Action {
+				text: qsTr("Save")
+				iconName: "document-save"
+				shortcut: StandardKey.Save
+				onTriggered: storage.store(workflow)
+			},
+			Kirigami.Action {
+				separator: true
+			},
+			Kirigami.Action {
 				text: qsTr("Quit")
 				iconName: "application-exit"
+				shortcut: StandardKey.Quit
 				onTriggered: Qt.quit()
 			}
 		]
