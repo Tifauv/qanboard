@@ -60,12 +60,20 @@ Kirigami.ScrollablePage {
 					radius: height/2
 					
 					color: model.color
+					
+					Kirigami.Icon {
+						anchors.centerIn: parent
+						width: Kirigami.Units.iconSizes.small
+						height: width
+						source: "checkbox"
+						color: Kirigami.Theme.backgroundColor
+						visible: model.name === workflow.defaultQueue
+					}
 				}
 
 				Controls.Label {
 					id: queueName
 					text: model.name
-					font.bold: model.name === workflow.defaultQueue
 					
 					Layout.fillWidth: true
 				}
