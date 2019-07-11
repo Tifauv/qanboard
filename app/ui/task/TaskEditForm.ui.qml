@@ -20,6 +20,7 @@ Item {
             id: clientTxt
             placeholderText: qsTr("Client name")
             Kirigami.FormData.label: qsTr("Client")
+			selectByMouse: true
             maximumLength: 24
             focus: true
         }
@@ -27,12 +28,14 @@ Item {
             id: activityTxt
             placeholderText: qsTr("Run or Project name")
             Kirigami.FormData.label: qsTr("Activity")
+			selectByMouse: true
             maximumLength: 32
         }
         Controls.TextField {
             id: descriptionTxt
             placeholderText: qsTr("What is it about?")
             Kirigami.FormData.label: qsTr("* Description")
+			selectByMouse: true
             maximumLength: 250
         }
         Kirigami.Separator {
@@ -44,12 +47,14 @@ Item {
             // TODO find a way to accept the input mask or an empty string
             //inputMask: qsTr("00/00/0000;_")
             Kirigami.FormData.label: qsTr("Due date")
+			selectByMouse: true
             maximumLength: 32
         }
         Controls.TextField {
             id: targetTxt
             placeholderText: qsTr("CI, Server names...")
             Kirigami.FormData.label: qsTr("Target")
+			selectByMouse: true
             maximumLength: 32
         }
     }
