@@ -21,6 +21,7 @@ Kirigami.Page {
 	mainAction: Kirigami.Action {
 		text: qsTr("Create task")
 		iconName: "task-new"
+		shortcut: StandardKey.New
 		onTriggered: {
 			taskEditSheet.model = undefined;
 			taskEditSheet.open()
@@ -38,7 +39,6 @@ Kirigami.Page {
 			iconName: "document-edit"
 			onTriggered: showBoardEdit()
 		}
-		
 	]
 	
 	Board {
