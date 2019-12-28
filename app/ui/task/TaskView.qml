@@ -125,25 +125,16 @@ Rectangle {
 			onContainsMouseChanged: if (!containsMouse) _showActions = false
 		}
 
-		RowLayout {
+		Row/*Layout*/ {
 			id: actionsLayout
 			
 			anchors.fill: parent
 			anchors.margins: Kirigami.Units.largeSpacing
+			anchors.verticalCenter: parent.verticalCenter
 			layoutDirection: Qt.RightToLeft
-			spacing: 0//Kirigami.Units.smallSpacing
+			spacing: Kirigami.Units.smallSpacing
 
 			opacity: 0
-			
-			Controls.ToolButton {
-				id: editBtn
-				
-				text: qsTr("Edit")
-				icon.name: "document-edit"
-				display: Controls.AbstractButton.IconOnly
-				
-				onClicked: edit(taskId)
-			}
 			
 			Controls.ToolButton {
 				id: removeBtn
@@ -152,8 +143,20 @@ Rectangle {
 				icon.name: "edit-delete"
 				icon.color: Kirigami.Theme.negativeTextColor
 				display: Controls.AbstractButton.IconOnly
+				anchors.verticalCenter: parent.verticalCenter
 				
 				onClicked: remove(taskId)
+			}
+			
+			Controls.ToolButton {
+				id: editBtn
+				
+				text: qsTr("Edit")
+				icon.name: "document-edit"
+				display: Controls.AbstractButton.IconOnly
+				anchors.verticalCenter: parent.verticalCenter
+				
+				onClicked: edit(taskId)
 			}
 		}
 	}
