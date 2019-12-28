@@ -1,7 +1,7 @@
-#include <QCoreApplication>
 #include <QGuiApplication>
 #include <QQmlContext>
 #include <QQmlApplicationEngine>
+#include <QIcon>
 
 #include "Task.h"
 #include "TaskQueue.h"
@@ -21,7 +21,7 @@
  *            array of parameters
  */
 int main(int p_argc, char *p_argv[]) {
-	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+	QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 	QGuiApplication app(p_argc, p_argv);
 	app.setOrganizationName("Catwitch");
 	app.setOrganizationDomain("catwitch.eu");
@@ -30,18 +30,20 @@ int main(int p_argc, char *p_argv[]) {
 	app.setApplicationVersion("0.5");
 
 	// Register model types with the QML engine
-	qmlRegisterType<Task>(     "Qanboard", 1, 0, "Task"     );
-	qmlRegisterType<TaskQueue>("Qanboard", 1, 0, "TaskQueue");
-	//qmlRegisterType<TaskMove>( "Qanboard", 1, 0, "TaskMove" );
-	qmlRegisterType<History>(  "Qanboard", 1, 0, "History"  );
-	qmlRegisterType<Workflow>( "Qanboard", 1, 0, "Workflow" );
+	qmlRegisterType<Task>(       "Qanboard", 1, 0, "Task"     );
+	qmlRegisterType<TaskQueue>(  "Qanboard", 1, 0, "TaskQueue");
+	//qmlRegisterType<TaskMove>(   "Qanboard", 1, 0, "TaskMove" );
+	qmlRegisterType<History>(    "Qanboard", 1, 0, "History"  );
+	qmlRegisterType<Workflow>(   "Qanboard", 1, 0, "Workflow" );
+	qmlRegisterType<FileStorage>("Qanboard", 1, 0, "FileStorage");
 
 	// Create the workflow and initialize the storage layer
 	Workflow wf;
 	ConvertingSerializer serializer;
 	serializer.setCurrentSerializer(new XmlSerializer20());
 	serializer.setLegacySerializer(new XmlSerializer10());
-	FileStorage storage(serializer);
+	FileStorage storage;
+	storage.setup(&serializer);
 
 	// Load the workflow
 	storage.load(wf);
@@ -53,7 +55,12 @@ int main(int p_argc, char *p_argv[]) {
 		wf.createQueue("Done");
 		wf.selectDefaultQueue("Backlog");
 	}
-
+	
+	// Set the default icon theme name
+	if (QIcon::themeName().isEmpty()) {
+		QIcon::setThemeName("breeze");
+	}
+	
 	// Create the QML view & show it !
 	QQmlApplicationEngine engine;
 	engine.addImportPath("qrc:///");

@@ -9,15 +9,18 @@ class FileStorage : public WorkflowStorage {
 	Q_OBJECT
 
 public:
-	explicit FileStorage(WorkflowSerializer& p_serializer, QObject* parent = nullptr);
+	explicit FileStorage(QObject* parent = nullptr);
 
-	void load(Workflow&)        const override;
-	void store(Workflow&) const override;
+	Q_INVOKABLE void setup(WorkflowSerializer* const p_serializer);
+
+	Q_INVOKABLE void load(Workflow&)  override;
+	Q_INVOKABLE void store(Workflow&) override;
 
 private:
-	void checkDataDir();
+	bool isDataDirReady();
+	bool isReady();
 
-	WorkflowSerializer& m_serializer;
+	WorkflowSerializer* m_serializer;
 	QDir                m_dataDir;
 };
 

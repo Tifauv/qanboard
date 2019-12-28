@@ -7,7 +7,7 @@ MemoryStorage::MemoryStorage(QObject* p_parent) :
 }
 
 
-void MemoryStorage::load(Workflow& p_workflow) const {
+void MemoryStorage::load(Workflow& p_workflow) {
 	qDebug() << "(i) [MemoryStorage] Initializing workflow...";
 	p_workflow.setName("Sample");
 
@@ -51,6 +51,6 @@ void MemoryStorage::load(Workflow& p_workflow) const {
 }
 
 
-void MemoryStorage::store(Workflow&) const {
+void MemoryStorage::store(Workflow&) {
 	qDebug() << "(i) [MemoryStorage] Storing is not supported.";
 }
